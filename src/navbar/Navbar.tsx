@@ -39,18 +39,18 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className={`navbar fixed w-full z-50 transition-all duration-300 ${
+      className={`navbar fixed w-full  z-50 transition-all duration-300 ${
         isScrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4 py-5 flex justify-between items-center">
+      <div className="container mx-auto py-4  flex justify-between items-center">
         {/* Logo */}
         <motion.a
           href="/"
-          className="text-2xl font-semibold text-black tracking-wide"
+          className="text-xl font-semibold text-black tracking-wide"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -58,25 +58,20 @@ const Navbar = () => {
         </motion.a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden text-sm tracking-wider md:flex items-center gap-10">
           {links.map((link) => (
             <motion.a
               key={link.path}
               href={link.path}
-              className="relative text-black hover:text-amber-800 transition-colors"
+              className="relative text-black transition-colors"
               whileHover={{ scale: 1.02 }}
             >
               {link.name}
-              <motion.div
-                className="absolute bottom-0 left-0 w-full h-[1.5px] bg-amber-800"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              />
             </motion.a>
           ))}
+
           <motion.button
-            className="ml-6 px-8 py-2.5 flex gap-1 items-center bg-gray-950 text-white rounded-sm hover:bg-amber-800 transition-colors font-medium tracking-wide"
+            className="ml-6 px-5 py-3 flex gap-1 items-center bg-amber-600 hover:bg-amber-700 text-white text-xs transition-colors font-medium tracking-wide"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -99,12 +94,13 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden z-50">
+        <div className="md:hidden w-10 z-50">
           <Hamburger
             toggled={isOpen}
             toggle={toggleMenu}
             color={isScrolled ? "#000" : "#000"}
             rounded
+            
           />
         </div>
 
@@ -134,7 +130,7 @@ const Navbar = () => {
                   </motion.a>
                 ))}
                 <motion.button
-                  className="mt-6 px-10 py-3 bg-gray-950 text-white rounded-sm text-lg font-medium tracking-wide"
+                  className="mt-6 px-10 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-sm text-lg font-medium tracking-wide"
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.98 }}
                 >
