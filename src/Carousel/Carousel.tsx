@@ -1,13 +1,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 import { motion } from "framer-motion";
 import resort from "../assets/resort.jpg";
 import bed from "../assets/bed.jpg";
 import parlour from "../assets/parlour.jpg";
 
 const Carousel = () => {
+  
   const slides = [
     {
       image: resort,
@@ -119,23 +119,8 @@ const Carousel = () => {
         <div className="custom-pagination absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10"></div>
       </Swiper>
 
-      {/* Add these styles to your global CSS or CSS module */}
-      <style jsx global>{`
-        .custom-bullet {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background-color: rgba(255,255,255,0.5);
-          cursor: pointer;
-          transition: all 0.3s ease;
-          margin: 0 5px !important;
-        }
-        .custom-bullet-active {
-          background-color: #3b82f6; /* Blue-500 */
-          width: 30px;
-          border-radius: 8px;
-        }
-      `}</style>
+      
+      
     </div>
   );
 };
