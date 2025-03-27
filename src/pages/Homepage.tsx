@@ -1,6 +1,7 @@
 import Carousel from "../Carousel/Carousel";
 import pool from "../assets/swiming.jpg";
 import Gallery from "./Gallery";
+import Recreational from "./Recreational";
 
 const Homepage = () => {
   return (
@@ -153,6 +154,10 @@ const Homepage = () => {
         </div>
       </div>
       <Gallery/>
+
+      <div className=" py-6">
+        <Recreational/>
+      </div>
     </div>
   );
 };
