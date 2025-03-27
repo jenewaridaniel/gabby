@@ -1,5 +1,7 @@
 import Carousel from "../Carousel/Carousel";
 import pool from "../assets/swiming.jpg";
+import ContactUs from "../utilis/Contactus";
+import Dining from "./Dining";
 import Gallery from "./Gallery";
 import Recreational from "./Recreational";
 
@@ -157,6 +159,15 @@ const Homepage = () => {
 
       <div className=" py-6">
         <Recreational/>
+      </div>
+
+      <div className=" py-4">
+        <Dining/>
+      </div>
+
+      {/* CONTACT US */}
+      <div className=" py-4">
+        <ContactUs/>
       </div>
     </div>
   );
