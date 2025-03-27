@@ -1,6 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
 import { motion } from "framer-motion";
 import resort from "../assets/resort.jpg";
 import bed from "../assets/bed.jpg";
