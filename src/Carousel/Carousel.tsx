@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { motion } from "framer-motion";
 import resort from "../assets/resort.jpg";
 import bed from "../assets/bed.jpg";
@@ -11,17 +11,15 @@ const Carousel = () => {
   const slides = [
     {
       image: resort,
-      title: "Unmatched Luxury Bliss",
-      subtitle:
-        "Stay in luxury, indulge in world-class amenities, and soak in breathtaking views",
-      cta: "Explore Our Rooms",
+      title: "Dream. Relax. Repeat",
+      subtitle: "Luxury So Good, You’ll Never Want to Leave",
+      cta: "Our Rooms",
     },
     {
       image: bed,
       title: "Your Private Paradise",
-      subtitle:
-        "Discover our exclusive resort with pristine beaches and infinity pools",
-      cta: "View Resort Features",
+      subtitle: "Discover our exclusive resort with pristine beaches and infinity pools",
+      cta: "Resort Features",
     },
     {
       image: parlour,
@@ -32,23 +30,31 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="pt-20">
+    <div className="pt-24">
       <Swiper
-        navigation={true}
-        modules={[Navigation, Autoplay]}
+        modules={[Pagination, Autoplay]}
+        pagination={{
+          clickable: true,
+          el: ".custom-pagination",
+          bulletClass: "custom-bullet",
+          bulletActiveClass: "custom-bullet-active",
+        }}
         className="mySwiper"
-        autoplay={{ delay: 6000 }}
+        autoplay={{ delay: 6000, disableOnInteraction: false }}
         loop={true}
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div className="relative w-full h-[80vh] min-h-[500px] overflow-hidden">
               {/* Background image with dark overlay */}
-              <img
-                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+              <motion.img
+                className="w-full h-full object-cover object-center"
                 src={slide.image}
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
               />
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+              <div className="absolute inset-0 bg-black/50"></div>
 
               {/* Content container */}
               <div className="absolute inset-0 flex items-center justify-center md:justify-start px-6 text-white">
@@ -56,9 +62,9 @@ const Carousel = () => {
                   {/* Main heading with animation */}
                   <motion.h1
                     className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
                   >
                     {slide.title}
                   </motion.h1>
@@ -66,67 +72,70 @@ const Carousel = () => {
                   {/* Subheading */}
                   <motion.p
                     className="text-sm md:text-lg mb-8 leading-relaxed max-w-lg"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
                   >
                     {slide.subtitle}
                   </motion.p>
 
                   {/* CTA Button */}
                   <motion.button
-                    className="px-8 py-4  justify-center bg-amber-600 hover:bg-amber-700 text-white font-medium tracking-wider rounded-sm transition-all duration-300 hover:shadow-lg flex items-center gap-2"
-                    initial={{ opacity: 0, y: 20 }}
+                    className="px-8 py-4 justify-center bg-amber-600 hover:bg-amber-700 text-white font-medium tracking-wider rounded-full transition-all duration-300 hover:shadow-lg flex items-center gap-2"
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
+                    transition={{ duration: 0.8, delay: 0.7 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {slide.cta}
-                    <svg
+                    <motion.svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-5 h-5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
+                      initial={{ x: -5 }}
+                      animate={{ x: 0 }}
+                      transition={{ 
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        duration: 1.2
+                      }}
                     >
                       <path
                         fillRule="evenodd"
                         d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
                         clipRule="evenodd"
                       />
-                    </svg>
+                    </motion.svg>
                   </motion.button>
                 </div>
               </div>
-
-              {/* Scrolling indicator - only show on first slide */}
-              {index === 0 && (
-                <div className="absolute bottom-8 left-0 right-0 flex justify-center">
-                  <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                    className="w-8 h-8 text-white"
-                  >
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                      />
-                    </svg> */}
-                  </motion.div>
-                </div>
-              )}
             </div>
           </SwiperSlide>
         ))}
+        
+        {/* Custom pagination container */}
+        <div className="custom-pagination absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10"></div>
       </Swiper>
+
+      {/* Add these styles to your global CSS or CSS module */}
+      <style jsx global>{`
+        .custom-bullet {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: rgba(255,255,255,0.5);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin: 0 5px !important;
+        }
+        .custom-bullet-active {
+          background-color: #3b82f6; /* Blue-500 */
+          width: 30px;
+          border-radius: 8px;
+        }
+      `}</style>
     </div>
   );
 };

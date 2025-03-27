@@ -40,7 +40,7 @@ const Navbar = () => {
   return (
     <motion.nav
       className={`navbar fixed w-full  z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        isScrolled ? "bg-white/95 shadow-sm" : "bg-transparent"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -71,7 +71,7 @@ const Navbar = () => {
           ))}
 
           <motion.button
-            className="ml-6 px-5 py-3 flex gap-1 items-center bg-amber-600 hover:bg-amber-700 text-white text-xs transition-colors font-medium tracking-wide"
+            className="ml-6 px-5 py-4 backdrop-blur-md opacity-80 flex gap-1 items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs transition-colors font-medium tracking-wide"
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.98 }}
           >
