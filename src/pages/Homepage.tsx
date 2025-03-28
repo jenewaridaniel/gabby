@@ -1,6 +1,7 @@
 import Carousel from "../Carousel/Carousel";
 import pool from "../assets/swiming.jpg";
 import ContactUs from "../utilis/Contactus";
+import Footer from "../utilis/Footer";
 import Dining from "./Dining";
 import Gallery from "./Gallery";
 import Recreational from "./Recreational";
@@ -168,6 +169,11 @@ const Homepage = () => {
       {/* CONTACT US */}
       <div className=" py-4">
         <ContactUs/>
+      </div>
+
+      {/* footer */}
+      <div>
+        <Footer/>
       </div>
     </div>
   );
