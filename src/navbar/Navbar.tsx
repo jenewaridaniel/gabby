@@ -46,7 +46,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto py-4  flex justify-between items-center">
+      <div className="container mx-auto py-4 px-6  flex justify-between items-center">
         {/* Logo */}
         <motion.a
           href="/"
@@ -94,7 +94,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden w-10 z-50">
+        <div className="md:hidden  w-14 z-50">
           <Hamburger
             toggled={isOpen}
             toggle={toggleMenu}
