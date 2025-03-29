@@ -1,5 +1,6 @@
 import Carousel from "../Carousel/Carousel";
 import pool from "../assets/swiming.jpg";
+import Navbar from "../navbar/Navbar";
 import ContactUs from "../utilis/Contactus";
 import Footer from "../utilis/Footer";
 import Map from "../utilis/Map";
@@ -10,6 +11,7 @@ import Recreational from "./Recreational";
 const Homepage = () => {
   return (
     <div>
+      <Navbar/>
       <Carousel />
 
       <div className="text-center py-12 px-4">
@@ -32,6 +34,7 @@ const Homepage = () => {
               src={pool}
               className="w-full h-auto rounded-lg shadow-xl object-cover transition-all duration-300 hover:shadow-2xl"
               alt="Luxury pool at Gabby Hotels"
+              loading="lazy"
             />
           </div>
 

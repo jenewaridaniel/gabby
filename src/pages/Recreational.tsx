@@ -128,6 +128,7 @@ const Recreational: React.FC = () => {
                     src={activity.image} 
                     alt={activity.name}
                     className="w-full h-full object-cover"
+                    loading='lazy'
                   />
                 </div>
                 <div className="p-6">

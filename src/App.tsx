@@ -1,14 +1,24 @@
-import Navbar from './navbar/Navbar'
-import Homepage from '../src/pages/Homepage'
-
+import Homepage from "../src/pages/Homepage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ContactUs from "./ContactFolder/Contactus";
 
 const App = () => {
-  return (
-    <div>
-      <Navbar/>
-      <Homepage/>
-    </div>
-  )
-}
+  const ROUTER = {
+    LANDING: "/",
+    CONTACTUS: "/contact-us",
+  };
 
-export default App
+  // routung the pages//
+  const router = createBrowserRouter([
+    {path: ROUTER.LANDING,element:<Homepage/>},
+    {path: ROUTER.CONTACTUS,element:<ContactUs/>},
+
+
+  ]);
+
+  return <div>
+    <RouterProvider router={router}/>
+  </div>;
+};
+
+export default App;

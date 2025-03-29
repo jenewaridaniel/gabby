@@ -39,14 +39,14 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className={`navbar fixed w-full  z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 shadow-sm" : "bg-transparent"
+      className={`navbar fixed w-full z-50 transition-all duration-300 ${
+        isScrolled ? "shadow-sm backdrop-blur-md bg-white/90" : "backdrop-blur-md bg-white/80"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto py-4 px-6  flex justify-between items-center">
+      <div className="container mx-auto py-4 px-6 flex justify-between items-center">
         {/* Logo */}
         <motion.a
           href="/"
@@ -54,53 +54,61 @@ const Navbar = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <img src={logo} className=" w-12 " alt="" />
+          <img src={logo} className="w-12" alt="Logo" />
         </motion.a>
 
         {/* Desktop Navigation */}
-        <div className="hidden text-sm tracking-wider md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
             <motion.a
               key={link.path}
               href={link.path}
-              className="relative text-black transition-colors"
+              className="relative text-black text-sm font-medium tracking-wide transition-colors hover:text-amber-600"
               whileHover={{ scale: 1.02 }}
             >
               {link.name}
             </motion.a>
           ))}
 
-          <motion.button
-            className="ml-6 px-5 py-4 backdrop-blur-md opacity-80 flex gap-1 items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs transition-colors font-medium tracking-wide"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Book Now{" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className="size-4 text-gray-50"
+          <div className="flex items-center gap-4 ml-6">
+            <motion.a
+              href="/signup"
+              className="px-4 py-2 text-sm font-medium text-black hover:text-amber-600 transition-colors"
+              whileHover={{ y: -1 }}
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-              />
-            </svg>
-          </motion.button>
+              Sign Up
+            </motion.a>
+            <motion.button
+              className="px-5 py-3 flex gap-1 items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium tracking-wide transition-colors"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Book Now
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-50"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                />
+              </svg>
+            </motion.button>
+          </div>
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden  w-14 z-50">
+        <div className="md:hidden z-50">
           <Hamburger
             toggled={isOpen}
             toggle={toggleMenu}
             color={isScrolled ? "#000" : "#000"}
             rounded
-            
           />
         </div>
 
@@ -108,34 +116,52 @@ const Navbar = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="md:hidden fixed top-0 left-0 w-full h-screen bg-white/98 backdrop-blur-lg"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.25 }}
+              className="md:hidden fixed inset-0 w-full h-screen bg-white/95 backdrop-blur-lg z-40"
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "tween", ease: "easeInOut" }}
             >
-              <div className="container mx-auto px-4 pt-28 pb-8 flex flex-col items-center gap-7">
-                {links.map((link, index) => (
+              <div className="container mx-auto px-6 pt-24 pb-8 h-full flex flex-col">
+                <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                  {links.map((link, index) => (
+                    <motion.a
+                      key={link.path}
+                      href={link.path}
+                      className="text-2xl text-black font-medium hover:text-amber-600 transition-colors"
+                      initial={{ x: 20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: 20, opacity: 0 }}
+                      transition={{ delay: index * 0.08 + 0.1 }}
+                      onClick={closeMenu}
+                    >
+                      {link.name}
+                    </motion.a>
+                  ))}
+                </div>
+
+                <div className="flex flex-col gap-4 items-center pb-8">
                   <motion.a
-                    key={link.path}
-                    href={link.path}
-                    className="text-xl text-black hover:text-amber-800 font-medium"
-                    initial={{ y: 15, opacity: 0 }}
+                    href="/signup"
+                    className="w-full max-w-xs py-3 text-center text-black font-medium border border-black rounded-sm hover:bg-black hover:text-white transition-colors"
+                    initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 15, opacity: 0 }}
-                    transition={{ delay: index * 0.08 }}
+                    transition={{ delay: links.length * 0.08 + 0.1 }}
                     onClick={closeMenu}
                   >
-                    {link.name}
+                    Sign Up
                   </motion.a>
-                ))}
-                <motion.button
-                  className="mt-6 px-10 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-sm text-lg font-medium tracking-wide"
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Book Now
-                </motion.button>
+                  <motion.button
+                    className="w-full max-w-xs py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-sm text-lg font-medium tracking-wide"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: links.length * 0.08 + 0.15 }}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Book Now
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
           )}

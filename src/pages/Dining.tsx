@@ -56,6 +56,7 @@ const Dining: React.FC = () => {
                 <img 
                   src={option.image} 
                   alt={option.name} 
+                  loading='lazy'
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
@@ -97,6 +98,7 @@ const Dining: React.FC = () => {
               <img 
                 src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
                 alt="Sunset Special" 
+                loading='lazy'
                 className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
               />
             </div>
