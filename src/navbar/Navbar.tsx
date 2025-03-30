@@ -143,7 +143,7 @@ const Navbar = () => {
                 <div className="flex flex-col gap-4 items-center pb-8">
                   <motion.a
                     href="/signup"
-                    className="w-full max-w-xs py-3 text-center text-black font-medium border border-black rounded-sm hover:bg-black hover:text-white transition-colors"
+                    className="w-full max-w-xs py-4 text-center text-black font-medium border border-black rounded-sm hover:bg-black hover:text-white transition-colors"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: links.length * 0.08 + 0.1 }}
