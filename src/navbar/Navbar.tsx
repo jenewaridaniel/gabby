@@ -72,7 +72,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4 ml-6">
             <motion.a
-              href="/signup"
+              href="/auth/signup"
               className="px-4 py-2 text-sm font-medium text-black hover:text-amber-600 transition-colors"
               whileHover={{ y: -1 }}
             >
