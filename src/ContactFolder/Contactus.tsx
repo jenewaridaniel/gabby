@@ -68,7 +68,7 @@ const ContactUs = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-amber-900 mb-4">Contact Us</h1>
+        <h1 className="text-3xl font-bold text-amber-900 mb-4">Contact Us</h1>
         <p className="text-base text-amber-800 max-w-2xl mx-auto">
           Reach out for inquiries, bookings, or special requests. We'd love to hear from you!
         </p>
@@ -129,7 +129,7 @@ const ContactUs = () => {
           <Map />
 
           <div className="bg-amber-50 p-6 rounded-lg shadow-md border border-amber-100">
-            <h2 className="text-2xl font-bold text-amber-900 mb-4">Contact Information</h2>
+            <h2 className="text-xl font-bold text-amber-900 mb-4">Contact Information</h2>
             <div className="space-y-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
