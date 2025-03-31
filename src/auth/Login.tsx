@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaGoogle, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import {auth,provider} from '../config/firebase'
+import { signInWithPopup } from "firebase/auth";
 // import BackButton from "../Backbutton/BackButton";
 // import { IoIosArrowForward } from "react-icons/io";
 
@@ -8,6 +10,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +19,9 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    // Handle Google login logic here
+    signInWithPopup(auth,provider).then((data)=>{
+      console.log('works')
+    })
     console.log("Logging in with Google");
   };
 

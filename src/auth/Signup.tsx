@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import {auth,provider} from '../config/firebase'
+import {signInWithPopup} from 'firebase/auth'
 import {
   FaGoogle,
   FaUser,
@@ -10,11 +12,24 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { MdOutlineLocationCity } from "react-icons/md";
+import Homepage from "../pages/Homepage";
 // import { IoIosArrowForward } from "react-icons/io";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [value,Setvalue] = useState('')
+
+
+  // Signup with Google //
+  const HandleClick =()=>{
+      signInWithPopup(auth,provider).then((data)=>
+     {
+      Setvalue(data)
+      console.log('i too love my bae')
+     }
+      )
+  }
 
   return (
     <motion.div
@@ -48,14 +63,17 @@ const Signup = () => {
         >
           <div className="p-8">
             {/* Google Signup Button */}
+            {value? <div><h1> Works finaly😅❤</h1></div> :
             <motion.button
               whileHover={{ y: -2 }}
+              onClick={HandleClick}
               whileTap={{ scale: 0.98 }}
               className="w-full flex items-center justify-center gap-3 bg-gray-700 hover:bg-amber-500/10 border border-amber-400/30 rounded-xl py-3 px-6 mb-6 text-amber-400 font-medium transition-all duration-300"
             >
               <FaGoogle className="text-xl" />
               <span>Continue with Google</span>
             </motion.button>
+            }
 
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
