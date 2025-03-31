@@ -142,7 +142,7 @@ const Navbar = () => {
 
                 <div className="flex flex-col gap-4 items-center pb-8">
                   <motion.a
-                    href="/signup"
+                    href="/auth/signup"
                     className="w-full max-w-xs py-4 text-center text-black font-medium border border-black rounded-sm hover:bg-black hover:text-white transition-colors"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
