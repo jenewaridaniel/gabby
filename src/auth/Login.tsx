@@ -19,7 +19,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    signInWithPopup(auth,provider).then((data)=>{
+    signInWithPopup(auth,provider).then(()=>{
       console.log('works')
     })
     console.log("Logging in with Google");

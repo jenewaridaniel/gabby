@@ -23,9 +23,9 @@ const Signup = () => {
 
   // Signup with Google //
   const HandleClick =()=>{
-      signInWithPopup(auth,provider).then((data)=>
+      signInWithPopup(auth,provider).then(()=>
      {
-      Setvalue(data)
+      Setvalue('ALL GOOD')
       console.log('i too love my bae')
      }
       )
