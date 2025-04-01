@@ -12,7 +12,7 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { MdOutlineLocationCity } from "react-icons/md";
-import Homepage from "../pages/Homepage";
+// import Homepage from "../pages/Homepage";
 // import { IoIosArrowForward } from "react-icons/io";
 
 const Signup = () => {
@@ -198,6 +198,7 @@ const Signup = () => {
                     <option value="Lagos">Lagos</option>
                     <option value="Abuja">Abuja</option>
                     <option value="Rivers">Rivers</option>
+                    <option value="Rivers">Owerri</option>
                     <option value="Kano">Kano</option>
                     <option value="Oyo">Oyo</option>
                     <option value="Edo">Edo</option>
