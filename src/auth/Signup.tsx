@@ -22,16 +22,14 @@ const Signup = () => {
 
 
   // Signup with Google //
-  const HandleClick = () => {
-    signInWithPopup(auth, provider)
-      .then(() => {
-        Setvalue('ALL GOOD');
-      })
-      .catch((error) => {
-        console.error("Sign-up failed:", error);
-        Setvalue("Sign-up error. Please try again.");
-      });
-  };
+  const HandleClick =()=>{
+    signInWithPopup(auth,provider).then(()=>
+   {
+    Setvalue('ALL GOOD')
+    console.log('i too love my bae')
+   }
+    )
+}
 
   return (
     <motion.div
