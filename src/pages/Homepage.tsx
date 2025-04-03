@@ -18,7 +18,7 @@ const Homepage = () => {
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight uppercase mb-2 text-gray-800">
           Welcome to{" "}
           <span className="text-amber-600 hover:text-amber-700 transition-colors">
-            Gabby's Hotels
+            Gabby
           </span>
         </h1>
         <p className="text-base tracking-wider md:text-lg text-gray-600 font-light mt-2">
@@ -42,7 +42,7 @@ const Homepage = () => {
           <div className="w-full md:w-1/2 space-y-6">
             <div className="space-y-2 ">
               <h2 className="text-sm font-semibold tracking-widest  text-amber-600 uppercase">
-                About Gabby's Hotels
+                About Gabby's Boutique Hotel and Lounge
               </h2>
               <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-800">
                 Where Luxury Meets Unforgettable Hospitality

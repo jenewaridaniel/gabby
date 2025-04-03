@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {auth,provider} from '../config/firebase'
-import {signInWithPopup} from 'firebase/auth'
+import { auth, provider } from "../config/firebase";
+import { signInWithPopup } from "firebase/auth";
 import {
   FaGoogle,
   FaUser,
@@ -18,18 +18,15 @@ import { MdOutlineLocationCity } from "react-icons/md";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [value,Setvalue] = useState('')
-
+  const [value, Setvalue] = useState("");
 
   // Signup with Google //
-  const HandleClick =()=>{
-    signInWithPopup(auth,provider).then(()=>
-   {
-    Setvalue('ALL GOOD')
-    console.log('i too love my bae')
-   }
-    )
-}
+  const HandleClick = () => {
+    signInWithPopup(auth, provider).then(() => {
+      Setvalue("ALL GOOD");
+      console.log("i too love my bae");
+    });
+  };
 
   return (
     <motion.div
@@ -38,16 +35,19 @@ const Signup = () => {
       transition={{ duration: 0.6 }}
       className="min-h-screen bg-gray-900 flex items-center justify-center p-4"
     >
-      
       <div className="w-full max-w-2xl">
-        <motion.div 
+        <motion.div
           initial={{ y: -20 }}
           animate={{ y: 0 }}
           className="flex justify-center mb-8"
         >
           <div className="text-center">
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome to <span className="text-amber-400">Gabby's Hotel</span>
+              Welcome to{" "}
+              <span className="text-amber-400">
+                Gabby's Boutique Hotel and{" "}
+                <span className=" text-white">Lounge</span>
+              </span>
             </h1>
             <p className="text-gray-300">
               Create your account to start your journey
@@ -63,17 +63,21 @@ const Signup = () => {
         >
           <div className="p-8">
             {/* Google Signup Button */}
-            {value? <div><h1> Works finaly😅❤</h1></div> :
-            <motion.button
-              whileHover={{ y: -2 }}
-              onClick={HandleClick}
-              whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-3 bg-gray-700 hover:bg-amber-500/10 border border-amber-400/30 rounded-xl py-3 px-6 mb-6 text-amber-400 font-medium transition-all duration-300"
-            >
-              <FaGoogle className="text-xl" />
-              <span>Continue with Google</span>
-            </motion.button>
-            }
+            {value ? (
+              <div>
+                <h1> Works finaly😅❤</h1>
+              </div>
+            ) : (
+              <motion.button
+                whileHover={{ y: -2 }}
+                onClick={HandleClick}
+                whileTap={{ scale: 0.98 }}
+                className="w-full flex items-center justify-center gap-3 bg-gray-700 hover:bg-amber-500/10 border border-amber-400/30 rounded-xl py-3 px-6 mb-6 text-amber-400 font-medium transition-all duration-300"
+              >
+                <FaGoogle className="text-xl" />
+                <span>Continue with Google</span>
+              </motion.button>
+            )}
 
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
@@ -110,7 +114,7 @@ const Signup = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label
                     htmlFor="lastName"
@@ -241,7 +245,7 @@ const Signup = () => {
                     </button>
                   </div>
                 </div>
-                
+
                 <div>
                   <label
                     htmlFor="confirmPassword"
@@ -264,7 +268,9 @@ const Signup = () => {
                     <button
                       type="button"
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                     >
                       {showConfirmPassword ? (
                         <FaEyeSlash className="text-amber-400/70 hover:text-amber-400" />
@@ -289,11 +295,17 @@ const Signup = () => {
                 <div className="ml-3 text-sm">
                   <label htmlFor="terms" className="font-medium text-amber-100">
                     I agree to the{" "}
-                    <a href="/terms" className="text-amber-400 hover:text-amber-300 underline">
+                    <a
+                      href="/terms"
+                      className="text-amber-400 hover:text-amber-300 underline"
+                    >
                       Terms of Service
                     </a>{" "}
                     and{" "}
-                    <a href="/privacy" className="text-amber-400 hover:text-amber-300 underline">
+                    <a
+                      href="/privacy"
+                      className="text-amber-400 hover:text-amber-300 underline"
+                    >
                       Privacy Policy
                     </a>
                   </label>
@@ -314,7 +326,10 @@ const Signup = () => {
             <div className="mt-8 text-center">
               <p className="text-sm text-amber-200/80">
                 Already have an account?{" "}
-                <a href="/auth/login" className="font-medium text-amber-400 hover:text-amber-300 underline">
+                <a
+                  href="/auth/login"
+                  className="font-medium text-amber-400 hover:text-amber-300 underline"
+                >
                   Sign in here
                 </a>
               </p>

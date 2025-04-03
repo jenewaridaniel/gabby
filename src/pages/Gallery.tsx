@@ -110,7 +110,7 @@ const Gallery = () => {
             Visual Experience
           </h2>
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-800">
-            Discover Gabby's Hotel
+            Discover Gabby's Boutique Hotel and Lounge
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
             Explore our luxurious accommodations, world-class amenities, and unforgettable experiences

@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGoogle, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import {auth,provider} from '../config/firebase'
+import {
+  FaGoogle,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+import { auth, provider } from "../config/firebase";
 import { signInWithPopup } from "firebase/auth";
 // import BackButton from "../Backbutton/BackButton";
 // import { IoIosArrowForward } from "react-icons/io";
@@ -10,7 +16,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,9 +24,9 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    signInWithPopup(auth,provider).then(()=>{
-      console.log('works')
-    })
+    signInWithPopup(auth, provider).then(() => {
+      console.log("works");
+    });
     console.log("Logging in with Google");
   };
 
@@ -32,20 +37,22 @@ const Login = () => {
       transition={{ duration: 0.6 }}
       className="min-h-screen bg-gray-900 flex items-center justify-center p-4"
     >
-        {/* <BackButton/> */}
+      {/* <BackButton/> */}
       <div className="w-full max-w-md">
-        <motion.div 
+        <motion.div
           initial={{ y: -20 }}
           animate={{ y: 0 }}
           className="flex justify-center mb-8"
         >
           <div className="text-center">
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome back to <span className="text-amber-400">Gabby's Hotel</span>
+              Welcome back to{" "}
+              <span className="text-amber-400">
+                Gabby's Boutique Hotel and{" "}
+                <span className=" text-white">Lounge</span>
+              </span>
             </h1>
-            <p className="text-gray-300">
-              Sign in to continue your journey
-            </p>
+            <p className="text-gray-300">Sign in to continue your journey</p>
           </div>
         </motion.div>
 
@@ -147,7 +154,10 @@ const Login = () => {
                     type="checkbox"
                     className="h-4 w-4 text-amber-500 focus:ring-amber-500 border-gray-600 rounded bg-gray-700"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-amber-100">
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-amber-100"
+                  >
                     Remember me
                   </label>
                 </div>
@@ -173,7 +183,10 @@ const Login = () => {
             <div className="mt-8 text-center">
               <p className="text-sm text-amber-200/80">
                 Don't have an account?{" "}
-                <a href="/auth/signup" className="font-medium text-amber-400 hover:text-amber-300 underline">
+                <a
+                  href="/auth/signup"
+                  className="font-medium text-amber-400 hover:text-amber-300 underline"
+                >
                   Sign up
                 </a>
               </p>
