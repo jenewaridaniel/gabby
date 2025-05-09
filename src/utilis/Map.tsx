@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 const Map = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
   
-  // Sample hotel address in Rivers State
-  const hotelAddress = "Prodest Hotel, 17 Forces Avenue, Old GRA, Port Harcourt, Rivers State, Nigeria";
+  // Updated hotel address in Rivers State
+  const hotelAddress = "Plot 11 Primegate Avenue off G.U Ake Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
   const encodedAddress = encodeURIComponent(hotelAddress);
 
   useEffect(() => {
