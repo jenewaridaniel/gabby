@@ -15,7 +15,7 @@ const navigate = useNavigate();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Signed in user:", user);
-      navigate("/"); 
+      navigate("/dashboard"); 
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
