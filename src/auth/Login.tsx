@@ -180,7 +180,7 @@ function Login() {
               <p className="text-sm text-gray-600">
                 Don't have an account?{" "}
                 <a
-                  href="#"
+                  href="/auth/signup"
                   className="text-blue-600 font-semibold hover:underline"
                 >
                   Sign up

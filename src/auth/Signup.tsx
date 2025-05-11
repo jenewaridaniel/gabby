@@ -10,7 +10,7 @@ function Signup() {
       <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div
           className="w-full max-w-lg py-4"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y:20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
@@ -200,7 +200,7 @@ function Signup() {
               <p className="text-sm text-gray-600">
                 Already have an account?{" "}
                 <a
-                  href="#"
+                  href="/auth/login"
                   className="text-blue-600 font-semibold hover:underline"
                 >
                   Log in
