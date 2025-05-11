@@ -2,28 +2,45 @@ import { motion } from "framer-motion";
 import signupLogo from "../assets/bar.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
+import { auth, provider } from "../config/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+const navigate = useNavigate();
+
+  // google sign up auth  //
+  const HandleGoogleSignup = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Signed in user:", user);
+      navigate("/"); 
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+    }
+  };
+
+
   return (
     <div className="h-screen flex bg-gray-50 overflow-hidden">
       {/* Signup Form Section - Left */}
       <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div
           className="w-full max-w-lg py-4"
-          initial={{ opacity: 0, y:20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           {/* Logo with animation */}
           <a href="/">
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            <img src={Logo} className="w-10 h-10 md:hidden" alt="Logo" />
-          </motion.div>
-
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            >
+              <img src={Logo} className="w-10 h-10 md:hidden" alt="Logo" />
+            </motion.div>
           </a>
 
           <motion.div
@@ -57,6 +74,7 @@ function Signup() {
               className="flex gap-2 border border-gray-200 rounded-xl p-3 w-11/12 justify-center items-center hover:bg-gray-50 transition-colors duration-200"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={HandleGoogleSignup}
             >
               <img src={google} className="w-5 h-5" alt="Google logo" />
               <span className="font-semibold text-gray-700">
