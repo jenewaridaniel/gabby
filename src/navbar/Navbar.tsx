@@ -172,7 +172,7 @@ const Navbar = () => {
                     <img src={logo} className="w-10" alt="Logo" />
                   </div> */}
 
-                  <div className="flex-1 flex flex-col gap-8 pt-8">
+                  <div className="flex-1  flex flex-col gap-8 pt-8">
                     {links.map((link, index) => (
                       <motion.a
                         key={link.path}
@@ -192,7 +192,7 @@ const Navbar = () => {
                   <div className="flex flex-col gap-4 items-center pt-8">
                     <motion.a
                       href="/auth/signup"
-                      className="w-full py-3 text-center text-black font-medium border border-black rounded-sm hover:bg-black hover:text-white transition-colors"
+                      className="w-full py-3 text-center  font-medium text-black border-2 border-amber-600 rounded-sm hover:bg-black hover:text-white transition-colors"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: links.length * 0.05 + 0.1 }}
