@@ -137,7 +137,7 @@ const Navbar = () => {
                 onClick={closeMenu}
               />
 
-              {/* Side Menu */}
+              {/*Side Menu */}
               <motion.div
                 className="md:hidden fixed top-0 right-0 w-4/5 max-w-sm h-screen bg-white z-50 shadow-xl"
                 initial={{ x: "100%" }}
@@ -201,7 +201,7 @@ const Navbar = () => {
                       Sign Up
                     </motion.a>
                     <motion.button
-                      className="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-sm text-lg font-medium tracking-wide shadow-md hover:shadow-amber-600/30 transition-all"
+                      className="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-sm text-lg font-medium tracking-wide  transition-all"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: links.length * 0.05 + 0.15 }}

@@ -1,11 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
- */
- @import "tailwindcss";
+
+
+/* sign up heading font */
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import "tailwindcss";
 @import "swiper/css";
 
-* {
+.header{
+  font-family: "Cal Sans", sans-serif;
+}
+
+body {
   font-family: "Lora", serif;
+
 }
 
 /* swiper carousel */
@@ -48,4 +56,43 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* loader */
+
+.loader {
+  width: 38px;
+  height: 38px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  inset: -10px;
+  border-radius: 50%;
+  border: 10px solid rgb(16, 16, 238);
+  animation: prixClipFix 2s infinite linear;
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
 }

@@ -57,7 +57,7 @@ const Carousel = () => {
 
               {/* Content container */}
               <div className="absolute inset-0 flex items-center justify-center md:justify-start px-6 text-white">
-                <div className="max-w-2xl mx-auto md:mx-24 text-center md:text-left">
+                <div className="max-w-2xl mx-auto md:mx-24 text-left">
                   {/* Main heading with animation */}
                   <motion.h1
                     className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6"
@@ -80,7 +80,7 @@ const Carousel = () => {
 
                   {/* CTA Button */}
                   <motion.button
-                    className="px-8 py-4 justify-center bg-amber-600 hover:bg-amber-700 text-white font-medium tracking-wider rounded-full transition-all duration-300 hover:shadow-lg flex items-center gap-2"
+                    className="px-6 py-4 text-sm md:text-lg justify-center bg-amber-600 hover:bg-amber-700 text-white font-medium tracking-wider rounded-full transition-all duration-300 hover:shadow-lg flex items-center gap-2"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.7 }}
