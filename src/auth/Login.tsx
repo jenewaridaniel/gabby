@@ -2,8 +2,32 @@ import { motion } from "framer-motion";
 import signupLogo from "../assets/swim.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
+import { useState } from "react";
+import { auth, provider } from "../config/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  // google sign up auth  //
+  const HandleGoogleSignup = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Signed in user:", user);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="h-screen flex bg-gray-50 overflow-hidden">
       {/* Image Section - Left with dark overlay */}
@@ -17,7 +41,7 @@ function Login() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         />
-        
+
         {/* Logo positioned top left */}
         <motion.div
           initial={{ scale: 0.8 }}
@@ -36,7 +60,8 @@ function Login() {
         >
           <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
           <p className="text-lg max-w-md">
-            Continue your journey with exclusive benefits and discounts worldwide.
+            Continue your journey with exclusive benefits and discounts
+            worldwide.
           </p>
         </motion.div>
       </div>
@@ -74,6 +99,7 @@ function Login() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
+            onClick={HandleGoogleSignup}
           >
             <motion.button
               className="flex gap-2 border border-gray-200 rounded-xl p-3 w-11/12 justify-center items-center hover:bg-gray-50 transition-colors duration-200"
@@ -125,11 +151,20 @@ function Login() {
               transition={{ delay: 0.65 }}
             >
               <label className="text-sm font-semibold p-2">Password*</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </motion.div>
 
             {/* Remember me & Forgot password */}
@@ -145,7 +180,10 @@ function Login() {
                   id="remember"
                   className="w-4 h-4 text-blue-600 outline-none rounded focus:ring-blue-500"
                 />
-                <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
+                <label
+                  htmlFor="remember"
+                  className="ml-2 text-sm text-gray-600"
+                >
                   Remember me
                 </label>
               </div>

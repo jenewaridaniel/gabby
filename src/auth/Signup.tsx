@@ -5,9 +5,13 @@ import google from "../assets/google.png";
 import { auth, provider } from "../config/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Signup() {
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // google sign up auth  //
   const HandleGoogleSignup = async () => {
@@ -15,12 +19,19 @@ const navigate = useNavigate();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log("Signed in user:", user);
-      navigate("/dashboard"); 
+      navigate("/dashboard");
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   return (
     <div className="h-screen flex bg-gray-50 overflow-hidden">
@@ -149,11 +160,20 @@ const navigate = useNavigate();
               transition={{ delay: 0.75 }}
             >
               <label className="text-sm font-semibold p-2">Password*</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </motion.div>
 
             {/* Confirm Password */}
@@ -165,11 +185,20 @@ const navigate = useNavigate();
               <label className="text-sm font-semibold p-2">
                 Confirm Password*
               </label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-              />
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </motion.div>
 
             {/* Terms and Conditions */}
