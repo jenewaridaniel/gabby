@@ -28,7 +28,7 @@ const Experiences = () => {
     {
       title: "Rooftop Lounge",
       description:
-        "Unwind at our stylish rooftop lounge with panoramic views of Lagos and signature cocktails.",
+        "Unwind at our stylish rooftop lounge with panoramic views of Port-Harcourt and signature cocktails.",
       icon: <MoonIcon className="w-8 h-8 text-amber-600" />,
     },
     {
