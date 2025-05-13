@@ -58,7 +58,7 @@ const Experiences = () => {
       name: "Emeka Okoro",
       role: "Food Critic",
       comment:
-        "The jollof rice at Gabby's is the best I've had in Lagos. The chef's twist on local dishes is exceptional.",
+        "The jollof rice at Gabby's is the best I've had in Port-Harcourt. The chef's twist on local dishes is exceptional.",
       rating: 4,
     },
   ];
@@ -270,7 +270,7 @@ const Experiences = () => {
             Ready to Experience Gabby's?
           </h2>
           <p className="text-gray-300 mb-8 text-lg max-w-2xl mx-auto">
-            Book your stay now and discover why we're Lagos' premier boutique
+            Book your stay now and discover why we're Port-Harcourt' premier boutique
             hotel destination
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
