@@ -215,7 +215,7 @@ function Signup() {
               />
               <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
                 I agree to the{" "}
-                <a href="#" className="text-blue-600 hover:underline">
+                <a href="/terms" className="text-blue-600 hover:underline">
                   Terms and Conditions
                 </a>
               </label>

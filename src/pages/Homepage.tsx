@@ -13,7 +13,6 @@ const Homepage = () => {
     <div>
       <Navbar/>
       <Carousel />
-
       <div className="text-center py-12 px-4">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight uppercase mb-2 text-gray-800">
           Welcome to{" "}

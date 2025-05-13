@@ -6,6 +6,7 @@ import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Terms from "./T&C/Terms";
 import Privacy from "./T&C/Privacy";
+import Experiences from "./utilis/experiences";
 import Dashboard from '../src/DashBoard/Dashboard'
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
     TERMS: "/terms",
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard",
+    EXP:'/experiences'
   };
 
   const router = createBrowserRouter([
@@ -28,6 +30,7 @@ const App = () => {
     { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },
     { path: ROUTER.PRIVACY, element: <Privacy /> },
+    {path: ROUTER.EXP, element: <Experiences/>},
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
   ]);
 

@@ -17,7 +17,7 @@ function Login() {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Signed in user:", user);
+      console.info(user)
       navigate("/dashboard");
     } catch (error) {
       console.error("Google sign-in error:", error);
