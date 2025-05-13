@@ -6,7 +6,6 @@ import {
   StarIcon,
   WifiIcon,
   UtensilsIcon,
-  CoffeeIcon,
   SunIcon,
   MoonIcon,
 } from "lucide-react";
@@ -266,9 +265,9 @@ const Experiences = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center px-4"
         >
-          <h2 className="text-3xl font-bold mb-6">
+          <h1 className="text-3xl font-bold mb-6">
             Ready to Experience Gabby's?
-          </h2>
+          </h1>
           <p className="text-gray-300 mb-8 text-lg max-w-2xl mx-auto">
             Book your stay now and discover why we're Port-Harcourt' premier boutique
             hotel destination

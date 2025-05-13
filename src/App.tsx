@@ -6,7 +6,7 @@ import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Terms from "./T&C/Terms";
 import Privacy from "./T&C/Privacy";
-import Experiences from "./utilis/experiences";
+import Experiences from "./utilis/Experiences";
 import Dashboard from '../src/DashBoard/Dashboard'
 
 const App = () => {
