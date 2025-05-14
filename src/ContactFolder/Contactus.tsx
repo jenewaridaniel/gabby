@@ -54,7 +54,7 @@ const Map = () => {
             href={`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-md transition duration-300"
+            className="py-2 px-1 text-sm bg-amber-600 hover:bg-amber-700 text-white rounded-md transition duration-300"
           >
             Get Directions
           </a>

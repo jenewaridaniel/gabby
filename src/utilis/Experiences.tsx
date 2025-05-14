@@ -85,6 +85,7 @@ const Experiences = () => {
 
   return (
     <div className="bg-amber-50">
+      
       {/* Hero Section */}
       <section className="relative h-96 overflow-hidden">
         <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
@@ -93,7 +94,8 @@ const Experiences = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center px-4"
-          >
+            >
+            
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Discover Gabby's Experiences
             </h1>
