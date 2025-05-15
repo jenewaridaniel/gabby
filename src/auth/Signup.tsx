@@ -4,14 +4,46 @@ import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { auth, provider } from "../config/firebase";
 import { signInWithPopup } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {addDoc,collection} from 'firebase/firestore'
+import {db} from '../config/firebase'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function Signup() {
   const navigate = useNavigate();
+  const[name,setName] = useState('')
+  const[email,setEmail] = useState('')
+  const[phone,setPhone] = useState('')
+  const[password,setPassword] = useState('')
+  const[confirmpassword,setConfirmPassowrd] = useState('')
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
+
+  // Signup for form submittion and save in firebase firestore//
+
+  const HandleSubmit=async()=>{
+  if(!name || !email || !phone || !password || password !==confirmpassword)
+     toast.error('Please fill in all required fields correctly.')
+
+  try{
+    await addDoc(collection(db,'profiles'),{
+      name,
+      email,
+      phone,
+      createdAt: new Date()
+    });
+    navigate('/dashboard')
+  }catch(error){
+    console.error(error);
+    
+  }
+  }
 
   // google sign up auth  //
   const HandleGoogleSignup = async () => {
@@ -35,6 +67,7 @@ function Signup() {
 
   return (
     <div className="h-screen flex bg-gray-50 overflow-hidden">
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       {/* Signup Form Section - Left */}
       <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div
@@ -122,6 +155,7 @@ function Signup() {
                 type="text"
                 placeholder="John Doe"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                onChange={(e)=>setName(e.target.value)}
               />
             </motion.div>
 
@@ -136,6 +170,7 @@ function Signup() {
                 type="email"
                 placeholder="john@example.com"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                onChange={(e)=>setEmail(e.target.value)}
               />
             </motion.div>
 
@@ -150,6 +185,7 @@ function Signup() {
                 type="tel"
                 placeholder="+234 812 345 6789"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                onChange={(e)=>setPhone(e.target.value)}
               />
             </motion.div>
 
@@ -165,6 +201,7 @@ function Signup() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  onChange={(e)=>setPassword(e.target.value)}
                 />
                 <button
                   type="button"
@@ -190,6 +227,7 @@ function Signup() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  onChange={(e)=>setConfirmPassowrd(e.target.value)}
                 />
                 <button
                   type="button"
@@ -232,6 +270,7 @@ function Signup() {
                 className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold p-3 rounded-xl transition-colors duration-200"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
+                onClick={HandleSubmit}
               >
                 Create Account
               </motion.button>

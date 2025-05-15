@@ -1,22 +1,23 @@
 import { initializeApp } from "firebase/app";
-import {getAuth,GoogleAuthProvider} from 'firebase/auth'
-import {getFirestore} from 'firebase/firestore'
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-
-// Your web app's Firebase configuration
+//  Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APIKEY,
-  authDomain: import.meta.env.VITE_AUTHDOMAIN,
-  projectId: import.meta.env.VITE_PROJECTID,
-  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
-  appId: import.meta.env.VITE_APPID
+  apiKey: "AIzaSyA6UdrpqooC2xSEwbzwjHzcvb_qtI_2nZo",
+  authDomain: "gabby-hotel.firebaseapp.com",
+  projectId: "gabby-hotel",
+  storageBucket: "gabby-hotel.appspot.com", // fixed typo (".app" → ".appspot.com")
+  messagingSenderId: "458498696965",
+  appId: "1:458498696965:web:3cf9163cb31dac253df96c",
+  measurementId: "G-9VHL9NJEZ9"
 };
 
-// Initialize Firebase
- initializeApp(firebaseConfig);
- const auth = getAuth()
- const provider = new GoogleAuthProvider()
- const db = getFirestore()
+//  Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+const db = getFirestore(app);
 
- export{auth,provider,db}
+//  Export instances
+export { auth, provider, db };
