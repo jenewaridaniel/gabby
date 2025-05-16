@@ -36,7 +36,7 @@ const Story = () => {
         transition={{ duration: 0.8 }}
         className="relative h-[70vh] min-h-[500px] overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-amber-900/70 via-amber-900/30 to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-black/75 transparent z-10"></div>
         <div
           className="w-full h-full bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945')] bg-cover bg-center bg-no-repeat"
           aria-label="Luxury hotel lobby"
