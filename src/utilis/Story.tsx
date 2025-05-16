@@ -189,7 +189,7 @@ const Story = () => {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-amber-700 to-amber-600 text-amber-50 p-12 rounded-2xl shadow-2xl mb-16"
+          className="bg-gray-50 text-gray-950 p-12 rounded-2xl shadow-2xl mb-16"
         >
           <blockquote className="text-2xl italic font-serif mb-6 leading-relaxed">
             "True hospitality is about creating spaces where guests don't just
@@ -197,12 +197,12 @@ const Story = () => {
             just host visitors - we welcome them into our family."
           </blockquote>
           <div className="flex items-center justify-center">
-            <div className="w-12 h-12 bg-amber-200 rounded-full mr-4"></div>
+            <div className="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
             <div>
               <p className="font-serif font-semibold text-lg">
                 Gabriel Johnson
               </p>
-              <p className="text-amber-200">Founder & CEO</p>
+              <p className="text-gray-900">Founder & CEO</p>
             </div>
           </div>
         </motion.div>
