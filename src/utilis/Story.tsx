@@ -13,13 +13,17 @@ const Story = () => {
         transition={{ duration: 0.6 }}
         className="bg-gray-50 text-gray-800 py-6  sticky top-0 z-50"
       >
+
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <motion.img
+        <a href="/">
+        <motion.img
             src={logo}
             alt="Gabby's Boutique Hotel Logo"
             className="h-14 object-contain"
             whileHover={{ scale: 1.05 }}
           />
+        </a>
+         
           <motion.h1
             className="text-3xl font-serif font-bold tracking-wider"
             whileHover={{ scale: 1.02 }}
