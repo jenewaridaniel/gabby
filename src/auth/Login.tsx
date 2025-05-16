@@ -4,23 +4,97 @@ import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { useState } from "react";
 import { auth, provider } from "../config/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../config/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // google sign up auth  //
+  // Check if user exists in profiles collection
+  const checkUserExists = async (uid) => {
+    const userRef = doc(db, "profiles", uid);
+    const userSnap = await getDoc(userRef);
+    return userSnap.exists();
+  };
+
+  // Save or update user login data
+  const saveLoginData = async (user) => {
+    const userRef = doc(db, "profiles", user.uid);
+    await setDoc(
+      userRef,
+      {
+        lastLoginAt: serverTimestamp(),
+        loginCount: (await getDoc(userRef)).data()?.loginCount + 1 || 1,
+      },
+      { merge: true }
+    );
+  };
+
+  // Google sign in
   const HandleGoogleSignup = async () => {
+    setIsLoading(true);
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.info(user)
+      
+      // Check if user exists in profiles
+      const userExists = await checkUserExists(user.uid);
+      if (!userExists) {
+        toast.error("Please sign up first");
+        await auth.signOut();
+        setIsLoading(false);
+        return;
+      }
+
+      // Save login data
+      await saveLoginData(user);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Google sign-in error:", error);
+      toast.error(error.messag);
+      setIsLoading(false);
+    }
+  };
+
+  // Email/password sign in
+  const handleEmailLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if user exists in profiles
+      const userExists = await checkUserExists(user.uid);
+      if (!userExists) {
+        toast.error("Please sign up first");
+        await auth.signOut();
+        setIsLoading(false);
+        return;
+      }
+
+      // Save login data
+      await saveLoginData(user);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -29,7 +103,31 @@ function Login() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50 overflow-hidden">
+    <div className="h-screen flex bg-gray-50 overflow-hidden relative">
+      {/* Loading Modal */}
+      {isLoading && (
+        <div className="absolute inset-0 bg-black/75 bg-opacity-50 z-50 flex items-center justify-center">
+          <motion.div 
+            className="bg-white p-8 rounded-xl max-w-sm w-full mx-4 text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="flex justify-center mb-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Signing you in</h3>
+            <p className="text-gray-600">Please wait while we authenticate your account...</p>
+          </motion.div>
+        </div>
+      )}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+      />
+      
       {/* Image Section - Left with dark overlay */}
       <div className="hidden md:block md:w-1/2 relative">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
@@ -99,12 +197,13 @@ function Login() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            onClick={HandleGoogleSignup}
           >
             <motion.button
-              className="flex gap-2 border border-gray-200 rounded-xl p-3 w-11/12 justify-center items-center hover:bg-gray-50 transition-colors duration-200"
+              className="flex gap-2 border border-gray-200 rounded-xl p-3 w-11/12 justify-center items-center hover:bg-gray-50 transition-colors duration-200 disabled:opacity-70"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={HandleGoogleSignup}
+              disabled={isLoading}
             >
               <img src={google} className="w-5 h-5" alt="Google logo" />
               <span className="font-semibold text-gray-700">
@@ -129,7 +228,7 @@ function Login() {
           </motion.div>
 
           {/* Form */}
-          <div className="space-y-4 px-6">
+          <form onSubmit={handleEmailLogin} className="space-y-4 px-6">
             {/* Email */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -141,6 +240,10 @@ function Login() {
                 type="email"
                 placeholder="john@example.com"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                required
               />
             </motion.div>
 
@@ -156,11 +259,16 @@ function Login() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                  required
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   onClick={togglePasswordVisibility}
+                  disabled={isLoading}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -179,6 +287,7 @@ function Login() {
                   type="checkbox"
                   id="remember"
                   className="w-4 h-4 text-blue-600 outline-none rounded focus:ring-blue-500"
+                  disabled={isLoading}
                 />
                 <label
                   htmlFor="remember"
@@ -200,11 +309,13 @@ function Login() {
               transition={{ delay: 0.8 }}
             >
               <motion.button
-                className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold p-3 rounded-xl transition-colors duration-200"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold p-3 rounded-xl transition-colors duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                whileHover={{ scale: isLoading ? 1 : 1.01 }}
+                whileTap={{ scale: isLoading ? 1 : 0.99 }}
+                type="submit"
+                disabled={isLoading}
               >
-                Sign In
+                {isLoading ? "Signing In..." : "Sign In"}
               </motion.button>
             </motion.div>
 
@@ -225,7 +336,7 @@ function Login() {
                 </a>
               </p>
             </motion.div>
-          </div>
+          </form>
         </motion.div>
       </div>
     </div>

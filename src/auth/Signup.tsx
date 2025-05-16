@@ -3,57 +3,111 @@ import signupLogo from "../assets/bar.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { auth, provider } from "../config/firebase";
-import { signInWithPopup } from "firebase/auth";
-import {  useNavigate } from "react-router-dom";
+import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import {addDoc,collection} from 'firebase/firestore'
-import {db} from '../config/firebase'
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 function Signup() {
   const navigate = useNavigate();
-  const[name,setName] = useState('')
-  const[email,setEmail] = useState('')
-  const[phone,setPhone] = useState('')
-  const[password,setPassword] = useState('')
-  const[confirmpassword,setConfirmPassowrd] = useState('')
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassowrd] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Save user data to Firestore
+  const saveUserToFirestore = async (userData) => {
+    try {
+      await addDoc(collection(db, "profiles"), {
+        ...userData,
+        createdAt: new Date(),
+      });
+      // Add a small delay to ensure the loading message is visible
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error saving user data:", error);
+      toast.error("Failed to save user data. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  // Handle form submission (email/password signup)
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  // Signup for form submittion and save in firebase firestore//
+    if (!termsAccepted) {
+      toast.error("Please accept the terms and conditions");
+      setIsLoading(false);
+      return;
+    }
 
-  const HandleSubmit=async()=>{
-  if(!name || !email || !phone || !password || password !==confirmpassword)
-     toast.error('Please fill in all required fields correctly.')
+    if (!name || !email || !password) {
+      toast.error("Please fill in all required fields");
+      setIsLoading(false);
+      return;
+    }
 
-  try{
-    await addDoc(collection(db,'profiles'),{
-      name,
-      email,
-      phone,
-      createdAt: new Date()
-    });
-    navigate('/dashboard')
-  }catch(error){
-    console.error(error);
-    
-  }
-  }
+    if (password !== confirmpassword) {
+      toast.error("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
 
-  // google sign up auth  //
+    try {
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Save user data to Firestore
+      await saveUserToFirestore({
+        uid: user.uid,
+        name,
+        email,
+        phone,
+        provider: "email",
+        emailVerified: user.emailVerified,
+      });
+    } catch (error) {
+      setIsLoading(false);
+      toast.error("Failed to sign up. " + error.message);
+    }
+  };
+
+  // Google sign up auth
   const HandleGoogleSignup = async () => {
+    setIsLoading(true);
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Signed in user:", user);
-      navigate("/dashboard");
+
+      // Save user data to Firestore
+      await saveUserToFirestore({
+        uid: user.uid,
+        name: user.displayName || name || "Google User",
+        email: user.email,
+        phone: user.phoneNumber || phone || "",
+        provider: "google",
+        emailVerified: user.emailVerified,
+      });
     } catch (error) {
-      console.error("Google sign-in error:", error);
+      setIsLoading(false);
+      toast.error("Failed to sign up with Google. " + error.message);
     }
   };
 
@@ -66,8 +120,34 @@ function Signup() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50 overflow-hidden">
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+    <div className="h-screen flex bg-gray-50 overflow-hidden relative">
+      {/* Loading Modal */}
+      {isLoading && (
+        <div className="absolute inset-0 bg-black/75 bg-opacity-50 z-50 flex items-center justify-center">
+          <motion.div
+            className="bg-white p-8 rounded-xl max-w-sm w-full mx-4 text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="flex justify-center mb-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Creating your account
+            </h3>
+            <p className="text-gray-600">
+              Please wait while we set up your account...
+            </p>
+          </motion.div>
+        </div>
+      )}
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+      />
       {/* Signup Form Section - Left */}
       <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div
@@ -119,6 +199,7 @@ function Signup() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={HandleGoogleSignup}
+              disabled={isLoading}
             >
               <img src={google} className="w-5 h-5" alt="Google logo" />
               <span className="font-semibold text-gray-700">
@@ -143,7 +224,7 @@ function Signup() {
           </motion.div>
 
           {/* Form */}
-          <div className="space-y-4 px-6">
+          <form onSubmit={HandleSubmit} className="space-y-4 px-6">
             {/* Full Name */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -155,7 +236,10 @@ function Signup() {
                 type="text"
                 placeholder="John Doe"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                onChange={(e)=>setName(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                disabled={isLoading}
               />
             </motion.div>
 
@@ -170,7 +254,10 @@ function Signup() {
                 type="email"
                 placeholder="john@example.com"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                onChange={(e)=>setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isLoading}
               />
             </motion.div>
 
@@ -185,7 +272,9 @@ function Signup() {
                 type="tel"
                 placeholder="+234 812 345 6789"
                 className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                onChange={(e)=>setPhone(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                disabled={isLoading}
               />
             </motion.div>
 
@@ -201,12 +290,17 @@ function Signup() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                  onChange={(e)=>setPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   onClick={togglePasswordVisibility}
+                  disabled={isLoading}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -227,12 +321,17 @@ function Signup() {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="my-1 w-full p-3 border border-gray-300 rounded-xl outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                  onChange={(e)=>setConfirmPassowrd(e.target.value)}
+                  value={confirmpassword}
+                  onChange={(e) => setConfirmPassowrd(e.target.value)}
+                  required
+                  minLength={6}
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   onClick={toggleConfirmPasswordVisibility}
+                  disabled={isLoading}
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -250,6 +349,9 @@ function Signup() {
                 type="checkbox"
                 id="terms"
                 className="my-1 w-4 h-4 text-blue-600 outline-none rounded focus:ring-blue-500"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                disabled={isLoading}
               />
               <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
                 I agree to the{" "}
@@ -267,12 +369,13 @@ function Signup() {
               transition={{ delay: 0.9 }}
             >
               <motion.button
-                className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold p-3 rounded-xl transition-colors duration-200"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                onClick={HandleSubmit}
+                type="submit"
+                className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold p-3 rounded-xl transition-colors duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                whileHover={{ scale: isLoading ? 1 : 1.01 }}
+                whileTap={{ scale: isLoading ? 1 : 0.99 }}
+                disabled={isLoading}
               >
-                Create Account
+                {isLoading ? "Creating Account..." : "Create Account"}
               </motion.button>
             </motion.div>
 
@@ -293,7 +396,7 @@ function Signup() {
                 </a>
               </p>
             </motion.div>
-          </div>
+          </form>
         </motion.div>
       </div>
 
