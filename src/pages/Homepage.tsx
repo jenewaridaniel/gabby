@@ -154,10 +154,12 @@ const Homepage = () => {
             </div>
 
             <div className=" flex justify-center md:justify-start">
-
+              
+              <a href="/story"> 
             <button className="mt-6 px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-full transition-all duration-300 hover:shadow-lg">
               Discover Our Story
             </button>
+              </a>
             </div>
           </div>
         </div>

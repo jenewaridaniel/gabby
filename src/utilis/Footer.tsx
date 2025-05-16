@@ -6,7 +6,7 @@ const Footer = () => {
             {/* Contact Information */}
             <div className="space-y-2">
               <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-              <p>123 Hotel Street</p>
+              <p className=" max-w-3/5">Plot 11 Primegate Avenue off G.U Ake Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria</p>
               <p>Port Harcourt, Nigeria</p>
               <p>Phone: +234 812 345 6789</p>
               <p>Email: gabbyshotel@gmail.com</p>
@@ -16,11 +16,10 @@ const Footer = () => {
             <div className="space-y-2">
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:underline">Home</a></li>
-                <li><a href="#" className="hover:underline">Rooms & Suites</a></li>
-                <li><a href="#" className="hover:underline">Dining</a></li>
-                <li><a href="#" className="hover:underline">Amenities</a></li>
-                <li><a href="#" className="hover:underline">Contact</a></li>
+                <li><a href="/rooms" className="hover:underline">Rooms & Suites</a></li>
+                <li><a href="/dining" className="hover:underline">Dining</a></li>
+                <li><a href="/expierences" className="hover:underline">Expierences</a></li>
+                <li><a href="/contact-us" className="hover:underline">Contact Us</a></li>
               </ul>
             </div>
   

@@ -8,6 +8,7 @@ import Terms from "./T&C/Terms";
 import Privacy from "./T&C/Privacy";
 import Experiences from "./utilis/Experiences";
 import Dashboard from '../src/DashBoard/Dashboard'
+import Story from '../src/utilis/Story'
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +21,8 @@ const App = () => {
     TERMS: "/terms",
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard",
-    EXP:'/experiences'
+    EXP:'/experiences',
+    STORY: '/story'
   };
 
   const router = createBrowserRouter([
@@ -31,6 +33,7 @@ const App = () => {
     { path: ROUTER.TERMS, element: <Terms /> },
     { path: ROUTER.PRIVACY, element: <Privacy /> },
     {path: ROUTER.EXP, element: <Experiences/>},
+    {path: ROUTER.STORY, element: <Story/>},
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
   ]);
 
