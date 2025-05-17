@@ -90,7 +90,7 @@ const Navbar = () => {
               Sign Up
             </motion.a>
             <motion.button
-              className="px-5 py-3 flex gap-1 items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium tracking-wide transition-colors shadow-lg hover:shadow-amber-600/20"
+              className="px-5 py-3 flex gap-1  items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium tracking-wide transition-colors hover:shadow-amber-600/20"
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
             >

@@ -122,7 +122,7 @@ const Recreational: React.FC = () => {
         {filteredActivities.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredActivities.map(activity => (
-              <div key={activity.id} className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div key={activity.id} className="bg-white rounded-xl overflow-hidden shadow-xs transition-shadow duration-300">
                 <div className="h-48 overflow-hidden">
                   <img 
                     src={activity.image} 

@@ -51,7 +51,7 @@ const Dining: React.FC = () => {
         {/* Dining Options Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {diningOptions.map((option) => (
-            <div key={option.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+            <div key={option.id} className="bg-white rounded-lg  overflow-hidden transition-transform duration-300 hover:scale-105">
               <div className="relative h-64">
                 <img 
                   src={option.image} 
