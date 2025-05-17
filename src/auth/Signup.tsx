@@ -3,10 +3,10 @@ import signupLogo from "../assets/bar.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { auth, provider } from "../config/firebase";
-import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,26 +24,43 @@ function Signup() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Save user data to Firestore
-  const saveUserToFirestore = async (userData) => {
+  interface UserData {
+    uid: string;
+    name: string;
+    email: string;
+    phone: string;
+    provider: string;
+    emailVerified: boolean;
+    createdAt: Date;
+    photoURL?: string;
+  }
+
+  const saveUserToFirestore = async (userData: UserData): Promise<void> => {
     try {
-      await addDoc(collection(db, "profiles"), {
+      // Use the user's UID as the document ID
+      await setDoc(doc(db, "users", userData.uid), {
         ...userData,
         createdAt: new Date(),
       });
-      // Add a small delay to ensure the loading message is visible
+
+      // Optional delay to show success loading state clearly
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate("/dashboard");
-    } catch (error) {
+
+      navigate(`/dashboard/${userData.uid}`);
+    } catch (error: unknown) {
       console.error("Error saving user data:", error);
-      toast.error("Failed to save user data. Please try again.");
+      toast.error(
+        "Failed to save user data. " +
+          (error instanceof Error ? error.message : "Please try again.")
+      );
+      throw error; // Re-throw to handle in the calling function
     } finally {
       setIsLoading(false);
     }
   };
 
   // Handle form submission (email/password signup)
-  const HandleSubmit = async (e) => {
+  const HandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -74,6 +91,11 @@ function Signup() {
       );
       const user = userCredential.user;
 
+      // Update user profile with display name
+      await updateProfile(user, {
+        displayName: name,
+      });
+
       // Save user data to Firestore
       await saveUserToFirestore({
         uid: user.uid,
@@ -82,10 +104,15 @@ function Signup() {
         phone,
         provider: "email",
         emailVerified: user.emailVerified,
+        createdAt: new Date(),
       });
+
+      toast.success("Account created successfully!");
     } catch (error) {
-      setIsLoading(false);
-      toast.error("Failed to sign up. " + error.message);
+     if(error instanceof Error){
+      toast.error(error.message)
+     }
+     setIsLoading(true)
     }
   };
 
@@ -100,14 +127,30 @@ function Signup() {
       await saveUserToFirestore({
         uid: user.uid,
         name: user.displayName || name || "Google User",
-        email: user.email,
+        email: user.email || "",
         phone: user.phoneNumber || phone || "",
         provider: "google",
         emailVerified: user.emailVerified,
+        createdAt: new Date(),
+        photoURL: user.photoURL || "",
       });
-    } catch (error) {
+
+      toast.success("Signed in with Google successfully!");
+    } catch (error: unknown) {
       setIsLoading(false);
-      toast.error("Failed to sign up with Google. " + error.message);
+      
+      let errorMessage = "Failed to sign up with Google.";
+      
+      if (error instanceof Error) {
+        // TypeScript now knows error is of type Error
+        if ('code' in error && error.code === "auth/account-exists-with-different-credential") {
+          errorMessage = "An account already exists with this email. Please sign in with your existing method.";
+        } else {
+          errorMessage += " " + error.message;
+        }
+      }
+      
+      toast.error(errorMessage);
     }
   };
 
@@ -131,7 +174,7 @@ function Signup() {
             transition={{ duration: 0.2 }}
           >
             <div className="flex justify-center mb-4">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+              <div className="loaders"></div>
             </div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               Creating your account
@@ -145,9 +188,16 @@ function Signup() {
 
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
+      
       {/* Signup Form Section - Left */}
       <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div

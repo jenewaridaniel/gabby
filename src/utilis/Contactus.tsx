@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 type FormData = {
   name: string;
@@ -13,42 +13,46 @@ type FormData = {
 
 const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: 'general',
-    message: '',
-    checkIn: '',
-    checkOut: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "general",
+    message: "",
+    checkIn: "",
+    checkOut: "",
     guests: 1,
   });
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'guests' ? parseInt(value) || 0 : value,
+      [name]: name === "guests" ? parseInt(value) || 0 : value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
     // Here you would typically send the data to your backend
     setSubmitted(true);
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: 'general',
-      message: '',
-      checkIn: '',
-      checkOut: '',
+      name: "",
+      email: "",
+      phone: "",
+      subject: "general",
+      message: "",
+      checkIn: "",
+      checkOut: "",
       guests: 1,
     });
-    
+
     // Reset submission status after 5 seconds
     setTimeout(() => setSubmitted(false), 5000);
   };
@@ -70,10 +74,16 @@ const ContactUs: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+      >
         {/* Name */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
             Full Name *
           </label>
           <div className="mt-1">
@@ -91,7 +101,10 @@ const ContactUs: React.FC = () => {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email *
           </label>
           <div className="mt-1">
@@ -109,7 +122,10 @@ const ContactUs: React.FC = () => {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700"
+          >
             Phone Number
           </label>
           <div className="mt-1">
@@ -126,7 +142,10 @@ const ContactUs: React.FC = () => {
 
         {/* Subject */}
         <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="subject"
+            className="block text-sm font-medium text-gray-700"
+          >
             Subject *
           </label>
           <div className="mt-1">
@@ -147,10 +166,13 @@ const ContactUs: React.FC = () => {
         </div>
 
         {/* Show reservation fields if subject is reservation */}
-        {formData.subject === 'reservation' && (
+        {formData.subject === "reservation" && (
           <>
             <div>
-              <label htmlFor="checkIn" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="checkIn"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Check-in Date
               </label>
               <div className="mt-1">
@@ -166,7 +188,10 @@ const ContactUs: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="checkOut" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="checkOut"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Check-out Date
               </label>
               <div className="mt-1">
@@ -182,7 +207,10 @@ const ContactUs: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="guests" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="guests"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Number of Guests
               </label>
               <div className="mt-1">
@@ -203,7 +231,10 @@ const ContactUs: React.FC = () => {
 
         {/* Message (full width) */}
         <div className="sm:col-span-2">
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="message"
+            className="block text-sm font-medium text-gray-700"
+          >
             Message *
           </label>
           <div className="mt-1">
@@ -234,8 +265,18 @@ const ContactUs: React.FC = () => {
       <div className="mt-16 grid grid-cols-1 gap-y-8 sm:grid-cols-3 sm:gap-x-8">
         <div className="text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-amber-100 text-amber-600">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
             </svg>
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Phone</h3>
@@ -244,8 +285,18 @@ const ContactUs: React.FC = () => {
 
         <div className="text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-amber-100 text-amber-600">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
             </svg>
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Email</h3>
@@ -254,13 +305,31 @@ const ContactUs: React.FC = () => {
 
         <div className="text-center">
           <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-amber-100 text-amber-600">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
             </svg>
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Address</h3>
-          <p className="mt-2 text-base text-gray-500">Plot 11 Primegate Avenue off G.U Ake Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria</p>
+          <p className="mt-2 text-base text-gray-500">
+            Plot 11 Primegate Avenue off G.U Ake Road, Eliogbolo, Port Harcourt,
+            Rivers State, Nigeria
+          </p>
         </div>
       </div>
     </div>

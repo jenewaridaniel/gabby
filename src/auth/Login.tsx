@@ -3,6 +3,7 @@ import signupLogo from "../assets/swim.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { useState } from "react";
+import { User } from "firebase/auth";
 import { auth, provider } from "../config/firebase";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -20,52 +21,75 @@ function Login() {
   const navigate = useNavigate();
 
   // Check if user exists in profiles collection
-  const checkUserExists = async (uid) => {
-    const userRef = doc(db, "profiles", uid);
-    const userSnap = await getDoc(userRef);
-    return userSnap.exists();
+  const checkUserExists = async (uid: string): Promise<boolean> => {
+    try {
+      const userRef = doc(db, "profiles", uid);
+      const userSnap = await getDoc(userRef);
+      return userSnap.exists();
+    } catch (error) {
+      console.error("Error checking user existence:", error);
+      return false;
+    }
   };
 
   // Save or update user login data
-  const saveLoginData = async (user) => {
-    const userRef = doc(db, "profiles", user.uid);
-    await setDoc(
-      userRef,
-      {
-        lastLoginAt: serverTimestamp(),
-        loginCount: (await getDoc(userRef)).data()?.loginCount + 1 || 1,
-      },
-      { merge: true }
-    );
+  const saveLoginData = async (user: User): Promise<void> => {
+    try {
+      const userRef = doc(db, "profiles", user.uid);
+      const userSnap = await getDoc(userRef);
+      const currentCount = userSnap.exists()
+        ? userSnap.data()?.loginCount ?? 0
+        : 0;
+
+      await setDoc(
+        userRef,
+        {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          lastLoginAt: serverTimestamp(),
+          loginCount: currentCount + 1,
+          photoURL: user.photoURL,
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error saving login data:", error);
+      throw error;
+    }
   };
 
   // Google sign in
-  const HandleGoogleSignup = async () => {
+  const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      
+
       // Check if user exists in profiles
       const userExists = await checkUserExists(user.uid);
       if (!userExists) {
         toast.error("Please sign up first");
         await auth.signOut();
-        setIsLoading(false);
         return;
       }
 
       // Save login data
       await saveLoginData(user);
+      toast.success(`Welcome back, ${user.displayName || "User"}!`);
       navigate("/dashboard");
     } catch (error) {
-      toast.error(error.messag);
+      console.error("Google sign-in error:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Google sign-in failed"
+      );
+    } finally {
       setIsLoading(false);
     }
   };
 
   // Email/password sign in
-  const handleEmailLogin = async (e) => {
+  const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -76,7 +100,11 @@ function Login() {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Check if user exists in profiles
@@ -84,16 +112,27 @@ function Login() {
       if (!userExists) {
         toast.error("Please sign up first");
         await auth.signOut();
-        setIsLoading(false);
         return;
       }
 
       // Save login data
       await saveLoginData(user);
-      navigate("/dashboard");
+      toast.success(`Welcome back, ${user.displayName}!`);
+      navigate(`/dashboard/${user.uid}`);
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error(error.message);
+      console.error("Email login error:", error);
+      if (error instanceof Error) {
+        if (error.message.includes("auth/user-not-found")) {
+          toast.error("No account found with this email");
+        } else if (error.message.includes("auth/wrong-password")) {
+          toast.error("Incorrect password");
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -107,27 +146,31 @@ function Login() {
       {/* Loading Modal */}
       {isLoading && (
         <div className="absolute inset-0 bg-black/75 bg-opacity-50 z-50 flex items-center justify-center">
-          <motion.div 
+          <motion.div
             className="bg-white p-8 rounded-xl max-w-sm w-full mx-4 text-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
           >
             <div className="flex justify-center mb-4">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-600"></div>
+              <div className="loaders"></div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Signing you in</h3>
-            <p className="text-gray-600">Please wait while we authenticate your account...</p>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Signing you in
+            </h3>
+            <p className="text-gray-600">
+              Please wait while we authenticate your account...
+            </p>
           </motion.div>
         </div>
       )}
 
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
       />
-      
+
       {/* Image Section - Left with dark overlay */}
       <div className="hidden md:block md:w-1/2 relative">
         <div className="absolute inset-0 bg-black/50 z-10"></div>
@@ -202,7 +245,7 @@ function Login() {
               className="flex gap-2 border border-gray-200 rounded-xl p-3 w-11/12 justify-center items-center hover:bg-gray-50 transition-colors duration-200 disabled:opacity-70"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={HandleGoogleSignup}
+              onClick={handleGoogleSignIn}
               disabled={isLoading}
             >
               <img src={google} className="w-5 h-5" alt="Google logo" />
@@ -263,6 +306,7 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
+                  minLength={6}
                 />
                 <button
                   type="button"
@@ -296,7 +340,10 @@ function Login() {
                   Remember me
                 </label>
               </div>
-              <a href="#" className="text-sm text-blue-600 hover:underline">
+              <a
+                href="/auth/forgot-password"
+                className="text-sm text-blue-600 hover:underline"
+              >
                 Forgot password?
               </a>
             </motion.div>

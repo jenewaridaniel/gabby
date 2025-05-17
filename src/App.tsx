@@ -7,8 +7,8 @@ import Login from "./auth/Login";
 import Terms from "./T&C/Terms";
 import Privacy from "./T&C/Privacy";
 import Experiences from "./utilis/Experiences";
-import Dashboard from '../src/DashBoard/Dashboard'
-import Story from '../src/utilis/Story'
+import Dashboard from "../src/DashBoard/Dashboard";
+import Story from "../src/utilis/Story";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,8 +21,8 @@ const App = () => {
     TERMS: "/terms",
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard",
-    EXP:'/experiences',
-    STORY: '/story'
+    EXP: "/experiences",
+    STORY: "/story",
   };
 
   const router = createBrowserRouter([
@@ -32,8 +32,8 @@ const App = () => {
     { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },
     { path: ROUTER.PRIVACY, element: <Privacy /> },
-    {path: ROUTER.EXP, element: <Experiences/>},
-    {path: ROUTER.STORY, element: <Story/>},
+    { path: ROUTER.EXP, element: <Experiences /> },
+    { path: ROUTER.STORY, element: <Story /> },
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
   ]);
 
@@ -41,7 +41,7 @@ const App = () => {
     // Simulate loading delay
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // 1.5 seconds loading
+    }, 2500); // 2.5 seconds loading
 
     return () => clearTimeout(timer);
   }, []);
@@ -50,11 +50,18 @@ const App = () => {
     <div>
       {isLoading ? (
         <div className="h-screen flex justify-center items-center">
-        <div
-        className="loader "
-        >
-        </div>
-
+          <div className="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       ) : (
         <RouterProvider router={router} />
