@@ -199,7 +199,7 @@ function Signup() {
       />
       
       {/* Signup Form Section - Left */}
-      <div className="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto">
+      <div className="w-full flex justify-center  md:w-1/2 p-6 sm:p-8 overflow-y-auto">
         <motion.div
           className="w-full max-w-lg py-4"
           initial={{ opacity: 0, y: 20 }}

@@ -9,6 +9,8 @@ import Privacy from "./T&C/Privacy";
 import Experiences from "./utilis/Experiences";
 import Dashboard from "../src/DashBoard/Dashboard";
 import Story from "../src/utilis/Story";
+import Rooms from "./pages/Rooms";
+import Diner from './pages/Diner'
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +21,8 @@ const App = () => {
     SIGNUP: "/auth/signup",
     LOGIN: "/auth/login",
     TERMS: "/terms",
+    ROOMS: '/rooms',
+    DINING: '/dining',
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard",
     EXP: "/experiences",
@@ -33,6 +37,8 @@ const App = () => {
     { path: ROUTER.TERMS, element: <Terms /> },
     { path: ROUTER.PRIVACY, element: <Privacy /> },
     { path: ROUTER.EXP, element: <Experiences /> },
+    { path: ROUTER.ROOMS, element: <Rooms /> },
+    { path: ROUTER.DINING, element: <Diner /> },
     { path: ROUTER.STORY, element: <Story /> },
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
   ]);
