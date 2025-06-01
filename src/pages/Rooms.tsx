@@ -1,5 +1,5 @@
 // Rooms.tsx
-import { useState, useEffect } from "react";
+import  { useState, useEffect } from "react"; // Added React import
 import { motion } from "framer-motion";
 import {
   FiStar,
@@ -16,7 +16,7 @@ import {
 // Define types for TypeScript
 type RoomFeature = {
   name: string;
-  icon: JSX.Element; 
+  icon: React.ReactElement;
 };
 
 type RoomType = {
