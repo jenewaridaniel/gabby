@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db } from "../config/firebase"; 
+import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import BackButton from "../Backbutton/BackButton";
 
@@ -91,7 +91,8 @@ const ContactUs = () => {
     setLoading(true);
 
     try {
-      await addDoc(collection(db, "contactUs"), {
+      // Updated collection name to "contactUsInfo"
+      await addDoc(collection(db, "contactUsInfo"), {
         name,
         email,
         message,

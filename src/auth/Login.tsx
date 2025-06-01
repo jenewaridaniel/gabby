@@ -3,12 +3,11 @@ import signupLogo from "../assets/swim.jpeg";
 import Logo from "../assets/logo.png";
 import google from "../assets/google.png";
 import { useState } from "react";
-import { User } from "firebase/auth";
 import { auth, provider } from "../config/firebase";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,42 +19,16 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Check if user exists in profiles collection
+  // Check if user exists in users collection (consistent with signup)
   const checkUserExists = async (uid: string): Promise<boolean> => {
     try {
-      const userRef = doc(db, "profiles", uid);
+      const userRef = doc(db, "users", uid);
       const userSnap = await getDoc(userRef);
       return userSnap.exists();
     } catch (error) {
       console.error("Error checking user existence:", error);
+      toast.error("Error checking user account. Please try again.");
       return false;
-    }
-  };
-
-  // Save or update user login data
-  const saveLoginData = async (user: User): Promise<void> => {
-    try {
-      const userRef = doc(db, "profiles", user.uid);
-      const userSnap = await getDoc(userRef);
-      const currentCount = userSnap.exists()
-        ? userSnap.data()?.loginCount ?? 0
-        : 0;
-
-      await setDoc(
-        userRef,
-        {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          lastLoginAt: serverTimestamp(),
-          loginCount: currentCount + 1,
-          photoURL: user.photoURL,
-        },
-        { merge: true }
-      );
-    } catch (error) {
-      console.error("Error saving login data:", error);
-      throw error;
     }
   };
 
@@ -66,23 +39,29 @@ function Login() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if user exists in profiles
+      // Check if user exists in users collection
       const userExists = await checkUserExists(user.uid);
       if (!userExists) {
         toast.error("Please sign up first");
         await auth.signOut();
+        setIsLoading(false);
         return;
       }
 
-      // Save login data
-      await saveLoginData(user);
       toast.success(`Welcome back, ${user.displayName || "User"}!`);
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Google sign-in error:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Google sign-in failed"
-      );
+      navigate(`/dashboard/${user.uid}`); // Consistent navigation with signup
+    } catch (error: unknown) {
+      let errorMessage = "Google sign-in failed";
+      
+      if (error instanceof Error) {
+        if (error.message.includes("auth/account-exists-with-different-credential")) {
+          errorMessage = "An account already exists with this email. Please sign in with your existing method.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -107,31 +86,31 @@ function Login() {
       );
       const user = userCredential.user;
 
-      // Check if user exists in profiles
+      // Check if user exists in users collection
       const userExists = await checkUserExists(user.uid);
       if (!userExists) {
         toast.error("Please sign up first");
         await auth.signOut();
+        setIsLoading(false);
         return;
       }
 
-      // Save login data
-      await saveLoginData(user);
-      toast.success(`Welcome back, ${user.displayName}!`);
-      navigate(`/dashboard/${user.uid}`);
-    } catch (error) {
-      console.error("Email login error:", error);
+      toast.success(`Welcome back, ${user.displayName || "User"}!`);
+      navigate(`/dashboard/${user.uid}`); // Consistent navigation with signup
+    } catch (error: unknown) {
+      let errorMessage = "Login failed";
+      
       if (error instanceof Error) {
         if (error.message.includes("auth/user-not-found")) {
-          toast.error("No account found with this email");
+          errorMessage = "No account found with this email";
         } else if (error.message.includes("auth/wrong-password")) {
-          toast.error("Incorrect password");
+          errorMessage = "Incorrect password";
         } else {
-          toast.error(error.message);
+          errorMessage = error.message;
         }
-      } else {
-        toast.error("Login failed. Please try again.");
       }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -169,6 +148,12 @@ function Login() {
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
 
       {/* Image Section - Left with dark overlay */}

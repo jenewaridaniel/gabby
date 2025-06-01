@@ -619,6 +619,7 @@ const Diner = () => {
                   Ingredients
                 </h4>
                 <p className="text-gray-600">
+                 
                   {activeDish.origin === "Nigerian"
                     ? "Fresh tomatoes, onions, peppers, traditional spices, locally sourced meats"
                     : activeDish.origin === "English"
