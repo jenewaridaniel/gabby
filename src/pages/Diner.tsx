@@ -651,7 +651,7 @@ const Diner = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium text-center"
+                  className="flex-1 bg-amber-500 hover:bg-amber-600  text-white py-3 px-6 rounded-full font-medium text-center"
                 >
                   Add to Order
                 </motion.button>
