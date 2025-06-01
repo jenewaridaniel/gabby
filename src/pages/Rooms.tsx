@@ -206,10 +206,10 @@ const Rooms = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Luxury Nigerian Retreats
             </h1>
-            <p className="text-xl text-white max-w-2xl mx-auto mb-8">
+            <p className="text-sm text-white max-w-2xl mx-auto mb-8">
               Experience Nigeria's finest accommodations with breathtaking views
               and authentic hospitality
             </p>
