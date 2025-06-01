@@ -148,7 +148,7 @@ const Dashboard = () => {
   }
 
   const upcomingBookings = bookings.filter(b => b.status === "confirmed" || b.status === "pending");
-  const pastBookings = bookings.filter(b => b.status === "cancelled");
+  // const pastBookings = bookings.filter(b => b.status === "cancelled");
 
   return (
     <div className="min-h-screen bg-gray-50">
