@@ -13,18 +13,21 @@ const Carousel = () => {
       title: "Dream. Relax. Repeat",
       subtitle: "Luxury So Good, You’ll Never Want to Leave",
       cta: "Our Rooms",
+      link:'/rooms'
     },
     {
       image: bed,
       title: "Your Private Paradise",
       subtitle: "Discover our exclusive resort with pristine beaches and infinity pools",
       cta: "Resort Features",
+      link:'/rooms'
     },
     {
       image: parlour,
       title: "Gourmet Experiences",
       subtitle: "Savor award-winning cuisine from our world-renowned chefs",
       cta: "Discover Dining",
+      link:'/dining'
     },
   ];
 
@@ -79,6 +82,8 @@ const Carousel = () => {
                   </motion.p>
 
                   {/* CTA Button */}
+                  <a href={slide.link}>
+
                   <motion.button
                     className="px-6 py-4 text-sm md:text-lg justify-center bg-amber-600 hover:bg-amber-700 text-white font-medium tracking-wider rounded-full transition-all duration-300 hover:shadow-lg flex items-center gap-2"
                     initial={{ opacity: 0, y: 30 }}
@@ -108,6 +113,7 @@ const Carousel = () => {
                       />
                     </motion.svg>
                   </motion.button>
+                  </a>
                 </div>
               </div>
             </div>
