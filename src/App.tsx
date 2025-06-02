@@ -11,6 +11,7 @@ import Dashboard from "../src/DashBoard/Dashboard";
 import Story from "../src/utilis/Story";
 import Rooms from "./pages/Rooms";
 import Diner from './pages/Diner'
+import Admin from './Admin/Admin'
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,12 +27,14 @@ const App = () => {
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard/:uid",
     EXP: "/experiences",
+    ADMIN:'/admin',
     STORY: "/story",
   };
 
   const router = createBrowserRouter([
     { path: ROUTER.LANDING, element: <Homepage /> },
     { path: ROUTER.CONTACTUS, element: <ContactUs /> },
+    {path:ROUTER.ADMIN, element:<Admin/>},
     { path: ROUTER.SIGNUP, element: <Signup /> },
     { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },

@@ -1,5 +1,5 @@
 // Rooms.tsx
-import  { useState, useEffect } from "react"; // Added React import
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   FiStar,
@@ -10,169 +10,67 @@ import {
   FiUsers,
   FiDroplet,
   FiTv,
-  FiSun,
+
+  FiHome,
+  FiDroplet as FiShower,
+  FiWind,
+  FiLock,
+  FiMonitor,
+  FiZap,
 } from "react-icons/fi";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../config/firebase"; // Adjust path to your firebase config
 
 // Define types for TypeScript
-type RoomFeature = {
-  name: string;
-  icon: React.ReactElement;
-};
-
 type RoomType = {
-  id: number;
-  title: string;
+  id: string;
+  number: string;
+  type: string;
   description: string;
   price: number;
-  size: string;
-  bedType: string;
-  image: string;
-  features: RoomFeature[];
-  popular?: boolean;
+  capacity: number;
+  imageUrl: string;
+  amenities: string[];
+  status?: string;
 };
 
 const Rooms = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [activeRoom, setActiveRoom] = useState<RoomType | null>(null);
+  const [rooms, setRooms] = useState<RoomType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedRoom, setSelectedRoom] = useState<RoomType | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Updated room data with real Nigerian hotel images
-  const roomTypes: RoomType[] = [
-    {
-      id: 1,
-      title: "Deluxe Lagos View",
-      description:
-        "Spacious room with breathtaking views of Lagos Lagoon, featuring a king-sized bed and luxurious amenities.",
-      price: 85000,
-      size: "45 m²",
-      bedType: "King Size",
-      image:
-        "https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "Lagoon View", icon: <FiDroplet /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Breakfast", icon: <FiCoffee /> },
-        { name: "2 Guests", icon: <FiUsers /> },
-      ],
-      popular: true,
-    },
-    {
-      id: 2,
-      title: "Executive Abuja Suite",
-      description:
-        "Elegant suite with separate living area, perfect for business travelers or extended stays in Nigeria's capital.",
-      price: 125000,
-      size: "75 m²",
-      bedType: "King Size",
-      image:
-        "https://images.unsplash.com/photo-1592229505726-ca121043fa5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "City View", icon: <FiMapPin /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Breakfast", icon: <FiCoffee /> },
-        { name: "4 Guests", icon: <FiUsers /> },
-      ],
-    },
-    {
-      id: 3,
-      title: "Presidential Suite",
-      description:
-        "The epitome of luxury with panoramic views, private balcony, and premium furnishings.",
-      price: 250000,
-      size: "120 m²",
-      bedType: "King Size",
-      image:
-        "https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "Panoramic View", icon: <FiMapPin /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Premium Breakfast", icon: <FiCoffee /> },
-        { name: "6 Guests", icon: <FiUsers /> },
-      ],
-    },
-    {
-      id: 4,
-      title: "Garden Terrace Room",
-      description:
-        "Charming room with private terrace overlooking our lush tropical gardens and pool area.",
-      price: 95000,
-      size: "50 m²",
-      bedType: "Queen Size",
-      image:
-        "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "Garden View", icon: <FiDroplet /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Breakfast", icon: <FiCoffee /> },
-        { name: "2 Guests", icon: <FiUsers /> },
-      ],
-      popular: true,
-    },
-    {
-      id: 5,
-      title: "Family Suite",
-      description:
-        "Spacious suite designed for families, with separate bedrooms and kid-friendly amenities.",
-      price: 150000,
-      size: "85 m²",
-      bedType: "2 Queen Beds",
-      image:
-        "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "City View", icon: <FiMapPin /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Breakfast", icon: <FiCoffee /> },
-        { name: "6 Guests", icon: <FiUsers /> },
-      ],
-    },
-    {
-      id: 6,
-      title: "Honeymoon Suite",
-      description:
-        "Romantic retreat with champagne on arrival, jacuzzi, and private balcony overlooking the ocean.",
-      price: 195000,
-      size: "65 m²",
-      bedType: "King Size",
-      image:
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80",
-      features: [
-        { name: "Ocean View", icon: <FiDroplet /> },
-        { name: "Free WiFi", icon: <FiWifi /> },
-        { name: "Breakfast", icon: <FiCoffee /> },
-        { name: "2 Guests", icon: <FiUsers /> },
-      ],
-    },
-  ];
-
-  // Simulate loading
+  // Fetch rooms from Firebase
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
+    const fetchRooms = async () => {
+      try {
+        const roomsCollection = collection(db, "rooms");
+        const roomSnapshot = await getDocs(roomsCollection);
+        const roomsList = roomSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as RoomType[];
+        setRooms(roomsList);
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRooms();
   }, []);
 
   // Filter rooms based on category
   const filteredRooms =
     selectedCategory === "all"
-      ? roomTypes
-      : roomTypes.filter((room) =>
-          selectedCategory === "popular"
-            ? room.popular
-            : selectedCategory === "suites"
-            ? room.title.toLowerCase().includes("suite")
-            : room.title.toLowerCase().includes(selectedCategory)
+      ? rooms
+      : rooms.filter((room) =>
+          selectedCategory === "luxury"
+            ? room.type.toLowerCase().includes("luxury") ||
+              room.type.toLowerCase().includes("suite")
+            : room.type.toLowerCase().includes(selectedCategory)
         );
-
-  // View room details
-  const viewRoomDetails = (room: RoomType) => {
-    setActiveRoom(room);
-  };
-
-  // Close room details
-  const closeRoomDetails = () => {
-    setActiveRoom(null);
-  };
 
   // Format Naira prices
   const formatNaira = (amount: number) => {
@@ -184,11 +82,25 @@ const Rooms = () => {
     });
   };
 
+  // Amenity icons mapping
+  const amenityIcons: Record<string, React.ReactElement> = {
+    wifi: <FiWifi />,
+    breakfast: <FiCoffee />,
+    shower: <FiShower />,
+    tv: <FiTv />,
+    ac: <FiWind />,
+    safe: <FiLock />,
+    pool: <FiDroplet />,
+    view: <FiMapPin />,
+    workspace: <FiMonitor />,
+    minibar: <FiZap />,
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       {/* Hero Section */}
       <div
-        className="relative h-[70vh] overflow-hidden"
+        className="relative h-[60vh] overflow-hidden"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
@@ -196,24 +108,19 @@ const Rooms = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 "></div>
-        <div className="absolute inset-0 bg-black/80 z-10"></div>
-
+        <div className="absolute inset-0 bg-black/70 z-10"></div>
         <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Luxury Nigerian Retreats
+              Our Luxury Rooms
             </h1>
-            <p className="text-sm text-white max-w-2xl mx-auto mb-8">
-              Experience Nigeria's finest accommodations with breathtaking views
-              and authentic hospitality
+            <p className="text-lg text-amber-100 max-w-2xl mx-auto mb-8">
+              Experience comfort and elegance in our carefully designed rooms
             </p>
-
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -231,14 +138,14 @@ const Rooms = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Discover Your Perfect Escape
+            Discover Your Perfect Room
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Each of our Nigerian-inspired rooms and suites offers a unique blend
-            of luxury and local charm
+            Each of our rooms is designed to provide ultimate comfort with modern
+            amenities
           </p>
         </motion.div>
 
@@ -260,34 +167,34 @@ const Rooms = () => {
             All Rooms
           </button>
           <button
-            onClick={() => setSelectedCategory("popular")}
+            onClick={() => setSelectedCategory("luxury")}
             className={`px-6 py-2 rounded-full transition-all ${
-              selectedCategory === "popular"
+              selectedCategory === "luxury"
                 ? "bg-amber-500 text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
-            Popular Choices
+            Luxury & Suites
           </button>
           <button
-            onClick={() => setSelectedCategory("suites")}
+            onClick={() => setSelectedCategory("deluxe")}
             className={`px-6 py-2 rounded-full transition-all ${
-              selectedCategory === "suites"
+              selectedCategory === "deluxe"
                 ? "bg-amber-500 text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
-            Suites
+            Deluxe
           </button>
           <button
-            onClick={() => setSelectedCategory("ocean")}
+            onClick={() => setSelectedCategory("standard")}
             className={`px-6 py-2 rounded-full transition-all ${
-              selectedCategory === "ocean"
+              selectedCategory === "standard"
                 ? "bg-amber-500 text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
-            Ocean View
+            Standard
           </button>
         </motion.div>
 
@@ -313,6 +220,18 @@ const Rooms = () => {
               </motion.div>
             ))}
           </div>
+        ) : rooms.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="mx-auto h-24 w-24 text-gray-400 mb-4">
+              <FiHome className="w-full h-full" />
+            </div>
+            <h3 className="text-xl font-medium text-gray-800 mb-2">
+              No Rooms Available
+            </h3>
+            <p className="text-gray-600 mb-6">
+              We're currently preparing our rooms. Please check back later.
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredRooms.map((room) => (
@@ -325,25 +244,35 @@ const Rooms = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative h-64">
-                  <img
-                    src={room.image}
-                    alt={room.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {room.popular && (
-                    <div className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
-                      <FiStar className="mr-1" /> Popular
+                  {room.imageUrl ? (
+                    <img
+                      src={room.imageUrl}
+                      alt={`Room ${room.number}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          "https://via.placeholder.com/500x300?text=Room+Image";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <FiHome className="w-12 h-12 text-gray-400" />
                     </div>
                   )}
                   <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
                     <FiHeart className="text-gray-600 hover:text-red-500 transition-colors" />
                   </div>
+                  {room.status === "new" && (
+                    <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                      New
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-bold text-gray-800">
-                      {room.title}
+                      {room.type} - Room {room.number}
                     </h3>
                     <div className="text-amber-500 flex items-center">
                       <FiStar className="fill-current" />
@@ -356,32 +285,40 @@ const Rooms = () => {
 
                   <div className="flex items-center text-gray-600 mb-4">
                     <span className="mr-4 flex items-center">
-                      <FiUsers className="mr-1" />{" "}
-                      {
-                        room.features.find((f) => f.name.includes("Guests"))
-                          ?.name
-                      }
+                      <FiUsers className="mr-1" /> {room.capacity}{" "}
+                      {room.capacity > 1 ? "Guests" : "Guest"}
                     </span>
                     <span className="flex items-center">
-                      <FiMapPin className="mr-1" /> {room.size}
+                      <FiMapPin className="mr-1" /> {room.type}
                     </span>
                   </div>
 
                   <p className="text-gray-600 mb-4 line-clamp-2">
-                    {room.description}
+                    {room.description || "Comfortable and well-appointed room"}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {room.features.map((feature, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center text-sm bg-slate-100 px-3 py-1 rounded-full"
-                      >
-                        {feature.icon}
-                        <span className="ml-1">{feature.name}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {room.amenities && room.amenities.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {room.amenities.slice(0, 4).map((amenity, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center text-sm bg-slate-100 px-3 py-1 rounded-full"
+                        >
+                          {amenityIcons[amenity.toLowerCase()] || (
+                            <FiStar className="mr-1" />
+                          )}
+                          <span className="ml-1 capitalize">
+                            {amenity.replace(/_/g, " ")}
+                          </span>
+                        </div>
+                      ))}
+                      {room.amenities.length > 4 && (
+                        <div className="flex items-center text-sm bg-slate-100 px-3 py-1 rounded-full">
+                          +{room.amenities.length - 4} more
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div className="flex justify-between items-center">
                     <div>
@@ -393,7 +330,7 @@ const Rooms = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => viewRoomDetails(room)}
+                      onClick={() => setSelectedRoom(room)}
                       className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-full transition-colors"
                     >
                       View Details
@@ -410,27 +347,27 @@ const Rooms = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
-          className="mt-24 bg-gradient-to-r from-green-50 to-amber-50 rounded-2xl p-8 md:p-12"
+          className="mt-24 bg-gradient-to-r from-amber-50 to-green-50 rounded-2xl p-8 md:p-12"
         >
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-3xl font-bold text-gray-800 mb-6">
-              Authentic Nigerian Experiences
+              Premium Amenities
             </h3>
             <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-              We provide exceptional amenities to ensure your stay is
-              comfortable and memorable.
+              We provide exceptional amenities to ensure your stay is comfortable
+              and memorable.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
                 { icon: <FiWifi size={32} />, name: "High-Speed WiFi" },
-                { icon: <FiCoffee size={32} />, name: "Nigerian Breakfast" },
-                { icon: <FiDroplet size={32} />, name: "Luxury Spa" },
+                { icon: <FiCoffee size={32} />, name: "Complimentary Breakfast" },
+                { icon: <FiShower size={32} />, name: "Rain Shower" },
                 { icon: <FiTv size={32} />, name: "Smart TV" },
                 { icon: <FiUsers size={32} />, name: "24/7 Concierge" },
-                { icon: <FiSun size={32} />, name: "Rooftop Pool" },
-                { icon: <FiMapPin size={32} />, name: "Local Tours" },
-                { icon: <FiHeart size={32} />, name: "Cultural Experiences" },
+                { icon: <FiDroplet size={32} />, name: "Swimming Pool" },
+                { icon: <FiWind size={32} />, name: "Air Conditioning" },
+                { icon: <FiLock size={32} />, name: "Room Safe" },
               ].map((amenity, index) => (
                 <motion.div
                   key={index}
@@ -451,12 +388,12 @@ const Rooms = () => {
       </div>
 
       {/* Room Detail Modal */}
-      {activeRoom && (
+      {selectedRoom && (
         <motion.div
           className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          onClick={closeRoomDetails}
+          onClick={() => setSelectedRoom(null)}
         >
           <motion.div
             className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
@@ -465,13 +402,19 @@ const Rooms = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative h-96">
-              <img
-                src={activeRoom.image}
-                alt={activeRoom.title}
-                className="w-full h-full object-cover rounded-t-2xl"
-              />
+              {selectedRoom.imageUrl ? (
+                <img
+                  src={selectedRoom.imageUrl}
+                  alt={`Room ${selectedRoom.number}`}
+                  className="w-full h-full object-cover rounded-t-2xl"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <FiHome className="w-20 h-20 text-gray-400" />
+                </div>
+              )}
               <button
-                onClick={closeRoomDetails}
+                onClick={() => setSelectedRoom(null)}
                 className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
               >
                 <svg
@@ -489,56 +432,57 @@ const Rooms = () => {
                   />
                 </svg>
               </button>
-
-              {activeRoom.popular && (
-                <div className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
-                  <FiStar className="mr-1" /> Popular Choice
-                </div>
-              )}
             </div>
 
             <div className="p-8">
               <div className="flex flex-wrap justify-between items-start mb-6">
                 <div>
                   <h3 className="text-3xl font-bold text-gray-800 mb-2">
-                    {activeRoom.title}
+                    {selectedRoom.type} - Room {selectedRoom.number}
                   </h3>
                   <div className="flex items-center text-gray-600 mb-4">
                     <span className="mr-4 flex items-center">
-                      <FiUsers className="mr-1" />{" "}
-                      {
-                        activeRoom.features.find((f) =>
-                          f.name.includes("Guests")
-                        )?.name
-                      }
+                      <FiUsers className="mr-1" /> {selectedRoom.capacity}{" "}
+                      {selectedRoom.capacity > 1 ? "Guests" : "Guest"}
                     </span>
                     <span className="flex items-center">
-                      <FiMapPin className="mr-1" /> {activeRoom.size}
+                      <FiMapPin className="mr-1" /> {selectedRoom.type}
                     </span>
                   </div>
                 </div>
 
                 <div className="text-3xl font-bold text-amber-500">
-                  {formatNaira(activeRoom.price)}
+                  {formatNaira(selectedRoom.price)}
                   <span className="text-lg text-gray-600"> / night</span>
                 </div>
               </div>
 
-              <p className="text-gray-600 mb-8">{activeRoom.description}</p>
+              <p className="text-gray-600 mb-8">
+                {selectedRoom.description ||
+                  "This comfortable and well-appointed room provides all the amenities you need for a pleasant stay."}
+              </p>
 
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                  Room Features
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {activeRoom.features.map((feature, index) => (
-                    <div key={index} className="flex items-center">
-                      <div className="text-amber-500 mr-2">{feature.icon}</div>
-                      <span>{feature.name}</span>
-                    </div>
-                  ))}
+              {selectedRoom.amenities && selectedRoom.amenities.length > 0 && (
+                <div className="mb-8">
+                  <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                    Room Amenities
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {selectedRoom.amenities.map((amenity, index) => (
+                      <div key={index} className="flex items-center">
+                        <div className="text-amber-500 mr-2">
+                          {amenityIcons[amenity.toLowerCase()] || (
+                            <FiStar className="mr-1" />
+                          )}
+                        </div>
+                        <span className="capitalize">
+                          {amenity.replace(/_/g, " ")}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="flex flex-wrap gap-4">
                 <motion.button
@@ -581,10 +525,10 @@ const Rooms = () => {
             className="max-w-3xl mx-auto"
           >
             <h3 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready for an Authentic Nigerian Experience?
+              Ready for an Exceptional Stay?
             </h3>
             <p className="text-xl mb-8 text-amber-100">
-              Experience luxury Nigerian hospitality at its finest
+              Experience luxury and comfort at its finest
             </p>
             <motion.div
               whileHover={{ scale: 1.05 }}

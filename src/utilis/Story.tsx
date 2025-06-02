@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import logo from "../assets/logo.png";
+import Footer from '../utilis/Footer'
 import { FaUmbrellaBeach, FaCocktail, FaHeart } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -233,33 +234,7 @@ const Story = () => {
       </main>
 
       {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="bg-gray-950 text-amber-50 py-12"
-      >
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <img
-                src={logo}
-                alt="Gabby's Boutique Hotel Logo"
-                className="h-14 object-contain mx-auto md:mx-0"
-              />
-            </div>
-            <div className="text-center md:text-right">
-              <p className="text-lg font-serif mb-2">
-                © {new Date().getFullYear()} Gabby's Boutique Hotel & Lounge
-              </p>
-              <p className="text-amber-200">
-                Port Harcourt, Rivers State, Nigeria
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.footer>
+        <Footer/>
     </div>
   );
 };
