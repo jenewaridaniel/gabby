@@ -12,6 +12,7 @@ import Story from "../src/utilis/Story";
 import Rooms from "./pages/Rooms";
 import Diner from './pages/Diner'
 import Admin from './Admin/Admin'
+import BookingSystem from "./Function/BookingSystem";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +29,7 @@ const App = () => {
     DASHBOARD: "/dashboard/:uid",
     EXP: "/experiences",
     ADMIN:'/admin',
+    BOOKING:'/booking',
     STORY: "/story",
   };
 
@@ -35,6 +37,7 @@ const App = () => {
     { path: ROUTER.LANDING, element: <Homepage /> },
     { path: ROUTER.CONTACTUS, element: <ContactUs /> },
     {path:ROUTER.ADMIN, element:<Admin/>},
+    {path:ROUTER.BOOKING, element:<BookingSystem/>},
     { path: ROUTER.SIGNUP, element: <Signup /> },
     { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },

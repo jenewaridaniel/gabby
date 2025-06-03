@@ -6,12 +6,14 @@ import logo from "../assets/logo.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeLink, setActiveLink] = useState("");
 
   const links = [
     { name: "Rooms & Suites", path: "/rooms" },
     { name: "Experiences", path: "/experiences" },
     { name: "Dining", path: "/dining" },
-    { name: "Contact", path: "/contact-us" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -19,7 +21,18 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 10);
+      // Update active link based on scroll position
+      const sections = document.querySelectorAll("section");
+      sections.forEach((section) => {
+        const top = window.scrollY;
+        const offset = section.offsetTop - 100;
+        const height = section.offsetHeight;
+        const id = section.getAttribute("id");
+        if (top >= offset && top < offset + height) {
+          setActiveLink(`#${id}`);
+        }
+      });
     };
 
     const handleClickOutside = (e: MouseEvent) => {
@@ -49,167 +62,191 @@ const Navbar = () => {
     <motion.nav
       className={`navbar fixed w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? " backdrop-blur-md bg-white/90"
-          : "backdrop-blur-md bg-white/80"
+          ? "bg-white/95 shadow-sm backdrop-blur-md"
+          : "bg-white/90 backdrop-blur-md"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="container mx-auto py-4 px-6 flex justify-between items-center">
-        {/* Logo */}
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        {/* Logo with modern hover effect */}
         <motion.a
           href="/"
-          className="text-xl font-semibold text-black tracking-wide"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          className="flex items-center gap-2"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
         >
-          <img src={logo} className="w-12" alt="Logo" />
+          <img src={logo} className="w-10 h-10" alt="Hotel Logo" />
         </motion.a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-1">
           {links.map((link) => (
             <motion.a
               key={link.path}
               href={link.path}
-              className="relative text-black text-sm font-medium tracking-wide group transition-colors hover:text-amber-600"
-              whileHover={{ scale: 1.02 }}
+              className={`relative px-4 py-2 text-sm font-medium ${
+                activeLink === link.path
+                  ? "text-amber-600"
+                  : "text-gray-700 hover:text-amber-500"
+              } transition-colors`}
+              whileHover={{ y: -2 }}
+              onClick={() => setActiveLink(link.path)}
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-600 transition-all group-hover:w-full"></span>
+              {activeLink === link.path && (
+                <motion.span
+                  className="absolute left-1/2 bottom-0 h-0.5 bg-amber-400 w-4"
+                  initial={{ width: 0, x: "-50%" }}
+                  animate={{ width: "80%", x: "-50%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
             </motion.a>
           ))}
+        </div>
 
-          <div className="flex items-center gap-4 ml-6">
-            <motion.a
-              href="/auth/signup"
-              className="px-4 py-2 text-sm font-medium text-black hover:text-amber-600 transition-colors"
-              whileHover={{ y: -1 }}
-            >
-              Sign Up
-            </motion.a>
-            <motion.button
-              className="px-5 py-3 flex gap-1  items-center rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium tracking-wide transition-colors hover:shadow-amber-600/20"
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
+        {/* CTA Buttons */}
+        <div className="hidden lg:flex items-center gap-3 ml-6">
+          <motion.a
+            href="/login"
+            className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-amber-600 transition-colors"
+            whileHover={{ y: -1 }}
+          >
+            Sign In
+          </motion.a>
+          <motion.a
+            href="/booking"
+            className="relative px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white text-sm font-medium group overflow-hidden"
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span className="relative z-10 flex items-center gap-1">
               Book Now
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-4 h-4 text-gray-50"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-4 h-4"
               >
                 <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                  fillRule="evenodd"
+                  d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
+                  clipRule="evenodd"
                 />
               </svg>
-            </motion.button>
-          </div>
+            </span>
+            <span className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </motion.a>
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden z-50">
+        <div className="lg:hidden z-50">
           <Hamburger
             toggled={isOpen}
             toggle={toggleMenu}
             color={isScrolled ? "#000" : "#000"}
             rounded
             size={24}
+            label="Show menu"
           />
         </div>
 
-        {/* Mobile Side Menu */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isOpen && (
             <>
               {/* Overlay */}
               <motion.div
-                className="fixed inset-0 bg-black/60 h-screen z-40 md:hidden"
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={closeMenu}
               />
 
-              {/*Side Menu */}
+              {/* Mobile Side Menu */}
               <motion.div
-                className="md:hidden fixed top-0 right-0 w-4/5 max-w-sm h-screen bg-white z-50 shadow-xl"
+                className="lg:hidden fixed top-0 right-0 w-80 h-screen bg-white z-50 shadow-2xl"
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
-                transition={{ type: "tween", ease: "easeInOut" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
-                <div className="container mx-auto px-6 pt-24 pb-8 h-full flex flex-col">
-                  {/* Close button */}
-                  <button
-                    onClick={closeMenu}
-                    className="absolute top-6 right-6 p-1 rounded-full hover:bg-gray-100 transition-colors"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                <div className="h-full flex flex-col">
+                  {/* Header */}
+                  <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <a href="/" className="flex items-center gap-2">
+                      <img src={logo} className="w-8 h-8" alt="Logo" />
+                    </a>
+                    <button
+                      onClick={closeMenu}
+                      className="p-1 rounded-full hover:bg-gray-100 transition-colors"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
 
-                  {/* Logo in menu */}
-                  {/* <div className="absolute top-6 left-6">
-                    <img src={logo} className="w-10" alt="Logo" />
-                  </div> */}
-
-                  <div className="flex-1  flex flex-col gap-8 pt-8">
+                  {/* Menu Items */}
+                  <div className="flex-1 overflow-y-auto py-6 px-6 space-y-2">
                     {links.map((link, index) => (
                       <motion.a
                         key={link.path}
                         href={link.path}
-                        className="text-xl text-black font-medium hover:text-amber-600 transition-colors py-2 border-b border-gray-100"
+                        className={`block py-3 px-4 rounded-lg text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-colors ${
+                          activeLink === link.path
+                            ? "bg-amber-50 text-amber-600"
+                            : ""
+                        }`}
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: 20, opacity: 0 }}
-                        transition={{ delay: index * 0.05 + 0.1 }}
-                        onClick={closeMenu}
+                        transition={{ delay: index * 0.05 }}
+                        onClick={() => {
+                          setActiveLink(link.path);
+                          closeMenu();
+                        }}
                       >
                         {link.name}
                       </motion.a>
                     ))}
                   </div>
 
-                  <div className="flex flex-col gap-4 items-center pt-8">
+                  {/* Footer CTA */}
+                  <div className="p-6 border-t border-gray-100 space-y-3">
                     <motion.a
                       href="/auth/signup"
-                      className="w-full py-3 text-center  font-medium text-black border-2 border-amber-600 rounded-sm hover:bg-black hover:text-white transition-colors"
+                      className="block py-3 px-4 text-center rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 transition-colors"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: links.length * 0.05 }}
+                      onClick={closeMenu}
+                    >
+                      Sign In
+                    </motion.a>
+                    <motion.a
+                      href="/booking"
+                      className="block py-3 px-4 text-center rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 transition-all"
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: links.length * 0.05 + 0.1 }}
                       onClick={closeMenu}
                     >
-                      Sign Up
-                    </motion.a>
-                    <motion.button
-                      className="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-sm text-lg font-medium tracking-wide  transition-all"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: links.length * 0.05 + 0.15 }}
-                      whileHover={{ y: -1 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
                       Book Now
-                    </motion.button>
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>

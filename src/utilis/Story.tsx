@@ -223,6 +223,7 @@ const Story = () => {
           <h3 className="text-2xl font-serif font-bold text-amber-800 mb-6">
             Experience Our Story Firsthand
           </h3>
+          <a href="/booking">
           <motion.button
             whileHover={{ scale: 1.05, backgroundColor: "#B45309" }}
             whileTap={{ scale: 0.95 }}
@@ -230,6 +231,7 @@ const Story = () => {
           >
             Book Your Stay <FiChevronRight className="ml-2" />
           </motion.button>
+          </a>
         </motion.div>
       </main>
 

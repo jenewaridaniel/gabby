@@ -121,6 +121,7 @@ const Rooms = () => {
             <p className="text-lg text-amber-100 max-w-2xl mx-auto mb-8">
               Experience comfort and elegance in our carefully designed rooms
             </p>
+            <a href="/booking">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -128,6 +129,7 @@ const Rooms = () => {
             >
               Book Your Stay
             </motion.button>
+            </a>
           </motion.div>
         </div>
       </div>
@@ -485,6 +487,7 @@ const Rooms = () => {
               )}
 
               <div className="flex flex-wrap gap-4">
+                <a href="/booking">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -492,6 +495,7 @@ const Rooms = () => {
                 >
                   Book Now
                 </motion.button>
+                </a>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

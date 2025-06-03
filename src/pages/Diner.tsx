@@ -224,6 +224,7 @@ const Diner = () => {
               classic English cuisine
             </p>
             <div className="flex flex-wrap justify-center gap-4">
+              <a href="/dining">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -238,6 +239,7 @@ const Diner = () => {
               >
                 View Menu
               </motion.button>
+              </a>
             </div>
           </motion.div>
         </div>
@@ -693,9 +695,11 @@ const Diner = () => {
               whileTap={{ scale: 0.95 }}
               className="inline-block"
             >
+              <a href="/booking">
               <button className="bg-white hover:bg-gray-100 text-amber-600 font-bold py-4 px-8 rounded-full text-lg shadow-lg">
                 Book Now
               </button>
+              </a>
             </motion.div>
           </motion.div>
         </div>

@@ -275,9 +275,11 @@ const Experiences = () => {
             hotel destination
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/booking">
             <button className="px-8 py-3 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700 transition-colors duration-300">
               Book Your Stay
             </button>
+            </a>
             <a href="/contact-us">
 
             <button className="px-8 py-3 border border-white text-white font-bold rounded-lg hover:bg-white hover:text-gray-900 transition-colors duration-300">
