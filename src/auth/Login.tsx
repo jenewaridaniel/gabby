@@ -40,6 +40,10 @@ function Login() {
       const user = result.user;
 
       // Check if user exists in users collection
+       if(user.email === "gilbertjenewari123@gmail.com"){
+        navigate('/admin')
+        return;
+      }
       const userExists = await checkUserExists(user.uid);
       if (!userExists) {
         toast.error("Please sign up first");
@@ -92,6 +96,10 @@ function Login() {
         toast.error("Please sign up first");
         await auth.signOut();
         setIsLoading(false);
+        return;
+      }
+      else if(user.email === 'gilbertjenewaridaniel123@gmail.com'){
+        navigate('/admin');
         return;
       }
 

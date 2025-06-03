@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { auth } from "../config/firebase";
+// import { auth } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   query,
@@ -16,12 +17,13 @@ import {
   PencilIcon,
 } from "lucide-react";
 import { db } from "../config/firebase";
-// @ts-expect-error: types.ts may not exist yet fuck.mm
+// @ts-expect-error: types.ts may not exist yet fuck mehn
 import { Room, Booking, Stats } from "./types";
 
 
 
 const Admin = () => {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<
     "dashboard" | "bookings" | "rooms"
   >("dashboard");
@@ -34,7 +36,14 @@ const Admin = () => {
   const [currentRoom, setCurrentRoom] = useState<Partial<Room>>({});
   const [currentBooking, setCurrentBooking] = useState<Partial<Booking>>({});
 
-  //    delete room func.//
+  // Signs out user //
+  const SignOut=()=>{
+    setLoading(true)
+    setTimeout(() => {
+       setLoading(false)
+      navigate('/')
+     },1500);
+    }
 
   // Fetch data from Firestore
   useEffect(() => {
@@ -176,7 +185,7 @@ const Admin = () => {
           </h1>
           <button
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-            onClick={() => auth.signOut()}
+            onClick={SignOut}
           >
             Logout
           </button>
