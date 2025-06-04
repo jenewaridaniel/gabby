@@ -80,32 +80,32 @@ const BookingSystem = () => {
             animate={isVisible ? "visible" : "hidden"}
             exit="hidden"
           >
+            {/* Cancel button (X icon) - Now outside the modal div */}
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-6 right-6 text-white hover:text-gray-200 transition-colors bg-black/30 backdrop-blur-sm rounded-full p-2"
+              aria-label="Close modal"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
             <motion.div
               className="bg-white p-8 rounded-xl shadow-2xl relative max-w-md w-full mx-4"
               variants={modalVariants}
             >
-              {/* Cancel button (X icon) */}
-              <button
-                onClick={handleCloseModal}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
-                aria-label="Close modal"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
               <motion.div className="flex flex-col items-center space-y-6">
                 {/* Badge image with coming up animation */}
                 <motion.div
@@ -120,7 +120,6 @@ const BookingSystem = () => {
                   />
                 </motion.div>
 
-                
                 <motion.h1
                   variants={contentVariants}
                   className="text-3xl font-bold text-center text-gray-800"
@@ -128,7 +127,6 @@ const BookingSystem = () => {
                   Your Perfect Stay Awaits
                 </motion.h1>
 
-                
                 <motion.p
                   variants={contentVariants}
                   className="text-gray-600 text-center"
@@ -148,7 +146,7 @@ const BookingSystem = () => {
                   >
                     Maybe Later
                   </button>
-                  <button className="flex-1 py-3 px-6 bg-gray-900 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+                  <button className="flex-1 py-3 px-6 bg-amber-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
                     Book Now
                   </button>
                 </motion.div>
@@ -166,7 +164,6 @@ const BookingSystem = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Page */}
       <div className="h-screen flex justify-center items-center">
         <h1 className="text-4xl font-bold">Hi, Traveller</h1>
       </div>

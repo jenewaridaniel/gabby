@@ -654,14 +654,14 @@ const Diner = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex-1 bg-amber-500 hover:bg-amber-600  text-white py-3 px-6 rounded-full font-medium text-center"
+                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-sm  text-white p-3  rounded-full font-medium text-center"
                 >
                   Add to Order
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex-1 border border-amber-500 text-amber-500 hover:bg-amber-50 py-3 px-6 rounded-full font-medium"
+                  className="flex-1 border border-amber-300 text-amber-500 hover:bg-amber-50 p-3  text-sm rounded-full font-medium"
                   onClick={closeDishDetails}
                 >
                   Back to Menu
