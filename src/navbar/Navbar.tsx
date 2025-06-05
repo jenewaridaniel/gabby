@@ -12,7 +12,6 @@ const Navbar = () => {
     { name: "Rooms & Suites", path: "/rooms" },
     { name: "Experiences", path: "/experiences" },
     { name: "Dining", path: "/dining" },
-    { name: "Gallery", path: "/gallery" },
     { name: "Contact", path: "/contact" },
   ];
 

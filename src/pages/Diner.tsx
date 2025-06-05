@@ -232,13 +232,7 @@ const Diner = () => {
               >
                 Reserve a Table
               </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-transparent border-2 border-white text-white font-medium py-3 px-8 rounded-full text-lg"
-              >
-                View Menu
-              </motion.button>
+            
               </a>
             </div>
           </motion.div>
