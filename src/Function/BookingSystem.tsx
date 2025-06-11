@@ -507,7 +507,7 @@ const BookingSystem = () => {
               )}
             </div>
 
-            <a href="/booking/details"></a>
+            <a href="/booking/details">
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -520,6 +520,7 @@ const BookingSystem = () => {
             >
               Continue Booking →
             </motion.button>
+            </a>
           </motion.div>
         </div>
       </motion.div>

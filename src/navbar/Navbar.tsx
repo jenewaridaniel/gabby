@@ -12,7 +12,7 @@ const Navbar = () => {
     { name: "Rooms & Suites", path: "/rooms" },
     { name: "Experiences", path: "/experiences" },
     { name: "Dining", path: "/dining" },
-    { name: "Contact", path: "/contact" },
+    { name: "Contact", path: "/contact-us" },
   ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
