@@ -10,6 +10,7 @@ import {
   FiBookOpen,
   FiChevronDown,
 } from "react-icons/fi";
+import { IoMdArrowBack } from "react-icons/io";
 import Footer from "../utilis/Footer";
 
 type Dish = {
@@ -210,34 +211,38 @@ const Diner = () => {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30"></div>
+
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              Nigerian-English Fusion Dining
+            <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">
+              Eat Fresh and Healthy
             </h1>
-            <p className="text-xl text-white max-w-2xl mx-auto mb-8">
-              Experience the perfect blend of traditional Nigerian flavors with
-              classic English cuisine
+            <p className=" text-md text-white max-w-2xl mx-auto mb-8">
+              A perfect blend of bold, tasty flavors
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="/dining">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg shadow-lg"
-              >
-                Reserve a Table
-              </motion.button>
-            
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg shadow-lg"
+                >
+                  Book Here
+                </motion.button>
               </a>
             </div>
           </motion.div>
         </div>
 
+        <a href="/">
+          <div className=" absolute z-10 left-0 top-0 p-5">
+            <IoMdArrowBack className=" text-gray-50 text-3xl" />
+          </div>
+        </a>
         {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
@@ -386,7 +391,7 @@ const Diner = () => {
                               )}
                             </div>
                           </div>
-                          <div className="text-2xl font-bold text-amber-600">
+                          <div className="text-xl font-bold text-amber-600">
                             {formatNaira(dish.price)}
                           </div>
                         </div>
@@ -615,7 +620,6 @@ const Diner = () => {
                   Ingredients
                 </h4>
                 <p className="text-gray-600">
-                 
                   {activeDish.origin === "Nigerian"
                     ? "Fresh tomatoes, onions, peppers, traditional spices, locally sourced meats"
                     : activeDish.origin === "English"
@@ -667,8 +671,8 @@ const Diner = () => {
       )}
 
       {/* Reservation CTA */}
-      <div className="py-24 bg-gradient-to-r from-amber-500 to-amber-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
+      <div className="py-24 bg-gray-100 md:m-10 rounded-4xl relative overflow-hidden">
+        {/* <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div> */}
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -677,10 +681,10 @@ const Diner = () => {
             transition={{ duration: 0.7 }}
             className="max-w-3xl mx-auto"
           >
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Reserve Your Table
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Enjoy your stay
             </h3>
-            <p className="text-xl mb-8 text-amber-100 max-w-2xl mx-auto">
+            <p className="text-lg mb-8 text-gray-900 max-w-2xl mx-auto">
               Experience our unique fusion dining in an elegant atmosphere with
               impeccable service
             </p>
@@ -690,9 +694,9 @@ const Diner = () => {
               className="inline-block"
             >
               <a href="/booking">
-              <button className="bg-white hover:bg-gray-100 text-amber-600 font-bold py-4 px-8 rounded-full text-lg shadow-lg">
-                Book Now
-              </button>
+                <button className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full text-lg shadow-md">
+                  Book Now
+                </button>
               </a>
             </motion.div>
           </motion.div>
