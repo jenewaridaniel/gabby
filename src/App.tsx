@@ -13,6 +13,7 @@ import Rooms from "./pages/Rooms";
 import Diner from './pages/Diner'
 import Admin from './Admin/Admin'
 import BookingSystem from "./Function/BookingSystem";
+import BookingDetails from "./Function/BookingDetails";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ const App = () => {
     ADMIN:'/admin',
     BOOKING:'/booking',
     STORY: "/story",
+    BOOKINGDETAILS: '/booking/details'
   };
 
   const router = createBrowserRouter([
@@ -38,6 +40,7 @@ const App = () => {
     { path: ROUTER.CONTACTUS, element: <ContactUs /> },
     {path:ROUTER.ADMIN, element:<Admin/>},
     {path:ROUTER.BOOKING, element:<BookingSystem/>},
+    {path:ROUTER.BOOKINGDETAILS, element:<BookingDetails/>},
     { path: ROUTER.SIGNUP, element: <Signup /> },
     { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },
