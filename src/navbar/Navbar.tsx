@@ -108,13 +108,13 @@ const Navbar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden lg:flex items-center gap-3 ml-6">
-          <motion.a
+          {/* <motion.a
             href="/auth/signup"
             className="px-4 py-2 text-md font-medium text-gray-700 hover:text-amber-600 transition-colors"
             whileHover={{ y: -1 }}
           >
             Sign In
-          </motion.a>
+          </motion.a> */}
           <motion.a
             href="/booking"
             className="relative px-5 py-3 rounded-full bg-amber-600 text-white text-md font-medium group overflow-hidden"
@@ -226,7 +226,7 @@ const Navbar = () => {
 
                   {/* Footer CTA */}
                   <div className="p-6 border-t border-gray-100 space-y-3">
-                    <motion.a
+                    {/* <motion.a
                       href="/auth/signup"
                       className="block py-3 px-4 text-center rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-50 transition-colors"
                       initial={{ y: 20, opacity: 0 }}
@@ -235,7 +235,7 @@ const Navbar = () => {
                       onClick={closeMenu}
                     >
                       Sign In
-                    </motion.a>
+                    </motion.a> */}
                     <motion.a
                       href="/booking"
                       className="block py-3 px-4 text-center rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 transition-all"
