@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyA6UdrpqooC2xSEwbzwjHzcvb_qtI_2nZo",
   authDomain: "gabby-hotel.firebaseapp.com",
   projectId: "gabby-hotel",
-  storageBucket: "gabby-hotel.appspot.com", // fixed typo (".app" → ".appspot.com")
+  storageBucket: "gabby-hotel.appspot.com",
   messagingSenderId: "458498696965",
   appId: "1:458498696965:web:3cf9163cb31dac253df96c",
   measurementId: "G-9VHL9NJEZ9"
