@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../config/firebase"; 
 
 const BookingDetails = () => {
   const [step, setStep] = useState(1);
@@ -7,8 +9,10 @@ const BookingDetails = () => {
     name: "",
     email: "",
     phone: "",
-    paymentMethod: "", // Added payment method field
+    paymentMethod: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,6 +24,36 @@ const BookingDetails = () => {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
+
+  // Save booking to Firestore
+  const saveBooking = async () => {
+    if (!formData.name || !formData.email || !formData.paymentMethod) {
+      setSubmitError("Please complete all required fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      // Add a new document to the "bookings" collection
+      await addDoc(collection(db, "bookings"), {
+        name: formData.name,
+        email: formData.email,
+        paymentMethod: formData.paymentMethod,
+        phone: formData.phone || "Not provided", // Optional field
+        createdAt: serverTimestamp(),
+        status: "pending",
+      });
+      
+      nextStep(); // Move to confirmation step
+    } catch (error) {
+      console.error("Error saving booking: ", error);
+      setSubmitError("Failed to save booking. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Animation variants
   const containerVariants = {
@@ -182,7 +216,7 @@ const BookingDetails = () => {
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Full Name
+                    Full Name *
                   </label>
                   <motion.input
                     type="text"
@@ -202,7 +236,7 @@ const BookingDetails = () => {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Email Address
+                    Email Address *
                   </label>
                   <motion.input
                     type="email"
@@ -232,7 +266,6 @@ const BookingDetails = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 outline-none border border-gray-300 rounded-lg transition"
                     placeholder="+1 (555) 123-4567"
-                    required
                     whileFocus={{ scale: 1.01 }}
                   />
                 </motion.div>
@@ -243,10 +276,17 @@ const BookingDetails = () => {
                 >
                   <motion.button
                     onClick={nextStep}
-                    className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md"
+                    disabled={!formData.name || !formData.email}
+                    className={`px-6 py-2 text-white font-medium rounded-lg shadow-md ${
+                      !formData.name || !formData.email
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-blue-600"
+                    }`}
                     variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
+                    whileHover={
+                      formData.name && formData.email ? "hover" : {}
+                    }
+                    whileTap={formData.name && formData.email ? "tap" : {}}
                   >
                     Next
                   </motion.button>
@@ -290,7 +330,9 @@ const BookingDetails = () => {
 
                   <div>
                     <p className="text-sm text-gray-500">Phone Number</p>
-                    <p className="font-medium">{formData.phone}</p>
+                    <p className="font-medium">
+                      {formData.phone || "Not provided"}
+                    </p>
                   </div>
                 </motion.div>
 
@@ -334,20 +376,10 @@ const BookingDetails = () => {
                   variants={itemVariants}
                   className="text-xl font-semibold text-gray-700"
                 >
-                  Payment Method
+                  Payment Method *
                 </motion.h2>
 
                 <motion.div variants={itemVariants} className="space-y-4">
-                  <motion.div
-                    className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                      formData.paymentMethod === "paystack"
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-300 hover:border-gray-400"
-                    }`}
-                    onClick={() => handlePaymentMethodSelect("paystack")}
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                  ></motion.div>
                   <motion.div
                     className={`p-4 border rounded-lg cursor-not-allowed bg-gray-50 transition-colors`}
                     whileHover={{ scale: 1.01 }}
@@ -425,6 +457,16 @@ const BookingDetails = () => {
                   </motion.div>
                 </motion.div>
 
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-sm text-center"
+                  >
+                    {submitError}
+                  </motion.div>
+                )}
+
                 <motion.div
                   variants={itemVariants}
                   className="flex justify-between pt-4"
@@ -439,18 +481,18 @@ const BookingDetails = () => {
                     Back
                   </motion.button>
                   <motion.button
-                    onClick={nextStep}
-                    disabled={!formData.paymentMethod}
+                    onClick={saveBooking}
+                    disabled={!formData.paymentMethod || isSubmitting}
                     className={`px-6 py-2 text-white font-medium rounded-lg shadow-md ${
-                      !formData.paymentMethod
+                      !formData.paymentMethod || isSubmitting
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-blue-600"
                     }`}
                     variants={buttonVariants}
-                    whileHover={formData.paymentMethod ? "hover" : {}}
-                    whileTap={formData.paymentMethod ? "tap" : {}}
+                    whileHover={formData.paymentMethod && !isSubmitting ? "hover" : {}}
+                    whileTap={formData.paymentMethod && !isSubmitting ? "tap" : {}}
                   >
-                    Complete Booking
+                    {isSubmitting ? "Processing..." : "Complete Booking"}
                   </motion.button>
                 </motion.div>
               </motion.div>
@@ -502,10 +544,7 @@ const BookingDetails = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Thank you for your booking.{" "}
-                  {formData.paymentMethod === "paystack"
-                    ? "We've processed your payment and sent the details to"
-                    : "Please pay when you arrive at the hotel. We've sent the details to"}{" "}
+                  Thank you for your booking. We've sent the details to{" "}
                   {formData.email}.
                 </motion.p>
 
@@ -529,13 +568,13 @@ const BookingDetails = () => {
                     </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Phone:</span>{" "}
-                      {formData.phone}
+                      {formData.phone || "Not provided"}
                     </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Payment Method:</span>{" "}
-                      {formData.paymentMethod === "paystack"
-                        ? "Pay Online (Paystack)"
-                        : "Pay at Hotel"}
+                      {formData.paymentMethod === "hotel"
+                        ? "Pay at Hotel"
+                        : "Not selected"}
                     </p>
                   </div>
                 </motion.div>
