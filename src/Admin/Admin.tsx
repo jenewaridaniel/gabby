@@ -35,6 +35,7 @@ const Admin = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [currentRoom, setCurrentRoom] = useState<Partial<Room>>({});
   const [currentBooking, setCurrentBooking] = useState<Partial<Booking>>({});
+  
 
   // Signs out user //
   const SignOut=()=>{
@@ -44,6 +45,8 @@ const Admin = () => {
       navigate('/')
      },1500);
     }
+
+    
 
   // Fetch data from Firestore
   useEffect(() => {

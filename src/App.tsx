@@ -15,6 +15,9 @@ import Admin from './Admin/Admin'
 import BookingSystem from "./Function/BookingSystem";
 import BookingDetails from "./Function/BookingDetails";
 
+// protected routes //
+
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
