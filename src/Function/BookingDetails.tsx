@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePaystackPayment } from 'react-paystack';
 
 const BookingDetails = () => {
   const [step, setStep] = useState(1);
@@ -8,9 +7,8 @@ const BookingDetails = () => {
     name: "",
     email: "",
     phone: "",
-    paymentMethod: "",
+    paymentMethod: "", // Added payment method field
   });
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,47 +20,6 @@ const BookingDetails = () => {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
-
-  // Paystack configuration
-  const paystackConfig = {
-    reference: `booking_${new Date().getTime()}`,
-    email: formData.email,
-    amount: 500000, // 5000 Naira in kobo
-    publicKey: 'pk_test_your_paystack_key_here', // Replace with your test key
-    currency: 'NGN',
-    metadata: {
-      name: formData.name,
-      phone: formData.phone,
-      custom_fields: [
-        {
-          display_name: "Booking Type",
-          variable_name: "booking_type",
-          value: "Hotel Reservation"
-        }
-      ]
-    }
-  };
-
-  const initializePayment = usePaystackPayment(paystackConfig);
-
-  const onPaymentSuccess = () => {
-    setIsProcessingPayment(false);
-    setStep(4); // Move to confirmation step
-  };
-
-  const onPaymentClose = () => {
-    setIsProcessingPayment(false);
-    alert("Payment was not completed. Please try again.");
-  };
-
-  const handleCompleteBooking = () => {
-    if (formData.paymentMethod === "paystack") {
-      setIsProcessingPayment(true);
-      initializePayment(onPaymentSuccess, onPaymentClose);
-    } else {
-      setStep(4); 
-    }
-  };
 
   // Animation variants
   const containerVariants = {
@@ -92,7 +49,8 @@ const BookingDetails = () => {
   const progressVariants = {
     initial: { width: "0%" },
     animate: (step: number) => ({
-      width: step >= 3 ? "100%" : step === 2 ? "66%" : step === 1 ? "33%" : "0%",
+      width:
+        step >= 3 ? "100%" : step === 2 ? "66%" : step === 1 ? "33%" : "0%",
       transition: { duration: 0.5, ease: "easeInOut" },
     }),
   };
@@ -147,10 +105,18 @@ const BookingDetails = () => {
                   </motion.div>
                   <motion.span
                     className={`text-xs mt-2 ${
-                      step >= i ? "text-gray-400 tracking-widest font-medium" : "text-gray-500"
+                      step >= i
+                        ? "text-gray-400 tracking-widest font-medium"
+                        : "text-gray-500"
                     }`}
                   >
-                    {i === 1 ? "Details" : i === 2 ? "Review" : i === 3 ? "Payment" : "Confirm"}
+                    {i === 1
+                      ? "Details"
+                      : i === 2
+                      ? "Review"
+                      : i === 3
+                      ? "Payment"
+                      : "Confirm"}
                   </motion.span>
                 </motion.div>
               ))}
@@ -204,10 +170,13 @@ const BookingDetails = () => {
                 exit="exit"
                 className="space-y-6"
               >
-                <motion.h2 variants={itemVariants} className="text-xl font-semibold text-gray-700">
+                <motion.h2
+                  variants={itemVariants}
+                  className="text-xl font-semibold text-gray-700"
+                >
                   Personal Information
                 </motion.h2>
-                
+
                 <motion.div variants={itemVariants}>
                   <label
                     htmlFor="name"
@@ -268,7 +237,10 @@ const BookingDetails = () => {
                   />
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex justify-end pt-4">
+                <motion.div
+                  variants={itemVariants}
+                  className="flex justify-end pt-4"
+                >
                   <motion.button
                     onClick={nextStep}
                     className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md"
@@ -292,11 +264,14 @@ const BookingDetails = () => {
                 exit="exit"
                 className="space-y-6"
               >
-                <motion.h2 variants={itemVariants} className="text-xl font-semibold text-gray-700">
+                <motion.h2
+                  variants={itemVariants}
+                  className="text-xl font-semibold text-gray-700"
+                >
                   Review Your Information
                 </motion.h2>
 
-                <motion.div 
+                <motion.div
                   variants={itemVariants}
                   className="bg-gray-50 p-6 rounded-lg"
                   initial={{ opacity: 0, y: 10 }}
@@ -319,7 +294,7 @@ const BookingDetails = () => {
                   </div>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   variants={itemVariants}
                   className="flex justify-between pt-4"
                 >
@@ -355,14 +330,14 @@ const BookingDetails = () => {
                 exit="exit"
                 className="space-y-6"
               >
-                <motion.h2 variants={itemVariants} className="text-xl font-semibold text-gray-700">
+                <motion.h2
+                  variants={itemVariants}
+                  className="text-xl font-semibold text-gray-700"
+                >
                   Payment Method
                 </motion.h2>
 
-                <motion.div 
-                  variants={itemVariants}
-                  className="space-y-4"
-                >
+                <motion.div variants={itemVariants} className="space-y-4">
                   <motion.div
                     className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                       formData.paymentMethod === "paystack"
@@ -372,26 +347,42 @@ const BookingDetails = () => {
                     onClick={() => handlePaymentMethodSelect("paystack")}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
+                  ></motion.div>
+                  <motion.div
+                    className={`p-4 border rounded-lg cursor-not-allowed bg-gray-50 transition-colors`}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    initial={{ opacity: 0.8 }}
+                    animate={{ opacity: 0.6 }}
+                    transition={{ duration: 0.3 }}
                   >
                     <div className="flex items-center">
-                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${
-                        formData.paymentMethod === "paystack"
-                          ? "border-blue-500 bg-blue-500"
-                          : "border-gray-400"
-                      }`}>
-                        {formData.paymentMethod === "paystack" && (
-                          <svg className="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
+                      <div
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-3 border-gray-300 bg-white`}
+                      >
+                        <div className="w-3 h-3 rounded-full bg-gray-300" />
                       </div>
                       <div>
-                        <h3 className="font-medium">Pay Online with Paystack</h3>
-                        <p className="text-sm text-gray-500">Secure payment with credit card or bank transfer</p>
+                        <h3 className="font-medium text-gray-600">
+                          Pay Online with Paystack
+                        </h3>
+                        <p className="text-xs text-gray-400 mt-1 flex items-center">
+                          <svg
+                            className="w-3 h-3 mr-1"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          Coming Soon
+                        </p>
                       </div>
                     </div>
                   </motion.div>
-
                   <motion.div
                     className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                       formData.paymentMethod === "hotel"
@@ -403,26 +394,38 @@ const BookingDetails = () => {
                     whileTap={{ scale: 0.99 }}
                   >
                     <div className="flex items-center">
-                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${
-                        formData.paymentMethod === "hotel"
-                          ? "border-blue-500 bg-blue-500"
-                          : "border-gray-400"
-                      }`}>
+                      <div
+                        className={`w-5 h-5 rounded-full border flex items-center justify-center mr-3 ${
+                          formData.paymentMethod === "hotel"
+                            ? "border-blue-500 bg-blue-500"
+                            : "border-gray-400"
+                        }`}
+                      >
                         {formData.paymentMethod === "hotel" && (
-                          <svg className="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          <svg
+                            className="w-3 h-3 text-white"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
                           </svg>
                         )}
                       </div>
                       <div>
                         <h3 className="font-medium">Pay at Hotel</h3>
-                        <p className="text-sm text-gray-500">Pay when you arrive at the hotel</p>
+                        <p className="text-sm text-gray-500">
+                          Pay when you arrive at the hotel
+                        </p>
                       </div>
                     </div>
                   </motion.div>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   variants={itemVariants}
                   className="flex justify-between pt-4"
                 >
@@ -436,28 +439,18 @@ const BookingDetails = () => {
                     Back
                   </motion.button>
                   <motion.button
-                    onClick={handleCompleteBooking}
-                    disabled={!formData.paymentMethod || isProcessingPayment}
+                    onClick={nextStep}
+                    disabled={!formData.paymentMethod}
                     className={`px-6 py-2 text-white font-medium rounded-lg shadow-md ${
-                      !formData.paymentMethod || isProcessingPayment 
-                        ? "bg-gray-400 cursor-not-allowed" 
+                      !formData.paymentMethod
+                        ? "bg-gray-400 cursor-not-allowed"
                         : "bg-blue-600"
                     }`}
                     variants={buttonVariants}
-                    whileHover={formData.paymentMethod && !isProcessingPayment ? "hover" : {}}
-                    whileTap={formData.paymentMethod && !isProcessingPayment ? "tap" : {}}
+                    whileHover={formData.paymentMethod ? "hover" : {}}
+                    whileTap={formData.paymentMethod ? "tap" : {}}
                   >
-                    {isProcessingPayment ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing...
-                      </span>
-                    ) : (
-                      "Complete Booking"
-                    )}
+                    Complete Booking
                   </motion.button>
                 </motion.div>
               </motion.div>
@@ -495,7 +488,7 @@ const BookingDetails = () => {
                   </svg>
                 </motion.div>
 
-                <motion.h2 
+                <motion.h2
                   className="text-xl font-bold text-gray-800"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -503,19 +496,20 @@ const BookingDetails = () => {
                 >
                   Booking Confirmed!
                 </motion.h2>
-                <motion.p 
+                <motion.p
                   className="text-gray-600 text-md"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  Thank you for your booking. {formData.paymentMethod === "paystack" 
-                    ? "We've processed your payment and sent the details to" 
-                    : "Please pay when you arrive at the hotel. We've sent the details to"} {" "}
+                  Thank you for your booking.{" "}
+                  {formData.paymentMethod === "paystack"
+                    ? "We've processed your payment and sent the details to"
+                    : "Please pay when you arrive at the hotel. We've sent the details to"}{" "}
                   {formData.email}.
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                   className="bg-blue-50 p-6 rounded-lg text-left"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -526,7 +520,8 @@ const BookingDetails = () => {
                   </h3>
                   <div className="space-y-2">
                     <p className="text-sm">
-                      <span className="text-gray-500">Name:</span> {formData.name}
+                      <span className="text-gray-500">Name:</span>{" "}
+                      {formData.name}
                     </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Email:</span>{" "}
@@ -538,15 +533,10 @@ const BookingDetails = () => {
                     </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Payment Method:</span>{" "}
-                      {formData.paymentMethod === "paystack" 
-                        ? "Pay Online (Paystack)" 
+                      {formData.paymentMethod === "paystack"
+                        ? "Pay Online (Paystack)"
                         : "Pay at Hotel"}
                     </p>
-                    {formData.paymentMethod === "paystack" && (
-                      <p className="text-sm">
-                        <span className="text-gray-500">Amount Paid:</span> ₦5,000
-                      </p>
-                    )}
                   </div>
                 </motion.div>
 

@@ -14,6 +14,7 @@ import Diner from './pages/Diner'
 import Admin from './Admin/Admin'
 import BookingSystem from "./Function/BookingSystem";
 import BookingDetails from "./Function/BookingDetails";
+import NotFound from "./utilis/NotFound";
 
 // protected routes //
 
@@ -35,7 +36,8 @@ const App = () => {
     ADMIN:'/admin',
     BOOKING:'/booking',
     STORY: "/story",
-    BOOKINGDETAILS: '/booking/details'
+    BOOKINGDETAILS: '/booking/details',
+    NOTFOUND: '*'
   };
 
   const router = createBrowserRouter([
@@ -53,6 +55,7 @@ const App = () => {
     { path: ROUTER.DINING, element: <Diner /> },
     { path: ROUTER.STORY, element: <Story /> },
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
+    { path: ROUTER.NOTFOUND, element: <NotFound/> },
   ]);
 
   useEffect(() => {
