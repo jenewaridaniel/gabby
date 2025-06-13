@@ -1,9 +1,32 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../config/firebase"; 
+import { db } from "../config/firebase";
+import { format } from "date-fns";
+
+interface Room {
+  id: string;
+  type: string;
+  price: number;
+  amenities: string[];
+  imageUrl: string;
+  description?: string;
+}
+
+interface BookingData {
+  room: Room;
+  checkInDate: Date;
+  checkOutDate: Date;
+  totalPrice: number;
+  nights: number;
+}
 
 const BookingDetails = () => {
+  const location = useLocation();
+  const { state } = location;
+  const bookingData = state as BookingData;
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -13,6 +36,15 @@ const BookingDetails = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  // Format currency for display
+  const formatNaira = (price: number) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      maximumFractionDigits: 0,
+    }).format(price);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,7 +57,13 @@ const BookingDetails = () => {
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
-  // Save booking to Firestore
+  const handlePaymentMethodSelect = (method: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      paymentMethod: method,
+    }));
+  };
+
   const saveBooking = async () => {
     if (!formData.name || !formData.email || !formData.paymentMethod) {
       setSubmitError("Please complete all required fields");
@@ -36,17 +74,38 @@ const BookingDetails = () => {
     setSubmitError("");
 
     try {
-      // Add a new document to the "bookings" collection
       await addDoc(collection(db, "bookings"), {
-        name: formData.name,
-        email: formData.email,
+        // Customer information
+        customer: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || "Not provided",
+        },
+        
+        // Booking details
+        room: {
+          id: bookingData.room.id,
+          type: bookingData.room.type,
+          price: bookingData.room.price,
+          amenities: bookingData.room.amenities,
+        },
+        
+        // Dates
+        checkInDate: bookingData.checkInDate,
+        checkOutDate: bookingData.checkOutDate,
+        nights: bookingData.nights,
+        
+        // Payment
         paymentMethod: formData.paymentMethod,
-        phone: formData.phone || "Not provided", // Optional field
-        createdAt: serverTimestamp(),
+        totalPrice: bookingData.totalPrice,
         status: "pending",
+        
+        // Metadata
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       });
       
-      nextStep(); // Move to confirmation step
+      nextStep();
     } catch (error) {
       console.error("Error saving booking: ", error);
       setSubmitError("Failed to save booking. Please try again.");
@@ -89,13 +148,6 @@ const BookingDetails = () => {
     }),
   };
 
-  const handlePaymentMethodSelect = (method: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      paymentMethod: method,
-    }));
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
@@ -114,7 +166,7 @@ const BookingDetails = () => {
             Booking Summary
           </motion.h1>
 
-          {/* Progress Steps with connecting lines */}
+          {/* Progress Steps */}
           <div className="relative mb-10">
             <div className="flex justify-between">
               {[1, 2, 3, 4].map((i) => (
@@ -314,20 +366,52 @@ const BookingDetails = () => {
                 <motion.div
                   variants={itemVariants}
                   className="bg-gray-50 p-6 rounded-lg"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
                 >
+                  <h3 className="font-medium text-gray-800 mb-3">Room Details</h3>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Room Type</p>
+                    <p className="font-medium">{bookingData.room.type}</p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Price Per Night</p>
+                    <p className="font-medium">
+                      {formatNaira(bookingData.room.price)}
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Check-In Date</p>
+                    <p className="font-medium">
+                    {format(new Date(bookingData.checkInDate), "MMM d, yyyy")}
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Check-Out Date</p>
+                    <p className="font-medium">
+                    {format(new Date(bookingData.checkOutDate), "MMM d, yyyy")}
+                    </p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Total Nights</p>
+                    <p className="font-medium">{bookingData.nights}</p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-500">Total Price</p>
+                    <p className="font-medium">
+                      {formatNaira(bookingData.totalPrice)}
+                    </p>
+                  </div>
+
+                  <h3 className="font-medium text-gray-800 mt-6 mb-3">
+                    Personal Information
+                  </h3>
                   <div className="mb-4">
                     <p className="text-sm text-gray-500">Full Name</p>
                     <p className="font-medium">{formData.name}</p>
                   </div>
-
                   <div className="mb-4">
                     <p className="text-sm text-gray-500">Email Address</p>
                     <p className="font-medium">{formData.email}</p>
                   </div>
-
                   <div>
                     <p className="text-sm text-gray-500">Phone Number</p>
                     <p className="font-medium">
@@ -558,6 +642,26 @@ const BookingDetails = () => {
                     Booking Summary
                   </h3>
                   <div className="space-y-2">
+                    <p className="text-sm">
+                      <span className="text-gray-500">Room Type:</span>{" "}
+                      {bookingData.room.type}
+                    </p>
+                    <p className="text-sm">
+                      <span className="text-gray-500">Check-In:</span>{" "}
+                      {format(new Date(bookingData.checkInDate), "MMM d, yyyy")}
+                    </p>
+                    <p className="text-sm">
+                      <span className="text-gray-500">Check-Out:</span>{" "}
+                      {format(new Date(bookingData.checkOutDate), "MMM d, yyyy")}
+                    </p>
+                    <p className="text-sm">
+                      <span className="text-gray-500">Nights:</span>{" "}
+                      {bookingData.nights}
+                    </p>
+                    <p className="text-sm">
+                      <span className="text-gray-500">Total Price:</span>{" "}
+                      {formatNaira(bookingData.totalPrice)}
+                    </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Name:</span>{" "}
                       {formData.name}

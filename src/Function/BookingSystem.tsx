@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { Link } from "react-router-dom";
 
 interface Room {
   id: string;
@@ -507,7 +508,15 @@ const BookingSystem = () => {
               )}
             </div>
 
-            <a href="/booking/details">
+            <Link to="/booking/details"
+             state={{
+              room: rooms.find((r) => r.id === selectedRoom),
+              checkInDate,
+              checkOutDate,
+              totalPrice,
+              nights
+            }}
+            >
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -520,7 +529,7 @@ const BookingSystem = () => {
             >
               Continue Booking →
             </motion.button>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </motion.div>
