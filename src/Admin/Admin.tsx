@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import {
   collection,
@@ -17,13 +16,61 @@ import {
   PencilIcon,
 } from "lucide-react";
 import { db } from "../config/firebase";
-// @ts-expect-error: types.ts may not exist yet fuck mehn
-import { Room, Booking, Stats } from "./types";
+import { format } from "date-fns";
 
+// Type definitions
+type Room = {
+  id: string;
+  number: string;
+  type: string;
+  description?: string;
+  price: number;
+  capacity: number;
+  status: "available" | "occupied" | "maintenance";
+  amenities?: string[];
+  imageUrl?: string;
+};
 
+type Booking = {
+  id: string;
+  customer: Customer;
+  room: {
+    type: string;
+    number: string;
+  };
+  checkIn: Date;
+  checkOut: Date;
+  status: "confirmed" | "pending" | "cancelled" | "completed";
+  totalPrice: number;
+  paymentMethod?: string;
+  specialRequests?: string;
+  createdAt: Date;
+  nights: number;
+};
+
+interface Customer {
+  name: string;
+  email?: string;
+  phone?: string;
+}
+type Stats = {
+  totalRooms: number;
+  occupiedRooms: number;
+  revenue: number;
+  upcomingCheckIns: number;
+  pendingBookings: number;
+};
+
+const formatNaira = (amount: number) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
 
 const Admin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<
     "dashboard" | "bookings" | "rooms"
   >("dashboard");
@@ -35,18 +82,15 @@ const Admin = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [currentRoom, setCurrentRoom] = useState<Partial<Room>>({});
   const [currentBooking, setCurrentBooking] = useState<Partial<Booking>>({});
-  
 
-  // Signs out user //
-  const SignOut=()=>{
-    setLoading(true)
+  // Signs out user
+  const SignOut = () => {
+    setLoading(true);
     setTimeout(() => {
-       setLoading(false)
-      navigate('/')
-     },1500);
-    }
-
-    
+      setLoading(false);
+      navigate("/");
+    }, 1500);
+  };
 
   // Fetch data from Firestore
   useEffect(() => {
@@ -65,26 +109,32 @@ const Admin = () => {
         // Bookings collection
         const bookingsQuery = query(collection(db, "bookings"));
         const bookingsUnsubscribe = onSnapshot(bookingsQuery, (snapshot) => {
-          const bookingsData = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-            checkIn: doc.data().checkIn.toDate(),
-            checkOut: doc.data().checkOut.toDate(),
-            createdAt: doc.data().createdAt.toDate(),
-          })) as Booking[];
+          const bookingsData = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              customer: {
+                name: data.customer.name || "N/A",
+                email: data.customer.email || "N/A",
+                phone: data.customer.phone || "",
+              },
+              room: {
+                type: data.room.type || "N/A",
+                number: data.room.number || "N/A",
+              },
+              checkIn: data.checkIn?.toDate() || new Date(),
+              checkOut: data.checkOut?.toDate() || new Date(),
+              status: data.status || "confirmed",
+              totalPrice: data.totalPrice || 0,
+              paymentMethod: data.paymentMethod || "",
+              specialRequests: data.specialRequests || "",
+              createdAt: data.createdAt?.toDate() || new Date(),
+              nights: data.nights || 0,
+            } as Booking;
+          });
           setBookings(bookingsData);
         });
 
-        type Room = {
-          id: string;
-          number: string;
-          type: string;
-          description?: string;
-          price: number;
-          capacity: number;
-          status: "available" | "occupied" | "maintenance";
-          amenities?: string[];
-        };
         // Calculate stats
         const calculateStats = async () => {
           const roomsSnapshot = await getDocs(collection(db, "rooms"));
@@ -96,14 +146,15 @@ const Admin = () => {
           ).length;
 
           const revenue = bookingsSnapshot.docs.reduce(
-            (sum, booking) => sum + booking.data().totalPrice,
+            (sum, booking) => sum + (booking.data().totalPrice || 0),
             0
           );
 
           const upcomingCheckIns = bookingsSnapshot.docs.filter((booking) => {
-            const checkIn = booking.data().checkIn.toDate();
+            const checkIn = booking.data().checkIn?.toDate();
             return (
               booking.data().status === "confirmed" &&
+              checkIn &&
               checkIn > new Date() &&
               checkIn < new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             );
@@ -242,19 +293,7 @@ const Admin = () => {
                 <div className="px-4 py-5 sm:p-6">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-blue-500 rounded-md p-3">
-                      <svg
-                        className="h-6 w-6 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                        />
-                      </svg>
+                      <BuildingOfficeIcon className="h-6 w-6 text-white" />
                     </div>
                     <div className="ml-5 w-0 flex-1">
                       <dt className="text-sm font-medium text-gray-500 truncate">
@@ -332,7 +371,7 @@ const Admin = () => {
                       </dt>
                       <dd className="flex items-baseline">
                         <div className="text-2xl font-semibold text-gray-900">
-                          &#8358;{stats.revenue.toLocaleString()}
+                          {formatNaira(stats.revenue)}
                         </div>
                       </dd>
                     </div>
@@ -388,19 +427,7 @@ const Admin = () => {
                   }}
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center"
                 >
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    ></path>
-                  </svg>
+                  <PlusIcon className="w-5 h-5 mr-2" />
                   Add Booking
                 </button>
               </div>
@@ -410,40 +437,22 @@ const Admin = () => {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Guest
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Guest Info
                         </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Room
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Contact
                         </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Dates
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Stay Details
                         </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Payment
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Status
                         </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Price
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
@@ -451,42 +460,51 @@ const Admin = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {bookings.map((booking) => (
                         <tr key={booking.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">
-                                  {booking.guestName}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {booking.guestEmail}
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {rooms.find((r) => r.id === booking.roomId)
-                                ?.number || "N/A"}
+                          {/* Guest Info */}
+                          <td className="px-6 py-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {booking.customer.name}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {rooms.find((r) => r.id === booking.roomId)
-                                ?.type || "N/A"}
+                              Room: {booking.room.type}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+
+                          {/* Contact */}
+                          <td className="px-6 py-4">
                             <div className="text-sm text-gray-900">
-                              {booking.checkIn.toLocaleDateString()} -{" "}
-                              {booking.checkOut.toLocaleDateString()}
+                              {booking.customer.email}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {Math.ceil(
-                                (booking.checkOut.getTime() -
-                                  booking.checkIn.getTime()) /
-                                  (1000 * 60 * 60 * 24)
-                              )}{" "}
-                              nights
+                              {booking.customer.phone || "No phone"}
                             </div>
                           </td>
+
+                          {/* Stay Details */}
+                          <td className="px-6 py-4">
+                            <div className="text-sm text-gray-900">
+                              {format(booking.checkIn, "MMM d, yyyy")} -{" "}
+                              {format(booking.checkOut, "MMM d, yyyy")}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {booking.nights} night
+                              {booking.nights !== 1 ? "s" : ""}
+                            </div>
+                          </td>
+
+                          {/* Payment */}
+                          <td className="px-6 py-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {formatNaira(booking.totalPrice)}
+                            </div>
+                            <div className="text-sm text-gray-500 capitalize">
+                              {booking.paymentMethod
+                                ?.replace(/([A-Z])/g, " $1")
+                                ?.toLowerCase() || "N/A"}
+                            </div>
+                          </td>
+
+                          {/* Status */}
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span
                               className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -503,9 +521,8 @@ const Admin = () => {
                                 booking.status.slice(1)}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            &#8358;{booking.totalPrice}
-                          </td>
+
+                          {/* Actions */}
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div className="flex space-x-2">
                               <button
@@ -552,14 +569,14 @@ const Admin = () => {
                   </p>
                 </div>
                 <div className="mt-6">
-                    <button
-                      onClick={() => setShowRoomModal(true)}
-                      className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition"
-                    >
-                      <PlusIcon className="w-5 h-5 mr-2" />
-                      Add Room
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setShowRoomModal(true)}
+                    className="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition"
+                  >
+                    <PlusIcon className="w-5 h-5 mr-2" />
+                    Add Room
+                  </button>
+                </div>
               </div>
 
               {rooms.length === 0 ? (
@@ -573,7 +590,6 @@ const Admin = () => {
                   <p className="mt-1 text-sm text-gray-500">
                     Get started by adding your first room.
                   </p>
-                 
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -633,7 +649,7 @@ const Admin = () => {
                               Price per night:
                             </span>
                             <span className="text-sm font-medium text-gray-900">
-                              ₦{room.price.toLocaleString()}
+                              {formatNaira(room.price)}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
@@ -653,16 +669,14 @@ const Admin = () => {
                               Amenities
                             </h4>
                             <div className="flex flex-wrap gap-2">
-                              {room.amenities.map(
-                                (amenity: string, index: number) => (
-                                  <span
-                                    key={index}
-                                    className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800"
-                                  >
-                                    {amenity}
-                                  </span>
-                                )
-                              )}
+                              {room.amenities.map((amenity, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800"
+                                >
+                                  {amenity}
+                                </span>
+                              ))}
                             </div>
                           </div>
                         )}
@@ -670,7 +684,6 @@ const Admin = () => {
 
                       <div className="bg-gray-50 px-5 py-3 flex justify-end gap-2 border-t border-gray-200">
                         <button
-                        //   onClick={() => handleDeleteRoom(room)}
                           className="p-2 text-gray-500 hover:text-red-600 rounded-lg hover:bg-gray-200 transition"
                           title="Delete room"
                         >
@@ -773,7 +786,7 @@ const Admin = () => {
                       onChange={(e) =>
                         setCurrentRoom({
                           ...currentRoom,
-                          type: e.target.value as Room["type"],
+                          type: e.target.value,
                         })
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -790,7 +803,7 @@ const Admin = () => {
                       htmlFor="room-price"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Price per night (&#8358;)
+                      Price per night (₦)
                     </label>
                     <input
                       type="number"
@@ -871,7 +884,10 @@ const Admin = () => {
                       onChange={(e) =>
                         setCurrentRoom({
                           ...currentRoom,
-                          status: e.target.value as Room["status"],
+                          status: e.target.value as
+                            | "available"
+                            | "occupied"
+                            | "maintenance",
                         })
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -959,11 +975,14 @@ const Admin = () => {
                       type="text"
                       name="guest-name"
                       id="guest-name"
-                      value={currentBooking.guestName || ""}
+                      value={currentBooking.customer?.name || ""}
                       onChange={(e) =>
                         setCurrentBooking({
                           ...currentBooking,
-                          guestName: e.target.value,
+                          customer: {
+                            ...currentBooking.customer,
+                            name: e.target.value,
+                          },
                         })
                       }
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -981,18 +1000,22 @@ const Admin = () => {
                       type="email"
                       name="guest-email"
                       id="guest-email"
-                      value={currentBooking.guestEmail || ""}
+                      value={currentBooking.customer?.email || ""}
                       onChange={(e) =>
                         setCurrentBooking({
                           ...currentBooking,
-                          guestEmail: e.target.value,
+                          customer: {
+                            name: currentBooking.customer?.name || "", // Provide default value
+                            email: e.target.value,
+                            phone: currentBooking.customer?.phone || "", // Provide default value
+                          },
                         })
                       }
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
-                  <div className="sm:col-span-3">
+                  {/* <div className="sm:col-span-3">
                     <label
                       htmlFor="room-id"
                       className="block text-sm font-medium text-gray-700"
@@ -1002,11 +1025,14 @@ const Admin = () => {
                     <select
                       id="room-id"
                       name="room-id"
-                      value={currentBooking.roomId || ""}
+                      value={currentBooking.room?.type || ""}
                       onChange={(e) =>
                         setCurrentBooking({
                           ...currentBooking,
-                          roomId: e.target.value,
+                          room: {
+                            ...currentBooking.room,
+                            type: e.target.value,
+                          },
                         })
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -1015,13 +1041,14 @@ const Admin = () => {
                       {rooms
                         .filter((r) => r.status === "available")
                         .map((room) => (
-                          <option key={room.id} value={room.id}>
-                            {room.number} - {room.type} (&#8358;{room.price}
+                          <option key={room.id} value={room.type}>
+                            {room.number} - {room.type} (
+                            {formatNaira(room.price)}
                             /night)
                           </option>
                         ))}
                     </select>
-                  </div>
+                  </div> */}
 
                   <div className="sm:col-span-3">
                     <label
@@ -1037,7 +1064,11 @@ const Admin = () => {
                       onChange={(e) =>
                         setCurrentBooking({
                           ...currentBooking,
-                          status: e.target.value as Booking["status"],
+                          status: e.target.value as
+                            | "confirmed"
+                            | "pending"
+                            | "cancelled"
+                            | "completed",
                         })
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -1062,9 +1093,7 @@ const Admin = () => {
                       id="check-in"
                       value={
                         currentBooking.checkIn
-                          ? currentBooking.checkIn instanceof Date
-                            ? currentBooking.checkIn.toISOString().split("T")[0]
-                            : currentBooking.checkIn
+                          ? format(currentBooking.checkIn as Date, "yyyy-MM-dd")
                           : ""
                       }
                       onChange={(e) =>
@@ -1090,11 +1119,10 @@ const Admin = () => {
                       id="check-out"
                       value={
                         currentBooking.checkOut
-                          ? currentBooking.checkOut instanceof Date
-                            ? currentBooking.checkOut
-                                .toISOString()
-                                .split("T")[0]
-                            : currentBooking.checkOut
+                          ? format(
+                              currentBooking.checkOut as Date,
+                              "yyyy-MM-dd"
+                            )
                           : ""
                       }
                       onChange={(e) =>
@@ -1112,7 +1140,7 @@ const Admin = () => {
                       htmlFor="total-price"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Total Price (&#8358;)
+                      Total Price (₦)
                     </label>
                     <input
                       type="number"

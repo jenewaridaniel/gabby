@@ -9,6 +9,7 @@ interface Room {
   id: string;
   type: string;
   price: number;
+  number: number;
   amenities: string[];
   imageUrl: string;
   description?: string;
@@ -20,6 +21,7 @@ interface BookingData {
   checkOutDate: Date;
   totalPrice: number;
   nights: number;
+  number: number;
 }
 
 const BookingDetails = () => {
@@ -87,6 +89,7 @@ const BookingDetails = () => {
           id: bookingData.room.id,
           type: bookingData.room.type,
           price: bookingData.room.price,
+          number: bookingData.room.number,
           amenities: bookingData.room.amenities,
         },
         
