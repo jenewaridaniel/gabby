@@ -6,7 +6,7 @@ import BackButton from "../Backbutton/BackButton";
 const Map = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const hotelAddress =
-    "Prodest Hotel, 17 Forces Avenue, Old GRA, Port Harcourt, Rivers State, Nigeria";
+    "Plot 11 Paradise Avenue off G.U Ake Road/Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
   const encodedAddress = encodeURIComponent(hotelAddress);
 
   useEffect(() => {
