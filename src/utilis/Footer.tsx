@@ -12,7 +12,7 @@ const Footer = () => {
             </p>
             {/* <p>Port Harcourt, Nigeria</p> */}
             <p>Phone: +234 812 345 6789</p>
-            <p>Email: gabbyshotel@gmail.com</p>
+            <p>Email: gabbyboutiquehotel@gmail.com</p>
           </div>
 
           {/* Quick Links */}

@@ -300,7 +300,7 @@ const ContactUs: React.FC = () => {
             </svg>
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Email</h3>
-          <p className="mt-2 text-base text-gray-500">Gabbyhotels@gmail.com</p>
+          <p className="mt-2 text-base text-gray-500">gabbyboutiquehotel@gmail.com</p>
         </div>
 
         <div className="text-center">

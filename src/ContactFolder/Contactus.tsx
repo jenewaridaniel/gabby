@@ -242,7 +242,7 @@ const ContactUs = () => {
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-amber-800">Email</h3>
                   <p className="text-sm text-amber-700">
-                    gabbyshotel@gmail.com
+                  gabbyboutiquehotel@gmail.com
                   </p>
                 </div>
               </div>
