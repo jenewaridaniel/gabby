@@ -66,8 +66,8 @@ const Map = () => {
         
         <div className="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">Arrival Information</h3>
-            <ul className="text-sm text-gray-600 space-y-1">
+            {/* <h3 className="font-semibold text-gray-800">Arrival Information</h3> */}
+            {/* <ul className="text-sm text-gray-600 space-y-1">
               <li className="flex items-start">
                 <span className="text-amber-600 mr-2">✈</span>
                 <span>20 minutes from Port Harcourt International Airport</span>
@@ -80,7 +80,7 @@ const Map = () => {
                 <span className="text-amber-600 mr-2">🅿</span>
                 <span>Private secured parking available</span>
               </li>
-            </ul>
+            </ul> */}
           </div>
           <a 
             href={`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`}
