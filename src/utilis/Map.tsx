@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import gabby from '../assets/gabby.png';
 
 const Map = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -25,16 +26,45 @@ const Map = () => {
           </address>
         </div>
         
-        <div className="relative h-96 w-full bg-amber-50 rounded-xl overflow-hidden border border-amber-200">
+        <div className="relative h-96 w-full bg-amber-50 rounded-xl overflow-hidden border border-amber-200 shadow-inner">
           {mapLoaded ? (
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://maps.google.com/maps?q=${encodedAddress}&output=embed&z=16`}
-              allowFullScreen
-              loading="lazy"
-              title="Luxury Retreat Location - Serene Luxury, Private Bliss"
-              aria-label="Interactive map showing our luxury retreat location"
-            />
+            <div className="relative h-full w-full">
+              <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/30 z-10"></div>
+              <img 
+                src={gabby} 
+                alt="Luxury retreat location overview" 
+                className="w-full h-full object-cover"
+              />
+              {/* <div className="absolute inset-0 flex items-center justify-center">
+                <a 
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-white/90 hover:bg-white text-amber-700 rounded-lg transition duration-300 flex items-center gap-2 whitespace-nowrap shadow-lg hover:shadow-xl backdrop-blur-sm border border-amber-200"
+                >
+                  <svg 
+                    className="w-5 h-5" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
+                    />
+                  </svg>
+                  View on Google Maps
+                </a>
+              </div> */}
+            </div>
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
               <div className="animate-pulse">
@@ -66,21 +96,21 @@ const Map = () => {
         
         <div className="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="space-y-2">
-            {/* <h3 className="font-semibold text-gray-800">Arrival Information</h3> */}
-            {/* <ul className="text-sm text-gray-600 space-y-1">
+            <h3 className="font-semibold text-gray-800">Why Choose Us</h3>
+            <ul className="text-sm text-gray-600 space-y-1">
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">✈</span>
-                <span>20 minutes from Port Harcourt International Airport</span>
+                <span className="text-amber-600 mr-2">✓</span>
+                <span>Exclusive private location</span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">🛣</span>
-                <span>5 minutes from Aba Road via Eliozu Junction</span>
+                <span className="text-amber-600 mr-2">✓</span>
+                <span>Luxurious amenities</span>
               </li>
               <li className="flex items-start">
-                <span className="text-amber-600 mr-2">🅿</span>
-                <span>Private secured parking available</span>
+                <span className="text-amber-600 mr-2">✓</span>
+                <span>Premium security</span>
               </li>
-            </ul> */}
+            </ul>
           </div>
           <a 
             href={`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`}
