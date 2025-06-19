@@ -8,6 +8,8 @@ const Map = () => {
   const hotelAddress =
     "Plot 11 Paradise Avenue off G.U Ake Road/Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
   const encodedAddress = encodeURIComponent(hotelAddress);
+  const mapEmbedUrl =
+    "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2300.865952127425!2d7.009820536930743!3d4.888375128434959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTMnMTguMiJOIDfCsDAwJzM1LjciRQ!5e0!3m2!1sen!2sng!4v1750335533859!5m2!1sen!2sng";
 
   useEffect(() => {
     const timer = setTimeout(() => setMapLoaded(true), 1000);
@@ -24,9 +26,10 @@ const Map = () => {
           {mapLoaded ? (
             <iframe
               className="absolute top-0 left-0 w-full h-full border-0"
-              src={`https://maps.google.com/maps?q=${encodedAddress}&output=embed`}
+              src={mapEmbedUrl}
               allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
               title="Hotel Location Map"
             />
           ) : (
@@ -91,7 +94,6 @@ const ContactUs = () => {
     setLoading(true);
 
     try {
-      // Updated collection name to "contactUsInfo"
       await addDoc(collection(db, "contactUsInfo"), {
         name,
         email,
@@ -242,7 +244,7 @@ const ContactUs = () => {
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-amber-800">Email</h3>
                   <p className="text-sm text-amber-700">
-                  gabbyboutiquehotel@gmail.com
+                    gabbyboutiquehotel@gmail.com
                   </p>
                 </div>
               </div>
