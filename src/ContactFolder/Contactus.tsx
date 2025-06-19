@@ -221,7 +221,9 @@ const ContactUs = () => {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-amber-800">Phone</h3>
-                  <p className="text-sm text-amber-700">+234234567893</p>
+                  <a href="tel:+234234567893">
+                    <p className="text-sm text-amber-700">+234234567893</p>
+                  </a>
                 </div>
               </div>
 
