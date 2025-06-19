@@ -11,7 +11,9 @@ const Footer = () => {
               Port Harcourt, Rivers State, Nigeria
             </p>
             <p>Port Harcourt, Nigeria</p>
-            <p>Phone: +234 812 345 6789</p>
+            <a href="tel:+2348123456789">
+              <p>Phone: +234 812 345 6789</p>
+            </a>
             <p>Email: gabbyboutiquehotel@gmail.com</p>
           </div>
 
