@@ -10,14 +10,13 @@ import Experiences from "./utilis/Experiences";
 import Dashboard from "../src/DashBoard/Dashboard";
 import Story from "../src/utilis/Story";
 import Rooms from "./pages/Rooms";
-import Diner from './pages/Diner'
-import Admin from './Admin/Admin'
+import Diner from "./pages/Diner";
+import Admin from "./Admin/Admin";
 import BookingSystem from "./Function/BookingSystem";
 import BookingDetails from "./Function/BookingDetails";
 import NotFound from "./utilis/NotFound";
 
 // protected routes //
-
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,24 +27,24 @@ const App = () => {
     // SIGNUP: "/auth/signup",
     // LOGIN: "/auth/login",
     TERMS: "/terms",
-    ROOMS: '/rooms',
-    DINING: '/dining',
+    ROOMS: "/rooms",
+    DINING: "/dining",
     PRIVACY: "/privacy",
     DASHBOARD: "/dashboard/:uid",
     EXP: "/experiences",
-    ADMIN:'/admin',
-    BOOKING:'/booking',
+    ADMIN: "/admin",
+    BOOKING: "/booking",
     STORY: "/story",
-    BOOKINGDETAILS: '/booking/details',
-    NOTFOUND: '*'
+    BOOKINGDETAILS: "/booking/details",
+    NOTFOUND: "*",
   };
 
   const router = createBrowserRouter([
     { path: ROUTER.LANDING, element: <Homepage /> },
     { path: ROUTER.CONTACTUS, element: <ContactUs /> },
-    {path:ROUTER.ADMIN, element:<Admin/>},
-    {path:ROUTER.BOOKING, element:<BookingSystem/>},
-    {path:ROUTER.BOOKINGDETAILS, element:<BookingDetails/>},
+    { path: ROUTER.ADMIN, element: <Admin /> },
+    { path: ROUTER.BOOKING, element: <BookingSystem /> },
+    { path: ROUTER.BOOKINGDETAILS, element: <BookingDetails /> },
     // { path: ROUTER.SIGNUP, element: <Signup /> },
     // { path: ROUTER.LOGIN, element: <Login /> },
     { path: ROUTER.TERMS, element: <Terms /> },
@@ -55,7 +54,7 @@ const App = () => {
     { path: ROUTER.DINING, element: <Diner /> },
     { path: ROUTER.STORY, element: <Story /> },
     { path: ROUTER.DASHBOARD, element: <Dashboard /> },
-    { path: ROUTER.NOTFOUND, element: <NotFound/> },
+    { path: ROUTER.NOTFOUND, element: <NotFound /> },
   ]);
 
   useEffect(() => {
@@ -71,18 +70,7 @@ const App = () => {
     <div>
       {isLoading ? (
         <div className="h-screen flex justify-center items-center">
-          <div className="spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          <div className="loader"></div>
         </div>
       ) : (
         <RouterProvider router={router} />

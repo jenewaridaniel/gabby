@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import exp from '../assets/exp.jpeg'
+import exp from "../assets/exp.jpeg";
 import {
   ArrowRightIcon,
   MapPinIcon,
@@ -85,7 +85,6 @@ const Experiences = () => {
 
   return (
     <div className="bg-amber-50">
-      
       {/* Hero Section */}
       <section className="relative h-96 overflow-hidden">
         <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
@@ -94,8 +93,7 @@ const Experiences = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center px-4"
-            >
-            
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Discover Gabby's Experiences
             </h1>
@@ -106,7 +104,7 @@ const Experiences = () => {
           </motion.div>
         </div>
         <div className="absolute inset-0  bg-cover ">
-            <img src={exp} className="w-full " alt="" />
+          <img src={exp} className="w-full " alt="" />
         </div>
       </section>
 
@@ -184,7 +182,7 @@ const Experiences = () => {
               >
                 <div className="aspect-w-16 aspect-h-9">
                   <img
-                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                    src="https://www.exp.com/wp-content/uploads/2024/12/AC_Kingston_Hotel_Jamaica-2.jpg"
                     alt="Nigerian dining experience"
                     className="object-cover w-full h-full"
                   />
@@ -271,20 +269,19 @@ const Experiences = () => {
             Ready to Experience Gabby's?
           </h1>
           <p className="text-gray-300 mb-8 text-lg max-w-2xl mx-auto">
-            Book your stay now and discover why we're Port-Harcourt' premier boutique
-            hotel destination
+            Book your stay now and discover why we're Port-Harcourt' premier
+            boutique hotel destination
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a href="/booking">
-            <button className="px-8 py-3 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700 transition-colors duration-300">
-              Book Your Stay
-            </button>
+              <button className="px-8 py-3 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700 transition-colors duration-300">
+                Book Your Stay
+              </button>
             </a>
             <a href="/contact-us">
-
-            <button className="px-8 py-3 border border-white text-white font-bold rounded-lg hover:bg-white hover:text-gray-900 transition-colors duration-300">
-              Contact Us
-            </button>
+              <button className="px-8 py-3 border border-white text-white font-bold rounded-lg hover:bg-white hover:text-gray-900 transition-colors duration-300">
+                Contact Us
+              </button>
             </a>
           </div>
         </motion.div>
