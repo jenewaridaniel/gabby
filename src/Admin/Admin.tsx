@@ -79,6 +79,9 @@ const Admin = () => {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [showRoomModal, setShowRoomModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminPin, setAdminPin] = useState("");
+  // const [showSensitiveInfo, setShowSensitiveInfo] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [currentRoom, setCurrentRoom] = useState<Partial<Room>>({});
   const [currentBooking, setCurrentBooking] = useState<Partial<Booking>>({});
@@ -229,8 +232,131 @@ const Admin = () => {
     );
   }
 
+  // Admin Pin//
+
+  const handleAdminAuth = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (adminPin === import.meta.env.VITE_PASSWORD) {
+      setIsAuthenticated(true);
+      // setShowSensitiveInfo(true);
+    } else {
+      alert("Invalid admin PIN");
+    }
+  };
+
+  // const toggleSensitiveInfo = () => {
+  //   if (isAuthenticated) {
+  //     setShowSensitiveInfo(!showSensitiveInfo);
+  //   } else {
+  //     alert("Admin authentication required");
+  //   }
+  // };
+
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* admin modal */}
+      {!isAuthenticated && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-white p-8 rounded-2xl max-w-md w-full border border-amber-100 shadow-2xl shadow-amber-100/20">
+            <div className="flex flex-col items-center mb-6">
+              <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-amber-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Admin Authentication
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Enter your credentials to continue
+              </p>
+            </div>
+
+            <form onSubmit={handleAdminAuth} className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Admin PIN
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    value={adminPin}
+                    onChange={(e) => setAdminPin(e.target.value)}
+                    className="block w-full p-3.5 rounded-lg border border-gray-200 focus:border-amber-300 focus:ring-4 focus:ring-amber-100 transition-all"
+                    placeholder="••••••"
+                    autoFocus
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-medium py-3.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
+              >
+                Authenticate
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
+            </form>
+
+            <div className="mt-4 text-center">
+              <a
+                href="#"
+                className="text-sm font-medium text-amber-600 hover:text-amber-700"
+              >
+                Forgot PIN?
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
