@@ -32,7 +32,7 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="pt-24">
+    <div className="pt-16">
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{
