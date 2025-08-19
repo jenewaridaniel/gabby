@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ContactUs from "./ContactFolder/Contactus";
 import Terms from "./T&C/Terms";
 import Privacy from "./T&C/Privacy";
-import Experiences from "./utilis/Experiences";
+import Experiences from "../src/utilis/Experiences";
 import Dashboard from "../src/DashBoard/Dashboard";
 import Story from "../src/utilis/Story";
 import Rooms from "./pages/Rooms";
@@ -12,7 +12,7 @@ import Diner from "./pages/Diner";
 import Admin from "./Admin/Admin";
 import BookingSystem from "./Function/BookingSystem";
 import BookingDetails from "./Function/BookingDetails";
-import NotFound from "./utilis/NotFound";
+import NotFound from "../src/utilis/NotFound";
 import { ArrowUp } from "lucide-react";
 
 const App = () => {
@@ -90,7 +90,7 @@ const App = () => {
 
             <button
               onClick={scrollToTop}
-              className="fixed bottom-5 flex justify-center items-center right-6 w-12 h-12 p-3 bg-orange-600 text-white rounded-full shadow-lg hover:bg-gray-700 transition"
+              className="fixed bottom-6 flex justify-center items-center right-6 w-12 h-12 p-3 bg-orange-600 text-white rounded-full shadow-lg hover:bg-gray-700 transition"
             >
               <ArrowUp/>
             </button>

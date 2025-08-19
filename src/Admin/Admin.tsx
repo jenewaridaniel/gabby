@@ -15,7 +15,7 @@ import {
   TrashIcon,
   PencilIcon,
 } from "lucide-react";
-import { db } from "../config/firebase";
+import { db } from '../config/firebase';
 import { format } from "date-fns";
 
 // Type definitions
