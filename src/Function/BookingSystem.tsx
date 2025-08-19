@@ -14,7 +14,7 @@ import {
   isSameDay,
 } from "date-fns";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../config/firebase";
+import {db} from '../config/firebase'
 import { Link } from "react-router-dom";
 
 interface Room {

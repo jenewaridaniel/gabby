@@ -19,7 +19,7 @@ import {
   FiZap,
 } from "react-icons/fi";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../config/firebase"; // Adjust path to your firebase config
+import { db } from "../config/firebase"; 
 
 // Define types for TypeScript
 type RoomType = {
