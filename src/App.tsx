@@ -90,7 +90,7 @@ const App = () => {
 
             <button
               onClick={scrollToTop}
-              className="fixed bottom-6 flex justify-center items-center right-6 w-12 h-12 p-3 bg-orange-600 text-white rounded-full shadow-lg hover:bg-gray-700 transition"
+              className="fixed bottom-5 flex justify-center items-center right-6 w-12 h-12 p-3 bg-orange-600 text-white rounded-full shadow-lg hover:bg-gray-700 transition"
             >
               <ArrowUp/>
             </button>
