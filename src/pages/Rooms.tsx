@@ -519,7 +519,7 @@ const Rooms = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-amber-900/90"></div>
+        <div className="absolute inset-0 bg-gray-950/40 opacity-90"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

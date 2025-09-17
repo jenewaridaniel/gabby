@@ -26,6 +26,7 @@ const App = () => {
     ROOMS: "/rooms",
     DINING: "/dining",
     PRIVACY: "/privacy",
+    
     DASHBOARD: "/dashboard/:uid",
     EXP: "/experiences",
     ADMIN: "/admin",

@@ -301,9 +301,9 @@ const Diner = () => {
         </div>
 
         {/* Menu Section */}
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-16">
+        <div className="bg-white rounded-3xl overflow-hidden mb-16">
           <div
-            className="bg-gradient-to-r from-amber-500 to-amber-600 p-6 flex justify-between items-center cursor-pointer"
+            className="bg-amber-500 p-6 flex justify-between items-center cursor-pointer"
             onClick={() => setShowMenu(!showMenu)}
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white">

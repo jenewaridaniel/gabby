@@ -74,11 +74,11 @@ const Dining: React.FC = () => {
                   </svg>
                   <span className="font-medium">Hours: {option.hours}</span>
                 </div>
-                <a href="/dining">
+                {/* <a href="/dining">
                 <button className="mt-6 px-6 py-2 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors duration-300">
                   View Menu
                 </button>
-                </a>
+                </a> */}
               </div>
             </div>
           ))}
