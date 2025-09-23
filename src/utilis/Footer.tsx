@@ -124,7 +124,7 @@ const Footer = () => {
           <p>
             &copy; {new Date().getFullYear()} Hotel Name. All rights reserved.
           </p>
-          <p className="mt-1 text-amber-100 text-sm">
+          {/* <p className="mt-1 text-amber-100 text-sm">
             Website by{" "}
             <a
               href="https://techtrek.com"
@@ -134,7 +134,7 @@ const Footer = () => {
             >
               TechTrek
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>

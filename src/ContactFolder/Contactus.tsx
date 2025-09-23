@@ -17,7 +17,7 @@ const Map = () => {
   }, []);
 
   return (
-    <div className="bg-amber-50 rounded-lg shadow-md overflow-hidden border border-amber-100">
+    <div className="bg-amber-50 rounded-lg overflow-hidden border border-amber-100">
       <BackButton />
       <div className="p-6">
         <h2 className="text-lg font-bold text-amber-900 mb-2">Our Location</h2>
@@ -122,7 +122,7 @@ const ContactUs = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-amber-50 p-8 rounded-lg shadow-md border border-amber-100">
+        <div className="bg-amber-50 p-8 rounded-lg border border-amber-100">
           <h2 className="text-2xl font-bold text-amber-900 mb-6">
             Send a Message
           </h2>
@@ -198,7 +198,7 @@ const ContactUs = () => {
         <div className="space-y-8">
           <Map />
 
-          <div className="bg-amber-50 p-6 rounded-lg shadow-md border border-amber-100">
+          <div className="bg-amber-50 p-6 rounded-lg border border-amber-100">
             <h2 className="text-xl font-bold text-amber-900 mb-4">
               Contact Information
             </h2>

@@ -125,7 +125,7 @@ const Rooms = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg shadow-lg"
+              className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg "
             >
               Book Your Stay
             </motion.button>
@@ -243,7 +243,7 @@ const Rooms = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 whileHover={{ y: -10 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-xl overflow-hidden  transition-shadow duration-300"
               >
                 <div className="relative h-64">
                   {room.imageUrl ? (
@@ -261,7 +261,7 @@ const Rooms = () => {
                       <FiHome className="w-12 h-12 text-gray-400" />
                     </div>
                   )}
-                  <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md cursor-pointer">
+                  <div className="absolute top-4 right-4 bg-white rounded-full p-2 cursor-pointer">
                     <FiHeart className="text-gray-600 hover:text-red-500 transition-colors" />
                   </div>
                   {room.status === "new" && (
@@ -376,7 +376,7 @@ const Rooms = () => {
                   whileHover={{ y: -5 }}
                   className="flex flex-col items-center"
                 >
-                  <div className="bg-white p-4 rounded-full text-amber-500 mb-3 shadow-md">
+                  <div className="bg-white p-4 rounded-full text-amber-500 mb-3">
                     {amenity.icon}
                   </div>
                   <span className="text-gray-700 font-medium">
@@ -417,7 +417,7 @@ const Rooms = () => {
               )}
               <button
                 onClick={() => setSelectedRoom(null)}
-                className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
+                className="absolute top-4 right-4 bg-white rounded-full p-2  hover:bg-gray-100"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -539,7 +539,7 @@ const Rooms = () => {
               whileTap={{ scale: 0.95 }}
               className="inline-block"
             >
-              <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg">
+              <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-full text-lg">
                 Book Your Room Today
               </button>
             </motion.div>

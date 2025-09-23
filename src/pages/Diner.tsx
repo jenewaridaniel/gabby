@@ -1,202 +1,45 @@
-// Diner.tsx
-import { useState } from "react";
+
 import { motion } from "framer-motion";
 import {
-  FiStar,
   FiClock,
   FiCoffee,
-  FiDroplet,
-  FiHeart,
   FiBookOpen,
   FiChevronDown,
+
 } from "react-icons/fi";
 import { IoMdArrowBack } from "react-icons/io";
 import Footer from "../utilis/Footer";
-
-type Dish = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  origin: "Nigerian" | "English" | "Fusion";
-  popular?: boolean;
-  spicy?: boolean;
-  vegetarian?: boolean;
-};
+import { Link } from "react-router-dom";
 
 const Diner = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [activeDish, setActiveDish] = useState<Dish | null>(null);
-  const [showMenu, setShowMenu] = useState(true);
-  const [showSpecials, setShowSpecials] = useState(true);
 
-  // Format currency in Naira
-  const formatNaira = (amount: number) => {
-    return amount.toLocaleString("en-NG", {
-      style: "currency",
-      currency: "NGN",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  };
 
-  // Sample dishes
-  const dishes: Dish[] = [
+  const testimonials = [
     {
       id: 1,
-      name: "Jollof Rice with Grilled Chicken",
-      description:
-        "West African classic rice dish cooked in rich tomato sauce, served with succulent grilled chicken",
-      price: 6500,
-      category: "main",
-      origin: "Nigerian",
-      popular: true,
+      name: "Sarah Johnson",
+      rating: 5,
+      comment:
+        "Absolutely incredible dining experience. The atmosphere is perfect for special occasions.",
+      date: "2 weeks ago",
     },
     {
       id: 2,
-      name: "Fish and Chips",
-      description:
-        "Beer-battered cod with triple-cooked chips, mushy peas and tartar sauce",
-      price: 7500,
-      category: "main",
-      origin: "English",
+      name: "Michael Chen",
+      rating: 5,
+      comment:
+        "Outstanding service and ambiance. Perfect for both business dinners and romantic dates.",
+      date: "1 month ago",
     },
     {
       id: 3,
-      name: "Suya Skewers",
-      description:
-        "Spicy grilled beef skewers with peanut spice rub, served with fresh onions and tomatoes",
-      price: 4500,
-      category: "starter",
-      origin: "Nigerian",
-      spicy: true,
-      popular: true,
-    },
-    {
-      id: 4,
-      name: "Beef Wellington",
-      description:
-        "Prime beef tenderloin wrapped in mushroom duxelles and puff pastry",
-      price: 12500,
-      category: "main",
-      origin: "English",
-    },
-    {
-      id: 5,
-      name: "Pounded Yam & Egusi Soup",
-      description:
-        "Traditional Nigerian staple with melon seed soup and assorted meats",
-      price: 6800,
-      category: "main",
-      origin: "Nigerian",
-    },
-    {
-      id: 6,
-      name: "Yorkshire Pudding with Suya Beef",
-      description: "English classic with Nigerian spiced beef filling",
-      price: 5200,
-      category: "starter",
-      origin: "Fusion",
-      popular: true,
-    },
-    {
-      id: 7,
-      name: "Sticky Toffee Pudding",
-      description:
-        "Classic English dessert with dates, toffee sauce and vanilla ice cream",
-      price: 4200,
-      category: "dessert",
-      origin: "English",
-    },
-    {
-      id: 8,
-      name: "Chin Chin Cheesecake",
-      description:
-        "Creamy cheesecake with Nigerian fried dough crust and palm wine caramel",
-      price: 4800,
-      category: "dessert",
-      origin: "Fusion",
-      popular: true,
-    },
-    {
-      id: 9,
-      name: "Pepper Soup",
-      description: "Spicy Nigerian broth with goat meat and traditional herbs",
-      price: 5500,
-      category: "starter",
-      origin: "Nigerian",
-      spicy: true,
-    },
-    {
-      id: 10,
-      name: "Afternoon Tea Selection",
-      description:
-        "Assorted finger sandwiches, scones with clotted cream, and miniature pastries",
-      price: 8500,
-      category: "dessert",
-      origin: "English",
-    },
-    {
-      id: 11,
-      name: "Plantain & Black Pudding",
-      description:
-        "Fried sweet plantain with English black pudding and pepper sauce",
-      price: 5800,
-      category: "starter",
-      origin: "Fusion",
-    },
-    {
-      id: 12,
-      name: "Zobo Panna Cotta",
-      description:
-        "Italian dessert with Nigerian hibiscus infusion and coconut crumble",
-      price: 4500,
-      category: "dessert",
-      origin: "Fusion",
-    },
-    {
-      id: 13,
-      name: "Chapman Cocktail",
-      description: "Nigerian classic with mixed fruits, grenadine and soda",
-      price: 3500,
-      category: "drink",
-      origin: "Nigerian",
-    },
-    {
-      id: 14,
-      name: "Gin & Zobo Tonic",
-      description: "Premium gin with hibiscus-infused tonic and citrus",
-      price: 4800,
-      category: "drink",
-      origin: "Fusion",
-      popular: true,
-    },
-    {
-      id: 15,
-      name: "Pimm's Royal",
-      description: "Classic English summer cocktail with seasonal fruits",
-      price: 4200,
-      category: "drink",
-      origin: "English",
+      name: "Emma Williams",
+      rating: 5,
+      comment:
+        "The attention to detail is remarkable. Every visit feels like a special celebration.",
+      date: "3 weeks ago",
     },
   ];
-
-  // Filter dishes by category
-  const filteredDishes =
-    activeCategory === "all"
-      ? dishes
-      : dishes.filter((dish) => dish.category === activeCategory);
-
-  // View dish details
-  const viewDishDetails = (dish: Dish) => {
-    setActiveDish(dish);
-  };
-
-  // Close dish details
-  const closeDishDetails = () => {
-    setActiveDish(null);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
@@ -221,7 +64,7 @@ const Diner = () => {
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">
               Eat Fresh and Healthy
             </h1>
-            <p className=" text-md text-white max-w-2xl mx-auto mb-8">
+            <p className="text-md text-white max-w-2xl mx-auto mb-8">
               A perfect blend of bold, tasty flavors
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -229,7 +72,7 @@ const Diner = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg shadow-lg"
+                  className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg "
                 >
                   Book Here
                 </motion.button>
@@ -238,11 +81,12 @@ const Diner = () => {
           </motion.div>
         </div>
 
-        <a href="/">
-          <div className=" absolute z-10 left-0 top-0 p-5">
-            <IoMdArrowBack className=" text-gray-50 text-3xl" />
+        <Link to="/">
+          <div className="absolute z-10 left-0 top-0 p-5">
+            <IoMdArrowBack className="text-gray-50 text-3xl" />
           </div>
-        </a>
+        </Link>
+
         {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white z-20"
@@ -265,414 +109,182 @@ const Diner = () => {
               A Culinary Journey
             </h2>
             <p className="text-gray-600 text-lg mb-8">
-              Our menu celebrates the rich culinary traditions of Nigeria and
-              England, creating unique fusion dishes that tell a story of
-              cultural harmony. From spicy Nigerian classics to refined English
-              favorites, each dish is crafted with locally sourced ingredients
-              and authentic techniques.
+              Our restaurant celebrates the art of fine dining with exceptional
+              service, carefully curated ambiance, and an unwavering commitment
+              to culinary excellence. Each visit is designed to create memorable
+              experiences that linger long after your meal ends.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 mt-12">
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-3">
-                  <FiClock className="text-2xl" />
-                </div>
-                <h3 className="font-bold text-gray-800">Opening Hours</h3>
-                <p className="text-gray-600">Mon-Sat: 11am - 10pm</p>
-                <p className="text-gray-600">Sunday: 12pm - 8pm</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-3">
-                  <FiCoffee className="text-2xl" />
-                </div>
-                <h3 className="font-bold text-gray-800">Sunday Brunch</h3>
-                <p className="text-gray-600">Every Sunday 12pm - 4pm</p>
-                <p className="text-gray-600">Live Jazz & Bottomless Mimosas</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-3">
-                  <FiBookOpen className="text-2xl" />
-                </div>
-                <h3 className="font-bold text-gray-800">Private Dining</h3>
-                <p className="text-gray-600">Special events & celebrations</p>
-                <p className="text-gray-600">Capacity: 20-50 guests</p>
-              </div>
-            </div>
           </motion.div>
         </div>
 
-        {/* Menu Section */}
-        <div className="bg-white rounded-3xl overflow-hidden mb-16">
-          <div
-            className="bg-amber-500 p-6 flex justify-between items-center cursor-pointer"
-            onClick={() => setShowMenu(!showMenu)}
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl p-8  transition-shadow duration-300"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white">
-              Our Menu
-            </h2>
-            <motion.div
-              animate={{ rotate: showMenu ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <FiChevronDown className="text-white text-2xl" />
-            </motion.div>
-          </div>
-
-          {showMenu && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="p-6">
-                {/* Category Filter */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
-                  {[
-                    { id: "all", name: "All Dishes" },
-                    { id: "starter", name: "Starters" },
-                    { id: "main", name: "Main Courses" },
-                    { id: "dessert", name: "Desserts" },
-                    { id: "drink", name: "Drinks" },
-                  ].map((category) => (
-                    <motion.button
-                      key={category.id}
-                      whileHover={{ y: -3 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setActiveCategory(category.id)}
-                      className={`px-6 py-3 rounded-full transition-all ${
-                        activeCategory === category.id
-                          ? "bg-amber-500 text-white"
-                          : "bg-amber-50 text-amber-700 hover:bg-amber-100"
-                      }`}
-                    >
-                      {category.name}
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Dishes Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredDishes.map((dish) => (
-                    <motion.div
-                      key={dish.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      whileHover={{ y: -10 }}
-                      className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-amber-100"
-                    >
-                      <div className="p-6">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <h3 className="text-xl font-bold text-gray-800">
-                              {dish.name}
-                            </h3>
-                            <div className="flex items-center mt-1">
-                              <span
-                                className={`text-xs px-2 py-1 rounded-full ${
-                                  dish.origin === "Nigerian"
-                                    ? "bg-green-100 text-green-800"
-                                    : dish.origin === "English"
-                                    ? "bg-blue-100 text-blue-800"
-                                    : "bg-purple-100 text-purple-800"
-                                }`}
-                              >
-                                {dish.origin}
-                              </span>
-                              {dish.popular && (
-                                <span className="ml-2 flex items-center text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">
-                                  <FiStar className="mr-1" /> Popular
-                                </span>
-                              )}
-                              {dish.spicy && (
-                                <span className="ml-2 flex items-center text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
-                                  <FiDroplet className="mr-1" /> Spicy
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="text-xl font-bold text-amber-600">
-                            {formatNaira(dish.price)}
-                          </div>
-                        </div>
-
-                        <p className="text-gray-600 my-4">{dish.description}</p>
-
-                        <div className="flex justify-between items-center mt-4">
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => viewDishDetails(dish)}
-                            className="text-amber-600 hover:text-amber-700 font-medium"
-                          >
-                            View Details
-                          </motion.button>
-                          <div className="bg-white rounded-full p-2 shadow-md cursor-pointer">
-                            <FiHeart className="text-gray-600 hover:text-red-500 transition-colors" />
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Chef's Special */}
-        <div className="bg-gradient-to-r from-amber-50 to-white rounded-3xl p-8 md:p-12 border border-amber-200 mb-16">
-          <div
-            className="flex justify-between items-center cursor-pointer mb-6"
-            onClick={() => setShowSpecials(!showSpecials)}
-          >
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800">
-              Chef's Special
+            <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-6 mx-auto">
+              <FiCoffee className="text-2xl" />
+            </div>
+            <h3 className="font-bold text-gray-800 text-xl text-center mb-4">
+              Fine Dining
             </h3>
-            <motion.div
-              animate={{ rotate: showSpecials ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <FiChevronDown className="text-amber-600 text-2xl" />
-            </motion.div>
-          </div>
+            <p className="text-gray-600 text-center">
+              Experience exceptional cuisine crafted with premium ingredients
+              and served in an elegant atmosphere perfect for special occasions.
+            </p>
+          </motion.div>
 
-          {showSpecials && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="md:w-1/3 flex justify-center">
-                  <div className="relative">
-                    <div className="w-64 h-64 rounded-full flex items-center justify-center overflow-hidden border-4 border-amber-500 shadow-lg">
-                      <img
-                        src="https://www.shutterstock.com/image-photo/african-american-chef-uniform-on-600nw-556163941.jpg"
-                        alt="Chef Adebayo"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="absolute -bottom-4 left-0 right-0 mx-auto bg-amber-500 text-white px-6 py-2 rounded-full text-sm font-medium w-max shadow-md">
-                      Chef Adebayo
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-2/3">
-                  <blockquote className="text-gray-600 text-lg italic mb-6 border-l-4 border-amber-500 pl-4 py-2">
-                    "My passion is creating dishes that honor both my Nigerian
-                    heritage and my training in classic English cuisine. The
-                    fusion of flavors creates something truly magical that can't
-                    be found anywhere else."
-                  </blockquote>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-white p-6 rounded-xl shadow-md border border-amber-100">
-                      <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-                        <FiStar className="text-amber-500 mr-2" />
-                        Today's Special
-                      </h4>
-                      <p className="text-amber-600 font-bold mb-1">
-                        Plantain Wellington
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        Ripe plantain wrapped in puff pastry with spiced beef
-                        filling, served with palm wine reduction
-                      </p>
-                      <div className="text-amber-600 font-bold mt-3">
-                        {formatNaira(6200)}
-                      </div>
-                    </div>
-                    <div className="bg-white p-6 rounded-xl shadow-md border border-amber-100">
-                      <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-                        <FiStar className="text-amber-500 mr-2" />
-                        Chef's Recommendation
-                      </h4>
-                      <p className="text-amber-600 font-bold mb-1">
-                        Jollof Risotto
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        Creamy Italian risotto cooked with traditional Jollof
-                        spices and topped with grilled prawns
-                      </p>
-                      <div className="text-amber-600 font-bold mt-3">
-                        {formatNaira(7800)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-2xl p-8   duration-300"
+          >
+            <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-6 mx-auto">
+              <FiBookOpen className="text-2xl" />
+            </div>
+            <h3 className="font-bold text-gray-800 text-xl text-center mb-4">
+              Private Events
+            </h3>
+            <p className="text-gray-600 text-center">
+              Host your celebrations in our private dining rooms with
+              personalized service and customized experiences for groups of
+              20-50 guests.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-2xl p-8 transition-shadow duration-300"
+          >
+            <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-white mb-6 mx-auto">
+              <FiClock className="text-2xl" />
+            </div>
+            <h3 className="font-bold text-gray-800 text-xl text-center mb-4">
+              Premium Service
+            </h3>
+            <p className="text-gray-600 text-center">
+              Our trained staff provides attentive, professional service
+              ensuring every detail of your dining experience exceeds
+              expectations.
+            </p>
+          </motion.div>
         </div>
 
-        {/* Fusion Experience */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-3xl p-8 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=640&q=80')] bg-cover bg-center mix-blend-overlay opacity-20"></div>
-            <div className="relative z-10">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Nigerian Flavors
-              </h3>
-              <p className="mb-4">
-                Experience the rich, bold flavors of traditional Nigerian
-                cuisine with dishes like:
-              </p>
-              <ul className="list-disc pl-5 mb-6">
-                <li>Jollof Rice - the celebrated West African staple</li>
-                <li>Suya - spicy grilled meat skewers</li>
-                <li>Egusi Soup - hearty melon seed stew</li>
-                <li>Pepper Soup - aromatic spicy broth</li>
-              </ul>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-amber-600 font-medium py-2 px-6 rounded-full"
+        {/* Testimonials */}
+        <div className="mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-14"
+          >
+            <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Voices of Delight
+            </h3>
+            <div className="w-24 h-1 bg-amber-500 mx-auto mb-6"></div>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto leading-relaxed">
+              Discover why our guests keep returning for unforgettable culinary
+              experiences that transform meals into cherished memories.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                whileHover={{ y: -5, transition: { duration: 0.3 } }}
+                className="group relative"
               >
-                Explore Nigerian Dishes
-              </motion.button>
-            </div>
+                <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl  border border-gray-100 transition-all duration-300 ">
+                  {/* Quote icon */}
+                  <div className="absolute -top-4 left-6 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+                    </svg>
+                  </div>
+
+                  {/* Rating stars */}
+                  <div className="flex items-center mb-5">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className={`w-5 h-5 ${
+                          i < testimonial.rating
+                            ? "text-amber-500 fill-current"
+                            : "text-gray-300"
+                        }`}
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                    <span className="ml-2 text-sm font-medium text-gray-700">
+                      {testimonial.rating}/5
+                    </span>
+                  </div>
+
+                  {/* Testimonial text */}
+                  <p className="text-gray-700 mb-6 leading-relaxed relative">
+                    <span className="absolute -left-2 -top-2 text-amber-500 text-3xl font-serif">
+                      "
+                    </span>
+                    {testimonial.comment}
+                  </p>
+
+                  {/* Author info */}
+                  <div className="flex items-center pt-4 border-t border-gray-100">
+                    <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {testimonial.date}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-8 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=640&q=80')] bg-cover bg-center mix-blend-overlay opacity-20"></div>
-            <div className="relative z-10">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                English Traditions
-              </h3>
-              <p className="mb-4">
-                Savor the classic comfort of English cuisine with our
-                interpretations of:
-              </p>
-              <ul className="list-disc pl-5 mb-6">
-                <li>Beef Wellington - the ultimate celebration dish</li>
-                <li>Fish and Chips - crispy beer-battered cod</li>
-                <li>Afternoon Tea - elegant finger sandwiches and scones</li>
-                <li>Sticky Toffee Pudding - decadent caramel dessert</li>
-              </ul>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-blue-600 font-medium py-2 px-6 rounded-full"
-              >
-                Explore English Dishes
-              </motion.button>
-            </div>
-          </div>
+          {/* Call to action */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <p className="text-gray-600 mb-4">
+              Ready to create your own memorable experience?
+            </p>
+            <button className="px-6 py-3 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 transition-colors duration-300 ">
+              Reserve Your Table
+            </button>
+          </motion.div>
         </div>
       </div>
 
-      {/* Dish Detail Modal */}
-      {activeDish && (
-        <motion.div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={closeDishDetails}
-        >
-          <motion.div
-            className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-3xl font-bold text-gray-800 mb-2">
-                    {activeDish.name}
-                  </h3>
-                  <div className="flex items-center">
-                    <span
-                      className={`text-sm px-3 py-1 rounded-full ${
-                        activeDish.origin === "Nigerian"
-                          ? "bg-green-100 text-green-800"
-                          : activeDish.origin === "English"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-purple-100 text-purple-800"
-                      }`}
-                    >
-                      {activeDish.origin}
-                    </span>
-                    {activeDish.popular && (
-                      <span className="ml-2 flex items-center text-sm bg-amber-100 text-amber-800 px-3 py-1 rounded-full">
-                        <FiStar className="mr-1" /> Popular
-                      </span>
-                    )}
-                    {activeDish.spicy && (
-                      <span className="ml-2 flex items-center text-sm bg-red-100 text-red-800 px-3 py-1 rounded-full">
-                        <FiDroplet className="mr-1" /> Spicy
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="text-3xl font-bold text-amber-600">
-                  {formatNaira(activeDish.price)}
-                </div>
-              </div>
-
-              <p className="text-gray-600 mb-8 text-lg">
-                {activeDish.description}
-              </p>
-
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                  Ingredients
-                </h4>
-                <p className="text-gray-600">
-                  {activeDish.origin === "Nigerian"
-                    ? "Fresh tomatoes, onions, peppers, traditional spices, locally sourced meats"
-                    : activeDish.origin === "English"
-                    ? "Premium cuts of meat, seasonal vegetables, herbs, cream, butter"
-                    : "A blend of Nigerian spices with English cooking techniques, fresh local produce"}
-                </p>
-              </div>
-
-              <div className="mb-8">
-                <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                  Pairing Suggestions
-                </h4>
-                <div className="bg-amber-50 p-4 rounded-lg">
-                  <p className="text-amber-700 font-medium">Wine Pairing:</p>
-                  <p className="text-gray-600 mb-3">
-                    South African Chenin Blanc
-                  </p>
-
-                  <p className="text-amber-700 font-medium">
-                    Cocktail Pairing:
-                  </p>
-                  <p className="text-gray-600 mb-3">Gin & Zobo Tonic</p>
-
-                  <p className="text-amber-700 font-medium">Non-Alcoholic:</p>
-                  <p className="text-gray-600">Hibiscus Ginger Fizz</p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-sm  text-white p-3  rounded-full font-medium text-center"
-                >
-                  Add to Order
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 border border-amber-300 text-amber-500 hover:bg-amber-50 p-3  text-sm rounded-full font-medium"
-                  onClick={closeDishDetails}
-                >
-                  Back to Menu
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-
       {/* Reservation CTA */}
-      <div className="py-24 bg-gray-100 md:m-10 rounded-4xl relative overflow-hidden">
-        {/* <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div> */}
+      <div className="py-24 bg-gray-100 md:m-10 rounded-3xl relative overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -682,11 +294,11 @@ const Diner = () => {
             className="max-w-3xl mx-auto"
           >
             <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Enjoy your stay
+              Ready for an Exceptional Experience?
             </h3>
-            <p className="text-lg mb-8 text-gray-900 max-w-2xl mx-auto">
-              Experience our unique fusion dining in an elegant atmosphere with
-              impeccable service
+            <p className="text-lg mb-8 text-gray-700 max-w-2xl mx-auto">
+              Reserve your table today and discover why discerning diners choose
+              us for their most important celebrations and memorable evenings.
             </p>
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -694,8 +306,8 @@ const Diner = () => {
               className="inline-block"
             >
               <a href="/booking">
-                <button className="bg-white hover:bg-gray-100 text-gray-900 font-bold py-4 px-8 rounded-full text-lg shadow-md">
-                  Book Now
+                <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-full text-lg">
+                  Make Reservation
                 </button>
               </a>
             </motion.div>
