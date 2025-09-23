@@ -100,14 +100,14 @@ const Experiences = () => {
     },
   };
 
-  const hoverCard = {
-    rest: { y: 0, scale: 1 },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: { type: "spring", stiffness: 300, damping: 15 },
-    },
-  };
+  // const hoverCard = {
+  //   rest: { y: 0, scale: 1 },
+  //   hover: {
+  //     y: -8,
+  //     scale: 1.02,
+  //     transition: { type: "spring", stiffness: 300, damping: 15 },
+  //   },
+  // };
 
   return (
     <div className="bg-gradient-to-br from-amber-50/30 to-white min-h-screen">
@@ -182,7 +182,7 @@ const Experiences = () => {
               variants={itemVariants}
               initial="rest"
               whileHover="hover"
-              variants={hoverCard}
+              // variant={hoverCard}
               className={`bg-gradient-to-br ${experience.gradient} rounded-2xl border-2 ${experience.border} p-8 relative overflow-hidden group`}
             >
               {/* Animated background element */}
