@@ -1,9 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
-import resort from "../assets/resort.jpg";
-import bed from "../assets/bed.jpg";
-import parlour from "../assets/parlour.jpg";
+import resort from "../assets/swim.jpg";
+import bed from "../assets/gaby room.jpg";
+import parlour from "../assets/more.jpg";
 
 const Carousel = () => {
   

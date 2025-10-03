@@ -4,7 +4,7 @@ const Map = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   const retreatAddress =
-    "Plot 11 Paradise Avenue off G.U Ake Road/Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
+    "Plot 11 Paradise Avenue off G.U Ake Road Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
   const encodedAddress = encodeURIComponent(retreatAddress);
   const mapEmbedUrl =
     "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2300.865952127425!2d7.009820536930743!3d4.888375128434959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTMnMTguMiJOIDfCsDAwJzM1LjciRQ!5e0!3m2!1sen!2sng!4v1750335533859!5m2!1sen!2sng";

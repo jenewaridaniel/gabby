@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import exp from "../assets/exp.jpeg";
+import exp from "../assets/hotel.jpg";
+import front from "../assets/front.jpg";
 import {
   ArrowRightIcon,
   MapPinIcon,
@@ -12,8 +13,9 @@ import {
   HeartIcon,
   UsersIcon,
 } from "lucide-react";
-import {Link} from "react-router-dom";
-import Footer from "../utilis/Footer"
+import { Link } from "react-router-dom";
+import Footer from "../utilis/Footer";
+import BackButton from "../Backbutton/BackButton";
 
 const Experiences = () => {
   const experiences = [
@@ -113,13 +115,15 @@ const Experiences = () => {
     <div className="bg-gradient-to-br from-amber-50/30 to-white min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
-     
+        {/* Gradient Overlay */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         />
+
+        {/* Background Image */}
         <motion.div
           className="absolute inset-0"
           initial={{ scale: 1.1 }}
@@ -133,37 +137,47 @@ const Experiences = () => {
           />
         </motion.div>
 
-        <div className="absolute bottom-0 left-0 right-0 z-20 pb-16 px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <motion.h1
-              className="text-4xl md:text-6xl font-light text-white mb-6 tracking-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Discover Gabby's Experiences
-            </motion.h1>
+        {/* Foreground Content */}
+        <div className="absolute inset-0 z-20 flex flex-col">
+          {/* Back Button at the top */}
+          <div className="p-4">
+            <BackButton />
+          </div>
+
+          {/* Text Content at the bottom */}
+          <div className="mt-auto pb-16 px-4 text-center">
             <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100px" }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="h-0.5 bg-amber-400 mx-auto mb-6"
-            />
-            <motion.p
-              className="text-xl text-amber-100 font-light max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="max-w-4xl mx-auto"
             >
-              Immerse yourself in luxury with our unique offerings that blend
-              Nigerian heritage with contemporary elegance
-            </motion.p>
-          </motion.div>
+              <motion.h1
+                className="text-3xl md:text-6xl font-light text-white mb-6 tracking-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Discover Gabby's Experiences
+              </motion.h1>
+
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100px" }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+                className="h-0.5 bg-amber-400 mx-auto mb-6"
+              />
+
+              <motion.p
+                className="text-lg md:text-xl text-amber-100 font-light max-w-2xl mx-auto leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+              Enjoy luxury with a touch of Nigerian culture
+              </motion.p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -290,14 +304,16 @@ const Experiences = () => {
                 </motion.div>
               </div>
 
-              <motion.button
-                className="px-8 py-4 bg-white text-amber-700 font-medium rounded-full flex items-center hover:bg-amber-50 transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Book Dining Experience
-                <ArrowRightIcon className="ml-2 w-4 h-4" />
-              </motion.button>
+              <Link to="/booking">
+                <motion.button
+                  className="px-8 py-4 bg-white text-amber-700 font-medium rounded-full flex items-center hover:bg-amber-50 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Book Stay
+                  <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </motion.button>
+              </Link>
             </div>
 
             <div className="lg:w-1/2">
@@ -310,7 +326,7 @@ const Experiences = () => {
               >
                 <div className="aspect-w-16 aspect-h-12">
                   <img
-                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80"
+                    src={front}
                     alt="Nigerian dining experience"
                     className="object-cover w-full h-full"
                   />
@@ -488,7 +504,7 @@ const Experiences = () => {
               </motion.button>
             </Link>
 
-            <Link  to="/contact-us">
+            <Link to="/contact-us">
               <motion.button
                 className="px-8 py-4 border-2 border-amber-600 text-amber-600 font-medium rounded-full hover:bg-white hover:text-gray-900 transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
@@ -502,7 +518,7 @@ const Experiences = () => {
       </section>
 
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

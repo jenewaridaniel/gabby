@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
-import room from '../assets/room.jpg'
+import room from '../assets/gaby room.jpg'
 import champ from '../assets//champ.jpg'
-import rest from '../assets/rest.jpg'
-import swim from '../assets/swiming.jpg'
-import spa from '../assets/spa.jpg'
-import spas from '../assets/spas.jpg'
-import suite from '../assets/suite.jpg'
+import rest from '../assets/hotel.jpg'
+import swim from '../assets/gabby swim.jpg'
+import suite from '../assets/rooms.jpg'
 import side from '../assets/sidee.jpg'
 
 interface GalleryImage {
@@ -25,7 +23,7 @@ const Gallery = () => {
     {
       id: 1,
       src: room,
-      alt: 'Gabby\'s Hotel Deluxe Room',
+      alt: "Gabby's Hotel Deluxe Room",
       category: 'rooms'
     },
     {
@@ -37,39 +35,28 @@ const Gallery = () => {
     {
       id: 3,
       src: swim,
-      alt: 'Infinity Pool at Gabby\'s Hotel',
+      alt: 'Swimming Pool at Gabby\'s Hotel',
       category: 'pool'
     },
     {
       id: 4,
-      src: spa,
-      alt: 'Luxury Spa at Gabby\'s Hotel',
-      category: 'spa'
-    },
-    {
-      id: 5,
       src: suite,
       alt: 'Executive Suite at Gabby\'s Hotel',
       category: 'rooms'
     },
     {
-      id: 6,
+      id: 5,
       src: champ,
       alt: 'Champagne Bar at Gabby\'s Hotel',
       category: 'dining'
     },
     {
-      id: 7,
+      id: 6,
       src: side,
       alt: 'Poolside Lounge at Gabby\'s Hotel',
       category: 'pool'
     },
-    {
-      id: 8,
-      src: spas,
-      alt: 'Spa Treatment Room at Gabby\'s Hotel',
-      category: 'spa'
-    },
+  
   ];
 
   const filteredImages = activeCategory === 'all' 
@@ -143,12 +130,7 @@ const Gallery = () => {
           >
             Pool & Recreation
           </button>
-          <button
-            onClick={() => setActiveCategory('spa')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === 'spa' ? 'bg-amber-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-          >
-            Spa & Wellness
-          </button>
+         
         </div>
 
         {/* Gallery Grid */}

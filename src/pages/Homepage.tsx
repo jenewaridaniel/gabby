@@ -1,12 +1,12 @@
 import Carousel from "../Carousel/Carousel";
-import pool from "../assets/swiming.jpg";
+import pool from "../assets/gabby front.jpg";
 import Navbar from "../navbar/Navbar";
 import ContactUs from "../utilis/Contactus";
 import Footer from "../utilis/Footer";
 import Map from "../utilis/Map";
 import Dining from "./Dining";
 import Gallery from "./Gallery";
-import Recreational from "./Recreational";
+// import Recreational from "./Recreational";
 
 const Homepage = () => {
   return (
@@ -166,9 +166,9 @@ const Homepage = () => {
       </div>
       <Gallery/>
 
-      <div className=" py-6">
+      {/* <div className=" py-6">
         <Recreational/>
-      </div>
+      </div> */}
 
       <div className=" py-4">
         <Dining/>

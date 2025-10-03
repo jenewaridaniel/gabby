@@ -1,5 +1,6 @@
 // Rooms.tsx
 import { useState, useEffect } from "react";
+import Footer from "../utilis/Footer";
 import { motion } from "framer-motion";
 import {
   FiStar,
@@ -18,8 +19,10 @@ import {
   FiMonitor,
   FiZap,
 } from "react-icons/fi";
+import room from '../assets/gaby room.jpg'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase"; 
+import BackButton from "../Backbutton/BackButton";
 
 // Define types for TypeScript
 type RoomType = {
@@ -102,13 +105,14 @@ const Rooms = () => {
       <div
         className="relative h-[60vh] overflow-hidden"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
+          backgroundImage: `url(${room})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black/70 z-10"></div>
+        <div className="absolute inset-0 bg-black/70 z-10">
+          <BackButton/>
+        </div>
         <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -509,43 +513,8 @@ const Rooms = () => {
         </motion.div>
       )}
 
-      {/* CTA Section */}
-      <div
-        className="relative py-24 text-white"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-gray-950/40 opacity-90"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="max-w-3xl mx-auto"
-          >
-            <h3 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready for an Exceptional Stay?
-            </h3>
-            <p className="text-xl mb-8 text-amber-100">
-              Experience luxury and comfort at its finest
-            </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block"
-            >
-              <button className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-8 rounded-full text-lg">
-                Book Your Room Today
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
+      {/* Footer Section */}
+  <Footer/>
     </div>
   );
 };
