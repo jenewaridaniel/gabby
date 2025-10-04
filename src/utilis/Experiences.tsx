@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import exp from "../assets/hotel.jpg";
-import front from "../assets/front.jpg";
+import front from "../assets/club.jpg";
 import {
   ArrowRightIcon,
   MapPinIcon,
@@ -354,7 +354,7 @@ const Experiences = () => {
 
                 {/* Floating badge */}
                 <motion.div
-                  className="absolute -top-4 -right-4 bg-amber-500 text-white px-4 py-2 rounded-full flex items-center text-sm font-medium"
+                  className="absolute top-5 right-3 bg-amber-500 text-white px-4 py-2 rounded-full flex items-center text-sm font-medium"
                   initial={{ scale: 0, rotate: -10 }}
                   whileInView={{ scale: 1, rotate: 0 }}
                   viewport={{ once: true }}
@@ -492,7 +492,7 @@ const Experiences = () => {
             boutique hotel destination
           </motion.p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex justify-center items-center">
             <Link to="/booking">
               <motion.button
                 className="px-8 py-4 bg-amber-600 text-white font-medium rounded-full hover:bg-amber-700 transition-colors duration-300 flex items-center"
@@ -504,7 +504,7 @@ const Experiences = () => {
               </motion.button>
             </Link>
 
-            <Link to="/contact-us">
+            {/* <Link to="/contact-us">
               <motion.button
                 className="px-8 py-4 border-2 border-amber-600 text-amber-600 font-medium rounded-full hover:bg-white hover:text-gray-900 transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
@@ -512,7 +512,7 @@ const Experiences = () => {
               >
                 Contact Us
               </motion.button>
-            </Link>
+            </Link> */}
           </div>
         </motion.div>
       </section>

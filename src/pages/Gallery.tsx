@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
 import room from '../assets/gaby room.jpg'
-import champ from '../assets//champ.jpg'
+import champ from '../assets/rooftop.jpg'
 import rest from '../assets/hotel.jpg'
 import swim from '../assets/gabby swim.jpg'
 import suite from '../assets/rooms.jpg'
-import side from '../assets/sidee.jpg'
+import side from '../assets/club.jpg'
 
 interface GalleryImage {
   id: number;
   src: string;
   alt: string;
-  category: 'rooms' | 'dining' | 'pool' | 'spa';
+  category: 'rooms' | 'roof' | 'club' | 'spa';
 }
 
 const Gallery = () => {
@@ -47,14 +47,14 @@ const Gallery = () => {
     {
       id: 5,
       src: champ,
-      alt: 'Champagne Bar at Gabby\'s Hotel',
-      category: 'dining'
+      alt: 'Gabby\'s Hotel Rooftop Lounge',
+      category: 'roof'
     },
     {
       id: 6,
       src: side,
-      alt: 'Poolside Lounge at Gabby\'s Hotel',
-      category: 'pool'
+      alt: 'Club Lounge at Gabby\'s Hotel',
+      category: 'club'
     },
   
   ];

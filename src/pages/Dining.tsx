@@ -1,40 +1,26 @@
 import React from 'react';
+import roof from '../assets/rooftop.jpg'
+import club from '../assets/clubss.jpg'
 
 const Dining: React.FC = () => {
   // Sample dining options data
   const diningOptions = [
     {
       id: 1,
-      name: "Amber Grill",
-      description: "Our signature restaurant offering gourmet international cuisine with locally sourced ingredients.",
+      name: "Club Night Restaurant",
+      description: "Club Night Restaurant combines fine local dining with exciting music and dance",
       hours: "6:30 AM - 11:00 PM",
-      type: "Fine Dining",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      type: "Clubbing & Dining",
+      image: club
     },
     {
       id: 2,
-      name: "Sunset Lounge",
-      description: "Casual poolside dining with light bites, cocktails, and breathtaking sunset views.",
-      hours: "11:00 AM - 10:00 PM",
-      type: "Casual/Lounge",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      name: "Skybar Lounge",
+      description: "Skybar Lounge offers panoramic city views, handcrafted cocktails, and a vibrant atmosphere.",
+      hours: "10:00 AM - 10:00 PM",
+      type: "Rooftop Lounge",
+      image: roof
     },
-    {
-      id: 3,
-      name: "The Golden Cup",
-      description: "Artisanal coffee shop featuring premium blends and freshly baked pastries.",
-      hours: "5:30 AM - 8:00 PM",
-      type: "Café",
-      image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-    },
-    {
-      id: 4,
-      name: "24/7 Room Service",
-      description: "Enjoy our exquisite menu in the comfort of your room, available around the clock.",
-      hours: "24 Hours",
-      type: "In-Room Dining",
-      image: "https://images.unsplash.com/photo-1589010588553-46e8e7c21788?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-    }
   ];
 
   return (

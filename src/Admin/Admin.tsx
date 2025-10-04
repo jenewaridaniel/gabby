@@ -876,7 +876,7 @@ const Admin = () => {
                   {currentRoom.id ? "Edit Room" : "Add New Room"}
                 </h3>
                 <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                  <div className="sm:col-span-3">
+                  {/* <div className="sm:col-span-3">
                     <label
                       htmlFor="room-number"
                       className="block text-sm font-medium text-gray-700"
@@ -896,7 +896,7 @@ const Admin = () => {
                       }
                       className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="sm:col-span-3">
                     <label
@@ -918,9 +918,10 @@ const Admin = () => {
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       <option value="">Select type</option>
-                      <option value="Standard">Standard</option>
-                      <option value="Deluxe">Deluxe</option>
-                      <option value="Suite">Suite</option>
+                      <option value="Serenity Luxe">Serenity Luxe</option>
+                      <option value="Urban Classic">Urban Classic</option>
+                      <option value="Velvet Luxe">Velvet Luxe</option>
+                      <option value="Grand Luxe">Grand Luxe</option>
                     </select>
                   </div>
 
