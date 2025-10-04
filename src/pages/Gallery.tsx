@@ -30,13 +30,13 @@ const Gallery = () => {
       id: 2,
       src: rest,
       alt: 'Signature Restaurant at Gabby\'s Hotel',
-      category: 'dining'
+      category: 'roof'
     },
     {
       id: 3,
       src: swim,
       alt: 'Swimming Pool at Gabby\'s Hotel',
-      category: 'pool'
+      category: 'spa'
     },
     {
       id: 4,
