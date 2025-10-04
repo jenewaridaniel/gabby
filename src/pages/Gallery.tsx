@@ -30,7 +30,7 @@ const Gallery = () => {
       id: 2,
       src: rest,
       alt: 'Signature Restaurant at Gabby\'s Hotel',
-      category: 'roof'
+      category: 'spa'
     },
     {
       id: 3,
@@ -48,13 +48,13 @@ const Gallery = () => {
       id: 5,
       src: champ,
       alt: 'Gabby\'s Hotel Rooftop Lounge',
-      category: 'roof'
+      category: 'spa'
     },
     {
       id: 6,
       src: side,
       alt: 'Club Lounge at Gabby\'s Hotel',
-      category: 'club'
+      category: 'spa'
     },
   
   ];
@@ -118,14 +118,14 @@ const Gallery = () => {
           >
             Rooms & Suites
           </button>
-          <button
-            onClick={() => setActiveCategory('dining')}
+          {/* <button
+            onClick={() => setActiveCategory('rooms')}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === 'dining' ? 'bg-amber-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
           >
             Dining
-          </button>
+          </button> */}
           <button
-            onClick={() => setActiveCategory('pool')}
+            onClick={() => setActiveCategory('spa')}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === 'pool' ? 'bg-amber-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
           >
             Pool & Recreation
