@@ -88,7 +88,7 @@ const Footer = () => {
 
               {/* Instagram */}
               <a
-                href="https://www.instagram.com/gabbysboutiquehotel?igsh=MWdtMGprNmcyenM3Yg=="
+                href="https://www.instagram.com/gabbysboutiquehotels?igsh=ZDY1aHBkb2d0OXZz"
                 className="hover:text-amber-300 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
