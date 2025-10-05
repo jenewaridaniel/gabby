@@ -74,9 +74,9 @@ const Dining: React.FC = () => {
         <div className="mt-20 bg-amber-100 rounded-xl p-8 md:p-12">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-              <h2 className="text-3xl font-bold text-amber-900 mb-4">Sunset Special</h2>
+              <h2 className="text-3xl font-bold text-amber-900 mb-4">Rooftop Special</h2>
               <p className="text-amber-800 mb-6">
-                Join us at the Sunset Lounge between 5-7PM daily for our signature cocktails and appetizers at 20% off.
+                Join us at the Rooftop Lounge between 5-7PM daily for our signature cocktails and appetizers at 20% off.
               </p>
               <button className="px-8 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 transition-colors duration-300">
                 Reserve a Table
