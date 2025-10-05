@@ -11,7 +11,6 @@ import {
   FiUsers,
   FiDroplet,
   FiTv,
-
   FiHome,
   FiDroplet as FiShower,
   FiWind,
@@ -19,9 +18,9 @@ import {
   FiMonitor,
   FiZap,
 } from "react-icons/fi";
-import room from '../assets/gaby room.jpg'
+import room from "../assets/gaby room.jpg";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../config/firebase"; 
+import { db } from "../config/firebase";
 import BackButton from "../Backbutton/BackButton";
 
 // Define types for TypeScript
@@ -110,10 +109,10 @@ const Rooms = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black/70 z-10">
-          <BackButton/>
-        </div>
+        <div className="absolute inset-0 bg-black/70 z-10"></div>
+
         <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+          <BackButton /> {/* Now sits above overlay */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -126,13 +125,13 @@ const Rooms = () => {
               Experience comfort and elegance in our carefully designed rooms
             </p>
             <a href="/booking">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg "
-            >
-              Book Your Stay
-            </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-full text-lg "
+              >
+                Book Your Stay
+              </motion.button>
             </a>
           </motion.div>
         </div>
@@ -150,8 +149,8 @@ const Rooms = () => {
             Discover Your Perfect Room
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Each of our rooms is designed to provide ultimate comfort with modern
-            amenities
+            Each of our rooms is designed to provide ultimate comfort with
+            modern amenities
           </p>
         </motion.div>
 
@@ -360,8 +359,8 @@ const Rooms = () => {
               Premium Amenities
             </h3>
             <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-              We provide exceptional amenities to ensure your stay is comfortable
-              and memorable.
+              We provide exceptional amenities to ensure your stay is
+              comfortable and memorable.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -389,10 +388,7 @@ const Rooms = () => {
         </motion.div>
       </div>
 
-
       {/* exlusive plans */}
-
-      
 
       {/* Room Detail Modal */}
       {selectedRoom && (
@@ -493,13 +489,13 @@ const Rooms = () => {
 
               <div className="flex flex-wrap gap-4">
                 <a href="/booking">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium text-center"
-                >
-                  Book Now
-                </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium text-center"
+                  >
+                    Book Now
+                  </motion.button>
                 </a>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -515,7 +511,7 @@ const Rooms = () => {
       )}
 
       {/* Footer Section */}
-  <Footer/>
+      <Footer />
     </div>
   );
 };

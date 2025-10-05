@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import Footer from "../utilis/Footer";
 import { FaUmbrellaBeach, FaCocktail, FaAward, FaHeart } from "react-icons/fa";
 import { FiChevronRight, FiStar } from "react-icons/fi";
+import swim from "./../assets/swim.jpg";
 
 const Story = () => {
   // Animation variants
@@ -75,8 +76,9 @@ const Story = () => {
           transition={{ delay: 0.3, duration: 0.8 }}
         />
         <motion.div
-          className="w-full h-full bg-[url('https://www.v8hotel.de/fileadmin/_processed_/4/4/csm_DSC01349_bb23e74aad.jpg')] bg-cover bg-center bg-no-repeat"
+          className="w-full h-full bg-cover bg-center bg-no-repeat"
           aria-label="Luxury hotel lobby"
+          style={{ backgroundImage: `url(${swim})` }}
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -291,10 +293,10 @@ const Story = () => {
           />
           <blockquote className="text-2xl italic text-gray-800 mb-8 leading-relaxed relative z-10">
             "True hospitality is about creating spaces where guests feel they
-            truly belong. At Gabby's, we don't just host visitors - we welcome
+            truly belong. At Gabby's, we don't just host visitors we welcome
             them into our family."
           </blockquote>
-          <div className="flex items-center relative z-10">
+          {/* <div className="flex items-center relative z-10">
             <motion.div
               className="w-12 h-12 bg-gradient-to-r from-amber-600 to-amber-700 rounded-full mr-4 flex items-center justify-center text-white font-bold text-lg"
               whileHover={{ scale: 1.1, rotate: 5 }}
@@ -305,7 +307,7 @@ const Story = () => {
               <p className="font-medium text-gray-900">Gabriel Johnson</p>
               <p className="text-amber-700 text-sm">Founder & CEO</p>
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Values Section */}
