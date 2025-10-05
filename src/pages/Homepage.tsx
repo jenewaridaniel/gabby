@@ -7,6 +7,7 @@ import Map from "../utilis/Map";
 import Dining from "./Dining";
 import Gallery from "./Gallery";
 // import Recreational from "./Recreational";
+ 
 
 const Homepage = () => {
   return (

@@ -367,10 +367,6 @@ const Rooms = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
                 { icon: <FiWifi size={32} />, name: "High-Speed WiFi" },
-                { icon: <FiCoffee size={32} />, name: "Complimentary Breakfast" },
-                { icon: <FiShower size={32} />, name: "Rain Shower" },
-                { icon: <FiTv size={32} />, name: "Smart TV" },
-                { icon: <FiUsers size={32} />, name: "24/7 Concierge" },
                 { icon: <FiDroplet size={32} />, name: "Swimming Pool" },
                 { icon: <FiWind size={32} />, name: "Air Conditioning" },
                 { icon: <FiLock size={32} />, name: "Room Safe" },
@@ -392,6 +388,11 @@ const Rooms = () => {
           </div>
         </motion.div>
       </div>
+
+
+      {/* exlusive plans */}
+
+      
 
       {/* Room Detail Modal */}
       {selectedRoom && (
