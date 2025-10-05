@@ -922,6 +922,7 @@ const Admin = () => {
                       <option value="Urban Classic">Urban Classic</option>
                       <option value="Velvet Luxe">Velvet Luxe</option>
                       <option value="Grand Luxe">Grand Luxe</option>
+                      <option value="Presidental Escape">Presidental Escape</option>
                     </select>
                   </div>
 

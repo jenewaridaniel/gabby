@@ -89,8 +89,8 @@ const BookingDetails = () => {
           id: bookingData.room.id,
           type: bookingData.room.type,
           price: bookingData.room.price,
-          number: bookingData.room.number,
-          amenities: bookingData.room.amenities,
+          // number: bookingData.room.number,
+          // amenities: bookingData.room.amenities,
         },
         
         // Dates
@@ -672,6 +672,7 @@ const BookingDetails = () => {
                     <p className="text-sm">
                       <span className="text-gray-500">Email:</span>{" "}
                       {formData.email}
+                      required
                     </p>
                     <p className="text-sm">
                       <span className="text-gray-500">Phone:</span>{" "}

@@ -439,7 +439,7 @@ const BookingSystem = () => {
                                 {room.description}
                               </p>
                             )}
-                            <div className="flex flex-wrap gap-2 mb-4">
+                            {/* <div className="flex flex-wrap gap-2 mb-4">
                               {room.amenities.slice(0, 3).map((amenity) => (
                                 <motion.span
                                   key={amenity}
@@ -454,7 +454,7 @@ const BookingSystem = () => {
                                   +{room.amenities.length - 3} more
                                 </span>
                               )}
-                            </div>
+                            </div> */}
                             <motion.button
                               whileHover={{ scale: 1.03 }}
                               whileTap={{ scale: 0.97 }}

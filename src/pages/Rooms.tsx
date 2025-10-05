@@ -278,7 +278,7 @@ const Rooms = () => {
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-bold text-gray-800">
-                      {room.type} - Room {room.number}
+                      {room.type} Luxe
                     </h3>
                     <div className="text-amber-500 flex items-center">
                       <FiStar className="fill-current" />
@@ -444,7 +444,7 @@ const Rooms = () => {
               <div className="flex flex-wrap justify-between items-start mb-6">
                 <div>
                   <h3 className="text-3xl font-bold text-gray-800 mb-2">
-                    {selectedRoom.type} - Room {selectedRoom.number}
+                    {selectedRoom.type} Luxe
                   </h3>
                   <div className="flex items-center text-gray-600 mb-4">
                     <span className="mr-4 flex items-center">
