@@ -280,8 +280,8 @@ const ContactUs: React.FC = () => {
             </svg>
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Phone</h3>
-          <a href="tel:+234234567893">
-          <p className="mt-2 text-base text-gray-500">+234234567893</p>
+          <a href="tel:+2349135009881">
+          <p className="mt-2 text-base text-gray-500">+2349135009881</p>
           </a>
         </div>
 
