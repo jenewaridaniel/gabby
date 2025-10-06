@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
-import logo from "../assets/logosss.jpg";
+import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
