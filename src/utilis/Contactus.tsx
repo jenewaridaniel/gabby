@@ -329,7 +329,7 @@ const ContactUs: React.FC = () => {
           </div>
           <h3 className="mt-3 text-base font-medium text-gray-900">Address</h3>
           <p className="mt-2 text-base text-gray-500">
-            Plot 11 Paradise Avenue off G.U Ake Road/Eliozu Road, Eliogbolo,
+            Plot 11 Primegate Avenue off G.U Ake Road/Eliozu Road, Eliogbolo,
             Port Harcourt, Rivers State, Nigeria
           </p>
         </div>

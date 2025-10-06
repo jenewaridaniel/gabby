@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="space-y-2">
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <p className=" max-w-3/5">
-              s Plot 11 Paradise Avenue off G.U Ake Road/Eliozu Road, Eliogbolo,
+               Plot 11 Primegate Avenue off G.U Ake Road/Eliozu Road, Eliogbolo,
               Port Harcourt, Rivers State, Nigeria
             </p>
             <p>Port Harcourt, Nigeria</p>
