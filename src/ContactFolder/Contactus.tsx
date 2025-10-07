@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
@@ -8,8 +9,9 @@ const Map = () => {
   const hotelAddress =
     "Plot 11 Primegate Avenue off G.U Ake Road Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
   const encodedAddress = encodeURIComponent(hotelAddress);
-  const mapEmbedUrl =
-    "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2300.865952127425!2d7.009820536930743!3d4.888375128434959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTMnMTguMiJOIDfCsDAwJzM1LjciRQ!5e0!3m2!1sen!2sng!4v1750335533859!5m2!1sen!2sng";
+
+  // ✅ Fixed embed URL (no HTML entities)
+  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d417.8540481759261!2d7.005601495059412!3d4.885968493457461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1069d100157567b9:0x85cd0568b0e93916!2sGabby's%20Boutique%20Hotel!5e0!3m2!1sen!2snl!4v1759879341666!5m2!1sen!2snl`;
 
   useEffect(() => {
     const timer = setTimeout(() => setMapLoaded(true), 1000);
@@ -22,6 +24,8 @@ const Map = () => {
       <div className="p-6">
         <h2 className="text-lg font-bold text-amber-900 mb-2">Our Location</h2>
         <p className="text-amber-800 mb-4">{hotelAddress}</p>
+
+        {/* Map */}
         <div className="relative h-80 w-full bg-amber-100 rounded-lg overflow-hidden">
           {mapLoaded ? (
             <iframe
@@ -61,6 +65,8 @@ const Map = () => {
             </div>
           )}
         </div>
+
+        {/* Directions */}
         <div className="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
           <div className="mb-4 sm:mb-0">
             <h3 className="font-semibold text-amber-800">Directions</h3>
@@ -89,7 +95,7 @@ const ContactUs = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -122,6 +128,7 @@ const ContactUs = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Contact Form */}
         <div className="bg-amber-50 p-8 rounded-lg border border-amber-100">
           <h2 className="text-2xl font-bold text-amber-900 mb-6">
             Send a Message
@@ -188,6 +195,7 @@ const ContactUs = () => {
             >
               {loading ? "Sending..." : "Send Message"}
             </button>
+
             {submitted && (
               <p className="text-green-600 mt-2">Message sent successfully!</p>
             )}
@@ -202,7 +210,9 @@ const ContactUs = () => {
             <h2 className="text-xl font-bold text-amber-900 mb-4">
               Contact Information
             </h2>
+
             <div className="space-y-4">
+              {/* Phone */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
                   <svg
@@ -227,6 +237,7 @@ const ContactUs = () => {
                 </div>
               </div>
 
+              {/* Email */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
                   <svg
@@ -251,6 +262,7 @@ const ContactUs = () => {
                 </div>
               </div>
 
+              {/* Hours */}
               <div className="flex items-start">
                 <div className="flex-shrink-0 mt-1">
                   <svg
@@ -283,3 +295,4 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+

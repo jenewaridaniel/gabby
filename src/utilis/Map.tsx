@@ -5,9 +5,10 @@ const Map = () => {
 
   const retreatAddress =
     "Plot 11 Primegate Avenue off G.U Ake Road Eliozu Road, Eliogbolo, Port Harcourt, Rivers State, Nigeria";
+
   const encodedAddress = encodeURIComponent(retreatAddress);
-  const mapEmbedUrl =
-    "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2300.865952127425!2d7.009820536930743!3d4.888375128434959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNTMnMTguMiJOIDfCsDAwJzM1LjciRQ!5e0!3m2!1sen!2sng!4v1750335533859!5m2!1sen!2sng";
+
+  const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d417.8540481759261!2d7.005601495059412!3d4.885968493457461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1069d100157567b9:0x85cd0568b0e93916!2sGabby's%20Boutique%20Hotel!5e0!3m2!1sen!2snl!4v1759879341666!5m2!1sen!2snl`;
 
   useEffect(() => {
     const timer = setTimeout(() => setMapLoaded(true), 800);
@@ -17,6 +18,7 @@ const Map = () => {
   return (
     <div className="bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-xl overflow-hidden border border-amber-100">
       <div className="p-8">
+        {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
             Our Sanctuary
@@ -26,12 +28,14 @@ const Map = () => {
           </p>
         </div>
 
+        {/* Address */}
         <div className="mb-6 text-center">
           <address className="not-italic text-gray-600 text-lg">
             {retreatAddress}
           </address>
         </div>
 
+        {/* Map Section */}
         <div className="relative h-96 w-full bg-amber-50 rounded-xl overflow-hidden border border-amber-200 shadow-inner">
           {mapLoaded ? (
             <iframe
@@ -43,7 +47,7 @@ const Map = () => {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 w-full h-full"
-              title="Retreat Location Map"
+              title="Gabby's Boutique Hotel Location Map"
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
@@ -78,6 +82,7 @@ const Map = () => {
           )}
         </div>
 
+        {/* Info + Directions */}
         <div className="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="space-y-2">
             <h3 className="font-semibold text-gray-800">Why Choose Us</h3>
@@ -96,6 +101,7 @@ const Map = () => {
               </li>
             </ul>
           </div>
+
           <a
             href={`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`}
             target="_blank"
