@@ -185,9 +185,9 @@ const Footer = () => {
             <p>
               &copy; {new Date().getFullYear()} Gabby's Boutique Hotel. All rights reserved.
             </p>
-            <p className="hover:text-amber-400 transition-colors cursor-pointer">
+            {/* <p className="hover:text-amber-400 transition-colors cursor-pointer">
               Designed by Gabby’s Dev Team
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
