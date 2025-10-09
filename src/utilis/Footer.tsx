@@ -1,31 +1,35 @@
-import logo from '../assets/logo.png'
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      {/* Main Footer Content */}
+      {/* ===== Main Footer Content ===== */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-8">
-          {/* Brand Column */}
-          <div className="lg:col-span-1 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* === Brand Column === */}
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-9 h-9  rounded-full"><img src={logo} alt="" /></div>
+              <div className="w-10 h-10 rounded-full overflow-hidden">
+                <img src={logo} alt="Gabby's Boutique Hotel" className="w-full h-full object-cover" />
+              </div>
               <span className="text-xl font-bold tracking-tight">
                 Gabby's Boutique Hotel
               </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Experience luxury and comfort in the heart of Port Harcourt. Your
-              perfect getaway awaits.
+              Experience luxury and comfort in the heart of Port Harcourt.
+              Your perfect getaway awaits.
             </p>
+
+            {/* Social Links */}
             <div className="flex space-x-3 pt-2">
               {/* Facebook */}
               <a
                 href="https://www.facebook.com/share/16QyD3L87N/?mibextid=wwXIfr"
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
               >
                 <svg
                   className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -39,10 +43,10 @@ const Footer = () => {
               {/* Twitter/X */}
               <a
                 href="https://x.com/gabbyshotel?s=21"
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
               >
                 <svg
                   className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -56,10 +60,10 @@ const Footer = () => {
               {/* Instagram */}
               <a
                 href="https://www.instagram.com/gabbysboutiquehotels?igsh=ZDY1aHBkb2d0OXZz"
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
+                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-amber-500 transition-all duration-300 group"
               >
                 <svg
                   className="w-5 h-5 group-hover:scale-110 transition-transform"
@@ -72,18 +76,11 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-amber-400 mb-4">
-              Explore
-            </h3>
+          {/* === Quick Links === */}
+          <div>
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Explore</h3>
             <ul className="space-y-3">
-              {[
-                "Rooms",
-                "Dining",
-                "Experiences",
-                 "Booking"
-              ].map((item) => (
+              {["Rooms", "Dining", "Experiences", "Booking"].map((item) => (
                 <li key={item}>
                   <a
                     href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
@@ -97,19 +94,18 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-amber-400 mb-4">
-              Contact
-            </h3>
-            <div className="space-y-3 text-sm">
+          {/* === Contact Info === */}
+          <div>
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Contact</h3>
+            <div className="space-y-3 text-sm text-gray-300">
+              {/* Address */}
               <div className="flex items-start space-x-3">
-                <div className="w-5 h-5 text-amber-500 mt-0.5">
-                  <svg fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
+                <div className="text-amber-500 mt-0.5">
+                  <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
                   </svg>
                 </div>
-                <p className="text-gray-300">
+                <p>
                   Plot 11 Primegate Avenue off G.U Ake Road
                   <br />
                   Eliozu Road, Eliogbolo,
@@ -117,77 +113,74 @@ const Footer = () => {
                   Port Harcourt, Rivers State
                 </p>
               </div>
+
+              {/* Email */}
               <div className="flex items-center space-x-3">
-                <div className="w-5 h-5 text-amber-500">
-                  <svg fill="currentColor" viewBox="0 0 24 24">
+                <div className="text-amber-500">
+                  <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                   </svg>
                 </div>
                 <a
                   href="mailto:gabbyboutiquehotel@gmail.com"
-                  className="text-gray-300 hover:text-amber-400 transition-colors"
+                  className="hover:text-amber-400 transition-colors"
                 >
                   gabbyboutiquehotel@gmail.com
                 </a>
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-5 h-5 text-amber-500">
-                  <svg fill="currentColor" viewBox="0 0 24 24">
+
+              {/* Phone */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 space-y-1 sm:space-y-0">
+                <div className="text-amber-500">
+                  <svg fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
                     <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" />
                   </svg>
                 </div>
-                <a
-                  href="tel:+2349135009881"
-                  className="text-gray-300 hover:text-amber-400 transition-colors"
-                >
-                  +234 913 500 9881, +234 913 650 0079
-                </a>
-                <a
-                  href="tel:+2349136500079"
-                  className="text-gray-300 hover:text-amber-400 transition-colors"
-                >
-                  +234 913 650 0079
-                </a>
+                <div className="flex flex-col sm:flex-row sm:space-x-3">
+                  <a href="tel:+2349135009881" className="hover:text-amber-400 transition-colors">
+                    +234 913 500 9881
+                  </a>
+                  <a href="tel:+2349136500079" className="hover:text-amber-400 transition-colors">
+                    +234 913 650 0079
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-amber-400 mb-4">
-              Stay Updated
-            </h3>
-            <p className="text-gray-300 text-sm">
+          {/* === Newsletter === */}
+          <div>
+            <h3 className="text-lg font-semibold text-amber-400 mb-4">Stay Updated</h3>
+            <p className="text-gray-300 text-sm mb-4">
               Subscribe to our newsletter for exclusive offers and updates.
             </p>
-            <div className="space-y-3">
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-white placeholder-gray-400 text-sm"
-                />
-                <button className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 text-sm whitespace-nowrap">
-                  Subscribe
-                </button>
-              </div>
-              <p className="text-xs text-gray-400">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-white placeholder-gray-400 text-sm"
+              />
+              <button className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 text-sm whitespace-nowrap">
+                Subscribe
+              </button>
             </div>
+            <p className="text-xs text-gray-400 mt-2">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* ===== Bottom Bar ===== */}
       <div className="border-t border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} Gabby's Boutique Hotel. All
-              rights reserved.
-            </div>
-       
+          <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm space-y-3 md:space-y-0">
+            <p>
+              &copy; {new Date().getFullYear()} Gabby's Boutique Hotel. All rights reserved.
+            </p>
+            <p className="hover:text-amber-400 transition-colors cursor-pointer">
+              Designed by Gabby’s Dev Team
+            </p>
           </div>
         </div>
       </div>
