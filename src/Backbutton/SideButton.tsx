@@ -1,9 +1,10 @@
+import React from 'react'
 import {Link} from "react-router-dom";
 
-const BackButton = () => {
+const SideButton = () => {
   return (
     <div>
-      <div className=" absolute text-gray-50  top-3 md:top-10 left-4 md:left-10">
+        <div className=" absolute text-gray-950  top-3 md:top-10 left-4 md:left-10">
         <Link to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +23,7 @@ const BackButton = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BackButton;
+export default SideButton

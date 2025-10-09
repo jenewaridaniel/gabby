@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
-import BackButton from "../Backbutton/BackButton";
+import SideButton from "../Backbutton/SideButton";
 
 const Map = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -20,7 +20,7 @@ const Map = () => {
 
   return (
     <div className="bg-amber-50 rounded-lg overflow-hidden border border-amber-100">
-      <BackButton />
+      <SideButton />
       <div className="p-6">
         <h2 className="text-lg font-bold text-amber-900 mb-2">Our Location</h2>
         <p className="text-amber-800 mb-4">{hotelAddress}</p>
