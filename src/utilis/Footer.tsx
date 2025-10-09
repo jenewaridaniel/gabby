@@ -148,7 +148,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* === Newsletter === */}
+          {/* === Newsletters === */}
           <div>
             <h3 className="text-lg font-semibold text-amber-400 mb-4">Stay Updated</h3>
             <p className="text-gray-300 text-sm mb-4">
