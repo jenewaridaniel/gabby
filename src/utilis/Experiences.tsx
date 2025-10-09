@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import exp from "../assets/hotel.jpg";
+import exp from "../assets/night.jpg";
 import front from "../assets/club.jpg";
 import {
   ArrowRightIcon,
